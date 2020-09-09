@@ -18,5 +18,9 @@ public class SignUp extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         //..............................
+
+    }
+    private void checkData(){
+
     }
 }
