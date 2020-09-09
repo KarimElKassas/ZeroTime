@@ -21,6 +21,6 @@ public class SignUp extends AppCompatActivity {
 
     }
     private void checkData(){
-
+//..............................
     }
 }
