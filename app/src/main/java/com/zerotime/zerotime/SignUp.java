@@ -154,14 +154,17 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         usersMap.put("UserId",Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
         usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
-                .setValue(usersMap).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        Toast.makeText(getApplicationContext(),"Sign Up Successfully",Toast.LENGTH_SHORT).show();
-                        goToLogin();
-                    }else {
-                        Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .setValue(usersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
+                    SignUp.this.goToLogin();
+                } else {
+                    Toast.makeText(SignUp.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
