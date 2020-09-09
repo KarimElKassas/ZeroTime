@@ -126,6 +126,10 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
+        if (binding.signUpUserPrimaryPhoneEditTxt.getText() == binding.signUpUserSecondaryPhoneEditTxt.getText()){
+            Toast.makeText(this,"من فضلك قم باختيار رقمين مختلفين !",Toast.LENGTH_SHORT).show();
+            return;
+        }
         //User Address Validation
         if (TextUtils.isEmpty(binding.signUpUserAddressEditTxt.getText())){
             binding.signUpUserAddressEditTxt.setError("ادخل العنوان بالتفصيل من فضلك !");
@@ -150,17 +154,14 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         usersMap.put("UserId",Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
         usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
-                .setValue(usersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Sign Up Successfully",Toast.LENGTH_SHORT).show();
-                    goToLogin();
-                }else {
-                    Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                .setValue(usersMap).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Toast.makeText(getApplicationContext(),"Sign Up Successfully",Toast.LENGTH_SHORT).show();
+                        goToLogin();
+                    }else {
+                        Toast.makeText(getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
