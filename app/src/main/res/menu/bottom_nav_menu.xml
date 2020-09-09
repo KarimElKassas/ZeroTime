@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/bottom_nav_home"
+    android:title=""
+    android:icon="@drawable/ic_baseline_home_24"
+    app:cnb_backgroundColor="@color/colorPrimary"
+ />
+
+    <item
+    android:id="@+id/bottom_nav_profile"
+    android:title=""
+    android:icon="@drawable/ic_baseline_person_pin_24"
+    app:cnb_backgroundColor="@color/colorPrimary"
+ />
+
+    <item
+    android:id="@+id/bottom_nav_contact"
+    android:title=""
+    android:icon="@drawable/ic_baseline_call_24"
+    app:cnb_backgroundColor="@color/colorPrimary"
+ />
+
+
+    <item
+    android:id="@+id/bottom_nav_settings"
+    android:title=""
+    android:icon="@drawable/ic_baseline_settings_24"
+    app:cnb_backgroundColor="@color/colorPrimary"
+ />
+</menu>
