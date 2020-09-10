@@ -15,8 +15,6 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
 
-
-
         new Handler().postDelayed(() -> {
 
             if (prefs.getBoolean("isLogged",false)){
