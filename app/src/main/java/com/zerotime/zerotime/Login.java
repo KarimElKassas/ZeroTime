@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,8 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
-import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 
 import java.util.Objects;
 
@@ -58,7 +57,7 @@ public class Login extends AppCompatActivity {
         //Moderator Case
         if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("0")
                 && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("0")){
-            Intent intent = new Intent(Login.this,ModeratorHome.class);
+            Intent intent = new Intent(Login.this, ModeratorHome.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             this.finish();

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Moderator.ModeratorAddClerck">
+
+    <TextView
+        android:id="@+id/textAddClerck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:gravity="center"
+        android:text="إضافه مندوب"
+        android:textSize="@dimen/_22sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Moderator_AddClerck_Name_edt"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:drawablePadding="12dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:hint="اسم المندوب"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:textColor="#000"
+        android:textColorHint="#494848"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textAddClerck" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Moderator_AddClerck_phone1_edt"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:drawablePadding="12dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:hint="رقم الهاتف الاول"
+        android:inputType="phone"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:textColor="#000"
+        android:textColorHint="#494848"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Moderator_AddClerck_Name_edt" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Moderator_AddClerck_phone2_edt"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:drawablePadding="12dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:hint="رقم الهاتف الثاني"
+        android:inputType="phone"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:textColor="#000"
+        android:textColorHint="#494848"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Moderator_AddClerck_phone1_edt" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Moderator_AddClerck_address_edt"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:drawablePadding="12dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:hint="العنوان بالتفصيل"
+        android:maxLines="3"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:textColor="#000"
+        android:textColorHint="#494848"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Moderator_AddClerck_phone2_edt" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Moderator_AddClerck_age_edt"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:drawablePadding="12dp"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:hint="السن"
+        android:inputType="number"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:textColor="#000"
+        android:textColorHint="#494848"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Moderator_AddClerck_address_edt" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/Moderator_AddClerck_age_edt">
+
+        <RadioButton
+
+            android:id="@+id/radio_have"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  يمتلك طياره " />
+
+        <RadioButton
+            android:id="@+id/radio_donthave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="لا يمتلك طياره" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/Moderator_AddClerck_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:text="إضافه"
+        android:textSize="@dimen/_22sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

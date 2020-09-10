@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -31,10 +32,10 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     private static final String[] regions = {"القاهرة", "الاسكندرية", "الجيزة"};
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+    private DatabaseReference usersRef;
 
     private String userToken = "";
-    private HashMap<String,Object> usersMap = new HashMap<>();
+    private HashMap<String,Object> usersMap ;
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
@@ -45,6 +46,9 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        usersMap = new HashMap<>();
         //animation
         inAnimation = new AlphaAnimation(0f,2f);
         outAnimation = new AlphaAnimation(2f,0f);
@@ -95,7 +99,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             return;
         }
         if (Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).length() < 8){
-            binding.signUpUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من 8 حروف او ارقام !");
+            binding.signUpUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من او تساوي 8 حروف او ارقام !");
             binding.signUpUserPasswordEditTxt.requestFocus();
             return;
         }
