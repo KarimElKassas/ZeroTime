@@ -23,6 +23,7 @@ import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 import com.zerotime.zerotime.databinding.ActivityModeratorViewClerksBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ModeratorViewClerks extends AppCompatActivity {
     private ActivityModeratorViewClerksBinding binding;
@@ -62,7 +63,7 @@ private ClerckAdapter adapter;
                     clerks.setAddress(address);
                     clerks.setPhone1(phone1);
                     clerks.setPhone2(phone2);
-                    clerks.setAge(Integer.valueOf(age));
+                    clerks.setAge(Integer.parseInt(Objects.requireNonNull(age)));
                     clerks.setHasVehicle(hasVehicle);
 
                     clerksList.add(clerks);

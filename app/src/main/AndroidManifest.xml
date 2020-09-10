@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SecretaryHome" />
-        <activity android:name=".ModeratorHome" />
+        <activity android:name=".Moderator.ModeratorAddClerck"/>
+        <activity android:name=".Moderator.ModeratorViewClerks"/>
+        <activity android:name=".Moderator.ModeratorHome" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
