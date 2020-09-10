@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -30,11 +32,13 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     private static final String[] regions = {"القاهرة", "الاسكندرية", "الجيزة"};
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+    private DatabaseReference usersRef;
 
     private String userToken = "";
-    private HashMap<String,String> usersMap = new HashMap<>();
+    private HashMap<String,String> usersMap ;
 
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,12 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //..............................
+
+        usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        usersMap = new HashMap<>();
+        //animation
+        inAnimation = new AlphaAnimation(0f,2f);
+        outAnimation = new AlphaAnimation(2f,0f);
         //Regions Spinner
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(SignUp.this,
                 android.R.layout.simple_spinner_item,regions);
@@ -90,7 +99,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             return;
         }
         if (Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).length() < 8){
-            binding.signUpUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من 8 حروف او ارقام !");
+            binding.signUpUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من او تساوي 8 حروف او ارقام !");
             binding.signUpUserPasswordEditTxt.requestFocus();
             return;
         }
@@ -144,6 +153,12 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         createNewUser();
     }
     private void createNewUser(){
+        //Progress Bar
+        binding.signUpProgressBarHolder.setAnimation(inAnimation);
+        binding.signUpProgressBarHolder.setVisibility(View.VISIBLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         usersMap.put("UserName", Objects.requireNonNull(binding.signUpUserNameEditTxt.getText()).toString());
         usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
@@ -158,9 +173,17 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+                    //clear progress bar
+                    binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
                     Toast.makeText(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
                     SignUp.this.goToLogin();
                 } else {
+                    //clear progress bar
+                    binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
                     Toast.makeText(SignUp.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

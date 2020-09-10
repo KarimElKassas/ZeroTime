@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,8 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
-import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 
 import java.util.Objects;
 
@@ -25,6 +27,8 @@ public class Login extends AppCompatActivity {
     private ActivityLoginBinding binding;
     SharedPreferences.Editor editor;
 
+     AlphaAnimation inAnimation;
+     AlphaAnimation outAnimation;
 
     private DatabaseReference usersRef;
     private String userToken = "";
@@ -35,6 +39,9 @@ public class Login extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        //animation
+        inAnimation = new AlphaAnimation(0f,2f);
+        outAnimation = new AlphaAnimation(2f,0f);
         // Initialize User State
         userState = new UserState();
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -43,8 +50,28 @@ public class Login extends AppCompatActivity {
         editor.apply();
 
         binding.loginLoginBtn.setOnClickListener(view1 -> checkData());
+        //Return To Sign Up
+        binding.loginSignUpTextView.setOnClickListener(view12 -> goToSignUp());
     }
-    private void checkData(){
+    private void checkData() {
+        //Moderator Case
+        if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("0")
+                && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("0")){
+            Intent intent = new Intent(Login.this, ModeratorHome.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            this.finish();
+            return;
+        }
+        //Secretary Case
+        if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("1")
+                && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("1")){
+            Intent intent = new Intent(Login.this,SecretaryHome.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            this.finish();
+            return;
+        }
         //Phone Validation
         if (TextUtils.isEmpty(binding.loginUserPhoneEditTxt.getText())){
             binding.loginUserPhoneEditTxt.setError("ادخل رقم الهاتف الاول من فضلك !");
@@ -72,9 +99,18 @@ public class Login extends AppCompatActivity {
             binding.loginUserPasswordEditTxt.requestFocus();
             return;
         }
+
         signIn();
     }
     private void signIn(){
+        //Progress Bar
+        binding.loginProgressBarHolder.setAnimation(inAnimation);
+        binding.loginProgressBarHolder.setVisibility(View.VISIBLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+
         Query query;
         query = usersRef.child(Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,9 +121,22 @@ public class Login extends AppCompatActivity {
                         String userPassword = snapshot.child("UserPassword").getValue(String.class);
                         assert userPassword != null;
                         if (userPassword.equals(Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString())){
+                            //clear progress bar
+                            binding.loginProgressBarHolder.setAnimation(outAnimation);
+                            binding.loginProgressBarHolder.setVisibility(View.GONE);
+                            //Save User State
                             editor.putBoolean("isLogged",true);
                             editor.apply();
+                            //Go To Home Activity
                             goToHome();
+
+                        }else {
+                            //clear progress bar
+                            binding.loginProgressBarHolder.setAnimation(outAnimation);
+                            binding.loginProgressBarHolder.setVisibility(View.GONE);
+                            // Wrong Password Helper
+                            binding.loginUserPasswordEditTxt.setError("كلمة المرور غير صحيحة !");
+                            binding.loginUserPasswordEditTxt.requestFocus();
                         }
                     }
                 }
@@ -101,6 +150,12 @@ public class Login extends AppCompatActivity {
     }
     public void goToHome(){
         Intent intent = new Intent(Login.this,Home.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        this.finish();
+    }
+    public void goToSignUp(){
+        Intent intent = new Intent(Login.this,SignUp.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         this.finish();

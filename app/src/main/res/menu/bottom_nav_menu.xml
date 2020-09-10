@@ -3,30 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
     android:id="@+id/bottom_nav_home"
-    android:title=""
+    android:title="Home"
     android:icon="@drawable/ic_baseline_home_24"
-    app:cnb_backgroundColor="@color/colorPrimary"
  />
 
     <item
     android:id="@+id/bottom_nav_profile"
-    android:title=""
+    android:title="Profile"
     android:icon="@drawable/ic_baseline_person_pin_24"
-    app:cnb_backgroundColor="@color/colorPrimary"
  />
 
     <item
     android:id="@+id/bottom_nav_contact"
-    android:title=""
+    android:title="Contact"
     android:icon="@drawable/ic_baseline_call_24"
-    app:cnb_backgroundColor="@color/colorPrimary"
  />
 
 
     <item
     android:id="@+id/bottom_nav_settings"
-    android:title=""
+    android:title="Setting"
     android:icon="@drawable/ic_baseline_settings_24"
-    app:cnb_backgroundColor="@color/colorPrimary"
  />
 </menu>
