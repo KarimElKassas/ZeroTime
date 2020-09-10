@@ -47,7 +47,7 @@ public class Login extends AppCompatActivity {
         userState = new UserState();
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         editor = getSharedPreferences("UserState", MODE_PRIVATE).edit();
-        editor.putBoolean("isLogged", false);
+        editor.putString("isLogged", "null");
         editor.apply();
 
         binding.loginLoginBtn.setOnClickListener(view1 -> checkData());
@@ -120,13 +120,15 @@ public class Login extends AppCompatActivity {
                 if (snapshot.exists()){
                     if (snapshot.hasChildren()){
                         String userPassword = snapshot.child("UserPassword").getValue(String.class);
+                        String userPhone = snapshot.child("UserPrimaryPhone").getValue(String.class);
                         assert userPassword != null;
                         if (userPassword.equals(Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString())){
                             //clear progress bar
                             binding.loginProgressBarHolder.setAnimation(outAnimation);
                             binding.loginProgressBarHolder.setVisibility(View.GONE);
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             //Save User State
-                            editor.putBoolean("isLogged",true);
+                            editor.putString("isLogged",userPhone);
                             editor.apply();
                             //Go To Home Activity
                             goToHome();
@@ -135,6 +137,7 @@ public class Login extends AppCompatActivity {
                             //clear progress bar
                             binding.loginProgressBarHolder.setAnimation(outAnimation);
                             binding.loginProgressBarHolder.setVisibility(View.GONE);
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             // Wrong Password Helper
                             binding.loginUserPasswordEditTxt.setError("كلمة المرور غير صحيحة !");
                             binding.loginUserPasswordEditTxt.requestFocus();

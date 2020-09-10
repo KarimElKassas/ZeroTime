@@ -13,7 +13,6 @@ import com.zerotime.zerotime.R;
 public class ContactFragment extends Fragment {
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

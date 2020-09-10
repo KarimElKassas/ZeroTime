@@ -1,12 +1,9 @@
 package com.zerotime.zerotime;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -15,7 +12,6 @@ import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
 import com.zerotime.zerotime.Fragments.SettingsFragment;
 import com.zerotime.zerotime.databinding.ActivityHomeBinding;
-import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 
 public class Home extends AppCompatActivity {
     private ActivityHomeBinding binding;
@@ -33,33 +29,8 @@ public class Home extends AppCompatActivity {
         //Attach Listener To Bottom Nav
         binding.bottomNav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        //bottomMenu();
     }
 
-    /*private void bottomMenu() {
-        binding.bottomNavMenu.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int i) {
-                Fragment fragment = null;
-                switch (i) {
-                    case R.id.bottom_nav_home:
-                        fragment = new HomeFragment();
-                        break;
-                    case R.id.bottom_nav_profile:
-                        fragment = new ProfileFragment();
-                        break;
-                        case R.id.bottom_nav_contact:
-                        fragment = new ContactFragment();
-                        break;
-                    case R.id.bottom_nav_settings:
-                        fragment = new SettingsFragment();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_content,fragment).commit();
-            }
-        });
-
-    }*/
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = menuItem -> {
         switch (menuItem.getItemId()){
 
