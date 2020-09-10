@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -35,6 +37,8 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     private String userToken = "";
     private HashMap<String,String> usersMap = new HashMap<>();
 
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,9 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        //..............................
+        //animation
+        inAnimation = new AlphaAnimation(0f,2f);
+        outAnimation = new AlphaAnimation(2f,0f);
         //Regions Spinner
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(SignUp.this,
                 android.R.layout.simple_spinner_item,regions);
@@ -144,6 +150,12 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         createNewUser();
     }
     private void createNewUser(){
+        //Progress Bar
+        binding.signUpProgressBarHolder.setAnimation(inAnimation);
+        binding.signUpProgressBarHolder.setVisibility(View.VISIBLE);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         usersMap.put("UserName", Objects.requireNonNull(binding.signUpUserNameEditTxt.getText()).toString());
         usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
@@ -158,9 +170,17 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+                    //clear progress bar
+                    binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
                     Toast.makeText(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
                     SignUp.this.goToLogin();
                 } else {
+                    //clear progress bar
+                    binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
                     Toast.makeText(SignUp.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
