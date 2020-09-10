@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
+import java.util.Objects;
+
 public class SplashScreen extends AppCompatActivity {
     private static int splashTimeOut=3000;
     @Override
@@ -16,8 +18,8 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
 
         new Handler().postDelayed(() -> {
-
-            if (prefs.getBoolean("isLogged",false)){
+                prefs.getString("isLogged","");
+            if (!Objects.requireNonNull(prefs.getString("isLogged", "null")).equals("null")){
                 Intent i=new Intent(SplashScreen.this,Home.class);
                 startActivity(i);
                 finish();

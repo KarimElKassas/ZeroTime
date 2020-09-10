@@ -3,14 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4CAF50"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFF"
     tools:context=".Fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment Profile"
-        android:gravity="center"/>
+        android:layout_marginTop="@dimen/_120sdp"
+        >
+
+    <Button
+        android:id="@+id/profile_update_user_data_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="تعديل بياناتك"
+        android:textSize="@dimen/_22sdp" />
+
+    <Button
+        android:id="@+id/profile_orders_history_btn"
+        app:layout_constraintTop_toBottomOf="@+id/profile_update_user_data_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="الطلبات السابقة"
+        android:textSize="@dimen/_22sdp" />
+
+    <Button
+        android:id="@+id/profile_order_progress_btn"
+        app:layout_constraintTop_toBottomOf="@+id/profile_orders_history_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="متابعة الطلبات"
+        android:textSize="@dimen/_22sdp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -162,7 +162,8 @@
                 android:layout_marginTop="8dp"
                 android:background="#000"
                 android:textColor="#FFF"
-                android:text="Sign Up"
+                android:text="انشاء حساب"
+                android:textStyle="bold"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 />
