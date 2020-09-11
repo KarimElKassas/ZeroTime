@@ -1,15 +1,11 @@
 package com.zerotime.zerotime.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,16 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.FragmentAddOrderBinding;
-import com.zerotime.zerotime.databinding.FragmentHomeBinding;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -146,6 +138,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         ordersMap.put("ReceiverAddress", Objects.requireNonNull(binding.addOrderReceiverAddressEditText.getText()).toString());
         ordersMap.put("OrderPrice", Objects.requireNonNull(binding.addOrderOrderPriceEditText.getText()).toString());
         ordersMap.put("OrderDate",currentTime.toString());
+        ordersMap.put("UserPrimaryPhone",userPhone);
 
         if (binding.addOrderArrivalDateNotesEditText.getText() == null || TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText()) ){
             ordersMap.put("ArrivalNotes","لا توجد");
@@ -153,7 +146,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         }else {
             ordersMap.put("ArrivalNotes",Objects.requireNonNull(binding.addOrderArrivalDateNotesEditText.getText()).toString());
         }
-        ordersRef.child(userPhone).child(currentTime.toString()).setValue(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        ordersRef.child(currentTime.toString()).setValue(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){

@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".M_DisplayUserData"></activity>
+        <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
         <activity android:name=".SecretaryHome" />
-        <activity android:name=".Moderator.ModeratorAddClerck"/>
-        <activity android:name=".Moderator.ModeratorViewClerks"/>
+        <activity android:name=".Moderator.ModeratorAddClerck" />
+        <activity android:name=".Moderator.ModeratorViewClerks" />
         <activity android:name=".Moderator.ModeratorHome" />
         <activity android:name=".SplashScreen">
             <intent-filter>

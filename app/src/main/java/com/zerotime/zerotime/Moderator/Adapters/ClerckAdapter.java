@@ -60,11 +60,11 @@ public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewH
             @Override
             public void onClick(View view) {
                 if (holder.expandableView.getVisibility()==View.GONE){
-                    TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
+                    //TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
                     holder.expandableView.setVisibility(View.VISIBLE);
                     holder.arrowBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
                 } else {
-                    TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
+                    //TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
                     holder.expandableView.setVisibility(View.GONE);
                     holder.arrowBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
                 }

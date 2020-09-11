@@ -29,15 +29,14 @@ public class ModeratorViewClerks extends AppCompatActivity {
     private ActivityModeratorViewClerksBinding binding;
     private DatabaseReference ClerksRef;
     ArrayList<Clerks> clerksList;
-private ClerckAdapter adapter;
+    private ClerckAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityModeratorViewClerksBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-
 
 
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -83,5 +82,5 @@ private ClerckAdapter adapter;
             }
         });
 
-}
+    }
 }

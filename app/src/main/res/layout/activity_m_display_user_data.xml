@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E3E3E3"
+    tools:context=".M_DisplayUserData">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#E3E3E3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/moderator_display_user_data_user_name"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:drawablePadding="12dp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="الاسم بالكامل"
+            android:inputType="textPersonName"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
+            android:paddingEnd="8dp"
+            android:paddingRight="8dp"
+            android:textColor="#000"
+            android:textColorHint="#494848"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/moderator_display_user_data_user_primary_phone"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="رقم الهاتف الاول"
+            android:inputType="phone"
+            android:gravity="end"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:textColor="#000"
+            android:textColorHint="#494848"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/moderator_display_user_data_user_name" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/moderator_display_user_data_user_secondary_phone"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="رقم الهاتف الثانى"
+            android:inputType="phone"
+            android:gravity="end"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:textColor="#000"
+            android:textColorHint="#494848"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/moderator_display_user_data_user_primary_phone" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/moderator_display_user_data_user_address"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:drawablePadding="@dimen/_12sdp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="العنوان بالتفصيل"
+            android:inputType="text"
+            android:maxLines="2"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:textColor="#000"
+            android:textColorHint="#494848"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/moderator_display_user_data_user_secondary_phone" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/moderator_display_user_data_user_region"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/moderator_display_user_data_user_address" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
