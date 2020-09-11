@@ -35,6 +35,8 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     private DatabaseReference usersRef;
 
     private String userToken = "";
+    private HashMap<String,String> usersMap ;
+
     private HashMap<String,Object> usersMap ;
 
     AlphaAnimation inAnimation;
@@ -135,10 +137,8 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
-        String primaryPhone = binding.signUpUserPrimaryPhoneEditTxt.getText().toString();
-        String secondaryPhone = binding.signUpUserSecondaryPhoneEditTxt.getText().toString();
-        if (primaryPhone.equals(secondaryPhone)) {
-            Toast.makeText(this, "من فضلك ادخل رقمين مختلفين !", Toast.LENGTH_SHORT).show();
+        if (binding.signUpUserPrimaryPhoneEditTxt.getText() == binding.signUpUserSecondaryPhoneEditTxt.getText()){
+            Toast.makeText(this,"من فضلك قم باختيار رقمين مختلفين !",Toast.LENGTH_SHORT).show();
             return;
         }
         //User Address Validation
@@ -178,7 +178,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                     //clear progress bar
                     binding.signUpProgressBarHolder.setAnimation(outAnimation);
                     binding.signUpProgressBarHolder.setVisibility(View.GONE);
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                     Toast.makeText(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
                     SignUp.this.goToLogin();
@@ -186,7 +185,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                     //clear progress bar
                     binding.signUpProgressBarHolder.setAnimation(outAnimation);
                     binding.signUpProgressBarHolder.setVisibility(View.GONE);
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                     Toast.makeText(SignUp.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -198,17 +196,14 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         switch (position) {
             case 0:
                 usersMap.put("UserRegion","القاهرة");
-                usersMap.put("UserRegionIndex",0);
                 // Whatever you want to happen when the first item gets selected
                 break;
             case 1:
                 usersMap.put("UserRegion","الاسكندرية");
-                usersMap.put("UserRegionIndex",1);
                 // Whatever you want to happen when the second item gets selected
                 break;
             case 2:
                 usersMap.put("UserRegion","الجيزة");
-                usersMap.put("UserRegionIndex",2);
                 // Whatever you want to happen when the thrid item gets selected
                 break;
 
