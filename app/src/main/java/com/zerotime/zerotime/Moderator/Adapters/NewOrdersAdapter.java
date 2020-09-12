@@ -43,6 +43,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
         holder.orderNotes.setText(orders.getOrderNotes());
         holder.orderDate.setText(orders.getOrderDate());
         holder.orderPrice.setText(orders.getOrderPrice());
+        holder.orderState.setText(orders.getOrderState());
         holder.receiverName.setText(orders.getReceiverName());
         holder.receiverAddress.setText(orders.getReceiverAddress());
         holder.userPrimaryPhone.setText(orders.getUserPrimaryPhone());
@@ -90,7 +91,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
 
 
     public class NewOrderViewHolder extends RecyclerView.ViewHolder {
-        private TextView orderDescription, orderDate, orderNotes, orderPrice, receiverName, receiverAddress, userPrimaryPhone, receiverPrimaryPhone, receiverSecondaryPhone;
+        private TextView orderDescription, orderDate, orderNotes, orderPrice, orderState, receiverName, receiverAddress, userPrimaryPhone, receiverPrimaryPhone, receiverSecondaryPhone;
         private Button orderReceived,orderInProgress,orderDelivered;
         ConstraintLayout expandableView;
         CardView cardView;
@@ -102,6 +103,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
             orderNotes = itemView.findViewById(R.id.display_orders_order_notes_value_text_view);
             orderDate = itemView.findViewById(R.id.display_orders_order_date_value_text_view);
             orderPrice = itemView.findViewById(R.id.display_orders_order_price_value_text_view);
+            orderState = itemView.findViewById(R.id.display_orders_order_state_value_text_view);
             receiverName = itemView.findViewById(R.id.display_orders_receiver_name_value_text_view);
             receiverAddress = itemView.findViewById(R.id.display_orders_receiver_address_value_text_view);
             userPrimaryPhone = itemView.findViewById(R.id.display_orders_user_primary_phone_value_text_view);

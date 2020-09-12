@@ -1,20 +1,8 @@
 package com.zerotime.zerotime.Moderator.Pojos;
 
 public class NewOrders {
-    String orderDescription, orderDate, orderPrice, orderNotes, receiverName, receiverAddress, receiverPrimaryPhone,
+    String orderDescription, orderDate, orderPrice, orderNotes, orderState, receiverName, receiverAddress, receiverPrimaryPhone,
            receiverSecondaryPhone, userPrimaryPhone;
-
-    public NewOrders(String orderDescription, String orderDate, String orderPrice, String orderNotes, String receiverName, String receiverAddress, String receiverPrimaryPhone, String receiverSecondaryPhone, String userPrimaryPhone) {
-        this.orderDescription = orderDescription;
-        this.orderDate = orderDate;
-        this.orderPrice = orderPrice;
-        this.orderNotes = orderNotes;
-        this.receiverName = receiverName;
-        this.receiverAddress = receiverAddress;
-        this.receiverPrimaryPhone = receiverPrimaryPhone;
-        this.receiverSecondaryPhone = receiverSecondaryPhone;
-        this.userPrimaryPhone = userPrimaryPhone;
-    }
     public NewOrders(){
 
     }
@@ -49,6 +37,14 @@ public class NewOrders {
 
     public void setOrderNotes(String orderNotes) {
         this.orderNotes = orderNotes;
+    }
+
+    public String getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(String orderState) {
+        this.orderState = orderState;
     }
 
     public String getReceiverName() {
@@ -90,4 +86,6 @@ public class NewOrders {
     public void setUserPrimaryPhone(String userPrimaryPhone) {
         this.userPrimaryPhone = userPrimaryPhone;
     }
+
+
 }

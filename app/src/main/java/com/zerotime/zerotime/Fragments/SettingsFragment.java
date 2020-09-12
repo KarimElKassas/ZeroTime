@@ -42,8 +42,8 @@ public class SettingsFragment extends Fragment {
             editor.apply();
             Intent intent = new Intent(getActivity(), Login.class);
             startActivity(intent);
-            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            ((Activity) context).finish();
+            ((Activity)context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity)context).finish();
         });
         return view;
     }

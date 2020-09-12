@@ -133,9 +133,8 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         requestOrder();
     }
     private void requestOrder(){
-        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
         String currentTime = df.format(Calendar.getInstance().getTime());
-        //Date currentTime = Calendar.getInstance().getTime();
 
         ordersMap.put("OrderDescription", Objects.requireNonNull(binding.addOrderOrderDescriptionEditText.getText()).toString());
         ordersMap.put("ReceiverName", Objects.requireNonNull(binding.addOrderReceiverNameEditText.getText()).toString());
@@ -144,6 +143,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         ordersMap.put("ReceiverAddress", Objects.requireNonNull(binding.addOrderReceiverAddressEditText.getText()).toString());
         ordersMap.put("OrderPrice", Objects.requireNonNull(binding.addOrderOrderPriceEditText.getText()).toString());
         ordersMap.put("OrderDate",currentTime);
+        ordersMap.put("OrderState","لم يتم الاستلام");
         ordersMap.put("UserPrimaryPhone",userPhone);
 
         if (binding.addOrderArrivalDateNotesEditText.getText() == null || TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText()) ){
