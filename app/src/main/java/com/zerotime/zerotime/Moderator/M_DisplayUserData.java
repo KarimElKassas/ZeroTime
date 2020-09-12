@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Moderator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

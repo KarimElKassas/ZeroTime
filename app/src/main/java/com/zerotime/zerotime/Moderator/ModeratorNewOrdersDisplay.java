@@ -52,6 +52,7 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
                     String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);
                     String userPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
                     String receiverName = dataSnapshot.child("ReceiverName").getValue(String.class);
+                    String receiverAddress = dataSnapshot.child("ReceiverAddress").getValue(String.class);
                     String receiverPrimaryPhone = dataSnapshot.child("ReceiverPrimaryPhone").getValue(String.class);
                     String receiverSecondaryPhone = dataSnapshot.child("ReceiverSecondaryPhone").getValue(String.class);
 
@@ -62,6 +63,7 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
                     newOrders.setOrderPrice(orderPrice);
                     newOrders.setUserPrimaryPhone(userPhone);
                     newOrders.setReceiverName(receiverName);
+                    newOrders.setReceiverAddress(receiverAddress);
                     newOrders.setReceiverPrimaryPhone(receiverPrimaryPhone);
                     newOrders.setReceiverSecondaryPhone(receiverSecondaryPhone);
 

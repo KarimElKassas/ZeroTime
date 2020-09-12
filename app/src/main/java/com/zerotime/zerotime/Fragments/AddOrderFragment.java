@@ -1,5 +1,6 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.FragmentAddOrderBinding;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -129,7 +133,9 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         requestOrder();
     }
     private void requestOrder(){
-        Date currentTime = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+        String currentTime = df.format(Calendar.getInstance().getTime());
+        //Date currentTime = Calendar.getInstance().getTime();
 
         ordersMap.put("OrderDescription", Objects.requireNonNull(binding.addOrderOrderDescriptionEditText.getText()).toString());
         ordersMap.put("ReceiverName", Objects.requireNonNull(binding.addOrderReceiverNameEditText.getText()).toString());
@@ -137,7 +143,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         ordersMap.put("ReceiverSecondaryPhone", Objects.requireNonNull(binding.addOrderReceiverSecondaryPhoneEditText.getText()).toString());
         ordersMap.put("ReceiverAddress", Objects.requireNonNull(binding.addOrderReceiverAddressEditText.getText()).toString());
         ordersMap.put("OrderPrice", Objects.requireNonNull(binding.addOrderOrderPriceEditText.getText()).toString());
-        ordersMap.put("OrderDate",currentTime.toString());
+        ordersMap.put("OrderDate",currentTime);
         ordersMap.put("UserPrimaryPhone",userPhone);
 
         if (binding.addOrderArrivalDateNotesEditText.getText() == null || TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText()) ){

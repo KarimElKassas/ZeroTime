@@ -37,7 +37,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     private String userToken = "";
     private HashMap<String,String> usersMap ;
 
-    private HashMap<String,Object> usersMap ;
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;

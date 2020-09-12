@@ -3,8 +3,6 @@ package com.zerotime.zerotime.Moderator.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.zerotime.zerotime.M_DisplayUserData;
+import com.zerotime.zerotime.Moderator.M_DisplayUserData;
 import com.zerotime.zerotime.Moderator.Pojos.NewOrders;
 import com.zerotime.zerotime.R;
 
@@ -46,6 +44,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
         holder.orderDate.setText(orders.getOrderDate());
         holder.orderPrice.setText(orders.getOrderPrice());
         holder.receiverName.setText(orders.getReceiverName());
+        holder.receiverAddress.setText(orders.getReceiverAddress());
         holder.userPrimaryPhone.setText(orders.getUserPrimaryPhone());
         holder.receiverPrimaryPhone.setText(orders.getReceiverPrimaryPhone());
         holder.receiverSecondaryPhone.setText(orders.getReceiverSecondaryPhone());
@@ -91,8 +90,8 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
 
 
     public class NewOrderViewHolder extends RecyclerView.ViewHolder {
-        private TextView orderDescription, orderDate, orderNotes, orderPrice, receiverName, userPrimaryPhone, receiverPrimaryPhone, receiverSecondaryPhone;
-        private Button orderReceived,orderInProgress,orderDelivered,arrowBtn;
+        private TextView orderDescription, orderDate, orderNotes, orderPrice, receiverName, receiverAddress, userPrimaryPhone, receiverPrimaryPhone, receiverSecondaryPhone;
+        private Button orderReceived,orderInProgress,orderDelivered;
         ConstraintLayout expandableView;
         CardView cardView;
         public NewOrderViewHolder(@NonNull View itemView) {
@@ -104,6 +103,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
             orderDate = itemView.findViewById(R.id.display_orders_order_date_value_text_view);
             orderPrice = itemView.findViewById(R.id.display_orders_order_price_value_text_view);
             receiverName = itemView.findViewById(R.id.display_orders_receiver_name_value_text_view);
+            receiverAddress = itemView.findViewById(R.id.display_orders_receiver_address_value_text_view);
             userPrimaryPhone = itemView.findViewById(R.id.display_orders_user_primary_phone_value_text_view);
             receiverPrimaryPhone = itemView.findViewById(R.id.display_orders_receiver_primary_phone_value_text_view);
             receiverSecondaryPhone = itemView.findViewById(R.id.display_orders_receiver_secondary_phone_value_text_view);
