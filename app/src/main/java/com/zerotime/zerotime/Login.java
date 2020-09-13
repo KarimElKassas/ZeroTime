@@ -66,7 +66,13 @@ public class Login extends AppCompatActivity {
         //Secretary Case
         if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("1")
                 && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("1")){
-            Intent intent = new Intent(Login.this,SecretaryHome.class);
+            Intent intent = new Intent(Login.this, FollowingTheOrderState.class);
+            editor.putString("UserType", "secretary");
+            editor.apply();
+
+
+
+
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             this.finish();

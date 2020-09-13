@@ -31,7 +31,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
     private ActivitySignUpBinding binding;
     private static final String[] regions = {"القاهرة", "الاسكندرية", "الجيزة"};
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference usersRef;
 
     private String userToken = "";
@@ -190,19 +189,18 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             }
         });
     }
+
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         switch (position) {
             case 0:
-                usersMap.put("UserRegion","القاهرة");
                 // Whatever you want to happen when the first item gets selected
                 break;
             case 1:
-                usersMap.put("UserRegion","الاسكندرية");
                 // Whatever you want to happen when the second item gets selected
                 break;
             case 2:
-                usersMap.put("UserRegion","الجيزة");
                 // Whatever you want to happen when the thrid item gets selected
                 break;
 
