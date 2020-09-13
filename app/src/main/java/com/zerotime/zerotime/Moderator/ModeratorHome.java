@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.ModeratorAddOffer;
 import com.zerotime.zerotime.databinding.ActivityModeratorHomeBinding;
 
 public class ModeratorHome extends AppCompatActivity {
@@ -35,7 +36,11 @@ public class ModeratorHome extends AppCompatActivity {
             Intent i = new Intent(ModeratorHome.this, ModeratorViewClerks.class);
             startActivity(i);
         });
-
+        //View Clerks Button
+        binding.ModeratorHomeAddOffersBtn.setOnClickListener(view12 -> {
+            Intent i = new Intent(ModeratorHome.this, ModeratorAddOffer.class);
+            startActivity(i);
+        });
 
     }
 }

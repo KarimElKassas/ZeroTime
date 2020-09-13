@@ -28,7 +28,12 @@ public class HomeFragment extends Fragment {
         });
         //Month Offers Button
         binding.homeFragmentMonthOffersBtn.setOnClickListener(view1 -> {
-            Toast.makeText(getContext(),"soon",Toast.LENGTH_SHORT).show();
+            Fragment newFragment = new DisplayOffersFragment();
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.Frame_Content, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
         //Add Order Button
         binding.homeFragmentAddOrderBtn.setOnClickListener(view1 -> {
