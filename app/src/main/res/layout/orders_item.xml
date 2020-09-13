@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/_8sdp"
@@ -196,12 +197,36 @@
                 android:textSize="16sp"
                 android:visibility="gone"
                 android:maxLines="1"/>
+            <TextView
+                android:id="@+id/display_orders_order_state_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/display_orders_receiver_primary_phone_text_view"
+                app:layout_constraintEnd_toStartOf="@id/display_orders_receiver_secondary_phone_text_view"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:maxLines="1"/>
+            <TextView
+                android:id="@+id/display_orders_order_size_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/display_orders_receiver_primary_phone_text_view"
+                app:layout_constraintEnd_toStartOf="@id/display_orders_receiver_secondary_phone_text_view"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:maxLines="1"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/display_orders_expandableView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/display_orders_receiver_secondary_phone_text_view">
@@ -210,37 +235,37 @@
                     android:id="@+id/display_orders_received_btn"
                     android:layout_width="@dimen/_76sdp"
                     android:layout_height="@dimen/_50sdp"
+                    android:background="#FF0000"
                     android:text="تم الاستلام"
                     android:textColor="#FFF"
                     android:textStyle="bold"
-                    android:background="#FF0000"
-                    app:layout_constraintBottom_toBottomOf="@+id/display_orders_expandableView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/display_orders_expandableView"/>
+                    app:layout_constraintTop_toTopOf="@+id/display_orders_expandableView" />
+
                 <Button
                     android:id="@+id/display_orders_in_progress_btn"
                     android:layout_width="@dimen/_76sdp"
                     android:layout_height="@dimen/_50sdp"
+                    android:background="#DDA807"
                     android:text="جارى التوصيل"
                     android:textColor="#FFF"
                     android:textStyle="bold"
-                    android:background="#DDA807"
-                    app:layout_constraintBottom_toBottomOf="@+id/display_orders_expandableView"
-                    app:layout_constraintEnd_toStartOf="@id/display_orders_received_btn"
-                    app:layout_constraintTop_toTopOf="@+id/display_orders_expandableView"
-                    android:layout_marginEnd="@dimen/_12sdp"/>
+                    app:layout_constraintEnd_toStartOf="@+id/display_orders_received_btn"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="@dimen/_8sdp"/>
+
                 <Button
                     android:id="@+id/display_orders_delivered_btn"
                     android:layout_width="@dimen/_76sdp"
                     android:layout_height="@dimen/_50sdp"
+                    android:background="#42AA02"
                     android:text="تم التوصيل"
                     android:textColor="#FFF"
                     android:textStyle="bold"
-                    android:background="#42AA02"
-                    app:layout_constraintBottom_toBottomOf="@+id/display_orders_expandableView"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/display_orders_in_progress_btn"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    app:layout_constraintTop_toTopOf="@+id/display_orders_expandableView"/>
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
