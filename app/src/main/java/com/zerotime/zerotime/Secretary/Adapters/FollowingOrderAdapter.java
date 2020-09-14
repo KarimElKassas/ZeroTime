@@ -1,5 +1,6 @@
 package com.zerotime.zerotime.Secretary.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -47,17 +48,25 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         return new FollowingOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.following_order_item, parent, false));
     }
 
+    @SuppressLint("PrivateResource")
     @Override
     public void onBindViewHolder(@NonNull FollowingOrderViewHolder holder, int position) {
         SharedPreferences prefs = context.getSharedPreferences("UserState", MODE_PRIVATE);
         String userType = prefs.getString("UserType","");
         if (userType != null){
-            if (userType.equals("secretary")){
-                holder.settings.setVisibility(View.VISIBLE);
-                holder.userData.setVisibility(View.VISIBLE);
-            }else {
-                holder.settings.setVisibility(View.INVISIBLE);
-                holder.userData.setVisibility(View.INVISIBLE);
+            switch (userType) {
+                case "Secretary":
+                    holder.settings.setVisibility(View.VISIBLE);
+                    holder.userData.setVisibility(View.VISIBLE);
+                    break;
+                case "Moderator":
+                    holder.settings.setVisibility(View.INVISIBLE);
+                    holder.userData.setVisibility(View.VISIBLE);
+                    break;
+                case "User":
+                    holder.settings.setVisibility(View.INVISIBLE);
+                    holder.userData.setVisibility(View.INVISIBLE);
+                    break;
             }
         }
         final OrderState orderState = ordersList.get(position);
@@ -69,15 +78,12 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         holder.phone.setText(orderState.getPhone());
 
 
-        holder.userData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.userData.setOnClickListener(view -> {
 
-                Intent intent = new Intent(context, Secretary_UserData.class);
-                intent.putExtra("UserPhone", orderState.getUser_Phone());
-                context.startActivity(intent);
+            Intent intent = new Intent(context, Secretary_UserData.class);
+            intent.putExtra("UserPhone", orderState.getUser_Phone());
+            context.startActivity(intent);
 
-            }
         });
 
 
@@ -107,13 +113,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         return ordersList.size();
     }
 
-
-    public void setList(List<OrderState> ordersList) {
-        this.ordersList = ordersList;
-        notifyDataSetChanged();
-    }
-
-    public class FollowingOrderViewHolder extends RecyclerView.ViewHolder {
+    public static class FollowingOrderViewHolder extends RecyclerView.ViewHolder {
         TextView name, phone, address, description, price, date;
         StepsView stepsView;
         ImageView userData, settings;

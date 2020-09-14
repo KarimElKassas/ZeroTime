@@ -34,6 +34,17 @@ public class ProfileFragment extends Fragment {
 
             transaction.commit();
         });
+        binding.profileOrderProgressBtn.setOnClickListener(view1 -> {
+            Fragment newFragment = new FollowMyOrdersFragment();
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.Frame_Content, newFragment);
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+        });
+        
         return view;
     }
 }

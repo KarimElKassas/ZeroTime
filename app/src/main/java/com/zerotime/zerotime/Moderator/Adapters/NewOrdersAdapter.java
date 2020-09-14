@@ -66,16 +66,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
         holder.receiverPrimaryPhone.setText(orders.getReceiverPrimaryPhone());
         holder.receiverSecondaryPhone.setText(orders.getReceiverSecondaryPhone());
 
-        //Click On Card Listener
-        holder.cardView.setOnClickListener(view -> {
-            if (holder.expandableView.getVisibility() == View.GONE) {
-                //TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
-                holder.expandableView.setVisibility(View.VISIBLE);
-            } else {
-                //TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
-                holder.expandableView.setVisibility(View.GONE);
-            }
-        });
+
         //CardView On Long Click
         holder.cardView.setOnLongClickListener(view -> {
 

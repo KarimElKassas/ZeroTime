@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ComplaintsFragment"
+    android:background="#ECEBEB">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavComplaint">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                android:id="@+id/complaintsFragment_insert_complaint_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="#000"
+                android:text="قم بإدخال شكوتك"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/complaintsFragment_complaint_edit_text"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_100sdp"
+                app:layout_constraintTop_toBottomOf="@id/complaintsFragment_insert_complaint_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="#FFF"
+                android:textAlignment="textStart"
+                android:padding="@dimen/_8sdp"
+                />
+            <Button
+                android:id="@+id/complaintsFragment_send_complaint_btn"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:layout_constraintTop_toBottomOf="@id/complaintsFragment_complaint_edit_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="#000"
+                android:text="ارسال"
+                android:textColor="#FFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavComplaint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@drawable/bottom_nav_icon_back"
+        app:menu="@menu/bottom_nav_menu"
+        android:visibility="invisible">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

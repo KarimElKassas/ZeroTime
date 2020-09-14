@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
 import com.zerotime.zerotime.databinding.ActivityModeratorHomeBinding;
 
 public class ModeratorHome extends AppCompatActivity {
@@ -20,9 +21,9 @@ public class ModeratorHome extends AppCompatActivity {
         setContentView(view);
         Toast.makeText(this, "Moderator", Toast.LENGTH_SHORT).show();
 
-        //Pending Orders Button
+        //New Orders Button
         binding.ModeratorHomeOrdersBtn.setOnClickListener(view1 -> {
-            Intent i = new Intent(ModeratorHome.this, ModeratorNewOrdersDisplay.class);
+            Intent i = new Intent(ModeratorHome.this, FollowingTheOrderState.class);
             startActivity(i);
         });
         //Add Clerk Button
