@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Chat;
+import com.zerotime.zerotime.Secretary.Pojos.Chat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public static final int msgTypeLeft = 0;
     public static final int msgTypeRight = 1;
     Context context;
-    private List<Chat> Chats = new ArrayList<>();
+    private List<Chat> Chats;
 
     public MessageAdapter(Context context, List<Chat> Chats) {
         this.context = context;
@@ -30,10 +30,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == msgTypeRight)
-            return new MessageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_right, parent, false));
-        else
-            return new MessageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_left, parent, false));
+        if (viewType == msgTypeRight){
+            View ItemView = LayoutInflater.from(context).inflate(R.layout.item_chat_right,parent,false);
+            return new MessageViewHolder(ItemView);
+        }
+        else{
+            View ItemView = LayoutInflater.from(context).inflate(R.layout.item_chat_left,parent,false);
+            return new MessageViewHolder(ItemView);
+        }
 
     }
 
@@ -65,7 +69,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public int getItemViewType(int position) {
-        if (Chats.get(position).getReceiver().equals("Zero Time")) {
+        if (Chats.get(position).getSender().equals("Zero Time")) {
             return msgTypeRight;
         } else return msgTypeLeft;
 

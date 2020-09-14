@@ -15,11 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.MessageAdapter;
+import com.zerotime.zerotime.Secretary.Pojos.Chat;
 import com.zerotime.zerotime.databinding.ActivityMessageBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class Message extends AppCompatActivity {
     private ActivityMessageBinding binding;
@@ -27,7 +29,7 @@ public class Message extends AppCompatActivity {
     MessageAdapter adapter;
     List<Chat> chatList;
     DatabaseReference reference;
-
+    String userId,intentFrom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,16 @@ public class Message extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         binding.messageRecycler.setLayoutManager(linearLayoutManager);
 
+        if (getIntent().getStringExtra("UniqueID") != null){
+            if (Objects.requireNonNull(getIntent().getStringExtra("UniqueID")).equals("DisplayChatsAdapter")){
+                intentFrom = "DisplayChatsAdapter";
+                userId = getIntent().getStringExtra("UserID");
+            }else if (getIntent().getStringExtra("UniqueID").equals("ContactFragment")){
+                userId = getIntent().getStringExtra("UserID");
+                intentFrom = "ContactFragment";
+            }
+        }
+
 
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -47,15 +59,24 @@ public class Message extends AppCompatActivity {
             public void onClick(View view) {
                 String msg = binding.messageWriteMSGEdt.getText().toString();
                 if (!msg.equals("")) {
-                    sendMessage(prefs.getString("isLogged", "")
-                            , "Zero Time", msg);
+                    if (intentFrom != null){
+                        if (intentFrom.equals("ContactFragment")){
+                            sendMessage(userId
+                                    , "Zero Time", msg);
+
+                        }else if (intentFrom.equals("DisplayChatsAdapter")){
+                            sendMessage("Zero Time"
+                                    , userId, msg);
+                        }
+                    }
+
 
                 } else
                     Toast.makeText(Message.this, "You Cant't Sent Empty Message!!", Toast.LENGTH_SHORT).show();
                 binding.messageWriteMSGEdt.setText("");
             }
         });
-ReadMessages(prefs.getString("isLogged", ""),"Zero Time");
+        ReadMessages(userId, "Zero Time");
     }
 
     private void sendMessage(String Sender, String Receiver, String Message) {
@@ -77,8 +98,8 @@ ReadMessages(prefs.getString("isLogged", ""),"Zero Time");
                 chatList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Chat mChat = dataSnapshot.getValue(Chat.class);
-                    if (mChat != null && (mChat.getReceiver().equals("Zero Time") && mChat.getSender().equals(prefs.getString("isLogged", "")) ||
-                            mChat.getReceiver().equals(prefs.getString("isLogged", "")) && mChat.getSender().equals("Zero Time"))) {
+                    if (mChat != null && (mChat.getReceiver().equals("Zero Time") && mChat.getSender().equals(userId) ||
+                            mChat.getReceiver().equals(userId) && mChat.getSender().equals("Zero Time"))) {
                         chatList.add(mChat);
                     }
                     adapter = new MessageAdapter(Message.this, chatList);
@@ -94,7 +115,7 @@ ReadMessages(prefs.getString("isLogged", ""),"Zero Time");
             }
         });
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatList")
-                .child(prefs.getString("isLogged", ""))
+                .child(Objects.requireNonNull(userId))
                 .child("Zero Time");
 
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -113,8 +134,8 @@ ReadMessages(prefs.getString("isLogged", ""),"Zero Time");
 
         final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child("Zero Time")
-                .child(prefs.getString("isLogged", ""));
-        chatRefReceiver.child("Receiver_ID").setValue(prefs.getString("isLogged", ""));
+                .child(userId);
+        chatRefReceiver.child("Receiver_ID").setValue(userId);
 
     }
 

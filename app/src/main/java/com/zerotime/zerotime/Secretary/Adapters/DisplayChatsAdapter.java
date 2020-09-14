@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Message;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.Chat;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
@@ -51,11 +52,11 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
         lastMessage(user.getUserPrimaryPhone(), holder.lastMsg);
         holder.chatCard.setOnClickListener(v -> {
 
-            /*Intent intent = new Intent(context, ChatAct.class);
-            intent.putExtra("UniqueID","from_DisplayChatsAdapter");
-            intent.putExtra("CustomerID",user.getUser_ID());
+            Intent intent = new Intent(context, Message.class);
+            intent.putExtra("UserID",user.getUserPrimaryPhone());
+            intent.putExtra("UniqueID","DisplayChatsAdapter");
             context.startActivity(intent);
-            ((Activity)context).overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);*/
+            ((Activity)context).overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         });
     }
 
