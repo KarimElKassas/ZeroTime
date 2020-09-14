@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.MessageAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.Chat;
 import com.zerotime.zerotime.databinding.ActivityMessageBinding;
 
@@ -76,7 +75,7 @@ public class Message extends AppCompatActivity {
                 binding.messageWriteMSGEdt.setText("");
             }
         });
-        ReadMessages(userId, "Zero Time");
+        ReadMessages();
     }
 
     private void sendMessage(String Sender, String Receiver, String Message) {
@@ -89,7 +88,7 @@ public class Message extends AppCompatActivity {
 
     }
 
-    private void ReadMessages(final String myID, final String userID) {
+    private void ReadMessages() {
         chatList = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {

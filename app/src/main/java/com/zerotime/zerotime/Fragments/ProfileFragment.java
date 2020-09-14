@@ -1,5 +1,6 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zerotime.zerotime.History;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.FragmentProfileBinding;
 
@@ -21,8 +23,16 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater,container,false);
-        View view =  binding.getRoot();
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        binding.profileOrdersHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), History.class);
+                startActivity(intent);
+            }
+        });
+
 
         binding.profileUpdateUserDataBtn.setOnClickListener(view1 -> {
             Fragment newFragment = new UpdateUserDataFragment();

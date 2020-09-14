@@ -1,4 +1,4 @@
-package com.zerotime;
+package com.zerotime.zerotime;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.Chat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
