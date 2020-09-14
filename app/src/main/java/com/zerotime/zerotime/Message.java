@@ -34,10 +34,12 @@ public class Message extends AppCompatActivity {
         binding = ActivityMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         binding.messageRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         binding.messageRecycler.setLayoutManager(linearLayoutManager);
+
 
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +55,7 @@ public class Message extends AppCompatActivity {
                 binding.messageWriteMSGEdt.setText("");
             }
         });
-
+ReadMessages(prefs.getString("isLogged", ""),"Zero Time");
     }
 
     private void sendMessage(String Sender, String Receiver, String Message) {
@@ -73,8 +75,14 @@ public class Message extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatList.clear();
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Chat mChat=dataSnapshot.getValue(Chat.class);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Chat mChat = dataSnapshot.getValue(Chat.class);
+                    if (mChat != null && (mChat.getReceiver().equals("Zero Time") && mChat.getSender().equals(prefs.getString("isLogged", "")) ||
+                            mChat.getReceiver().equals(prefs.getString("isLogged", "")) && mChat.getSender().equals("Zero Time"))) {
+                        chatList.add(mChat);
+                    }
+                    adapter = new MessageAdapter(Message.this, chatList);
+                    binding.messageRecycler.setAdapter(adapter);
                 }
 
 
@@ -85,7 +93,28 @@ public class Message extends AppCompatActivity {
 
             }
         });
+        final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatList")
+                .child(prefs.getString("isLogged", ""))
+                .child("Zero Time");
 
+        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    chatRef.child("Receiver_ID").setValue("Zero Time");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("ChatList")
+                .child("Zero Time")
+                .child(prefs.getString("isLogged", ""));
+        chatRefReceiver.child("Receiver_ID").setValue(prefs.getString("isLogged", ""));
 
     }
 
