@@ -75,7 +75,7 @@ public class Message extends AppCompatActivity {
                 binding.messageWriteMSGEdt.setText("");
             }
         });
-        ReadMessages(userId, "Zero Time");
+        ReadMessages();
     }
 
     private void sendMessage(String Sender, String Receiver, String Message) {
@@ -88,7 +88,7 @@ public class Message extends AppCompatActivity {
 
     }
 
-    private void ReadMessages(final String myID, final String userID) {
+    private void ReadMessages() {
         chatList = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
