@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Secretary.Pojos;
 
 public class OrderState {
     private String name,price,address,date,description,Receiver_phone,User_Phone;

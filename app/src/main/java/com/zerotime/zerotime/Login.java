@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
+import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
+import com.zerotime.zerotime.Secretary.SecretaryHome;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 
 import java.util.Objects;
@@ -66,13 +68,11 @@ public class Login extends AppCompatActivity {
         //Secretary Case
         if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("1")
                 && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("1")){
-            Intent intent = new Intent(Login.this, FollowingTheOrderState.class);
+
             editor.putString("UserType", "secretary");
             editor.apply();
 
-
-
-
+            Intent intent = new Intent(Login.this, SecretaryHome.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             this.finish();

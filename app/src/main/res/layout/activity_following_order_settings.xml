@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E4E2E2"
-    tools:context=".FollowingOrderSettings">
+    tools:context=".Secretary.FollowingOrderSettings">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -21,10 +21,10 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_marginTop="@dimen/_16sdp"
                 android:id="@+id/SelectClerkTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_32sdp"
                 android:text="إختر الطيار "
                 android:textSize="@dimen/_22sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -35,41 +35,50 @@
 
             <androidx.appcompat.widget.AppCompatSpinner
 
-                android:id="@+id/FollowinOrderSetting_SelectClerk"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:id="@+id/FollowingOrderSetting_SelectClerk"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SelectClerkTxt" />
 
 
-
             <TextView
-                android:layout_marginTop="@dimen/_22sdp"
                 android:id="@+id/SelectOrderStateTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_22sdp"
                 android:text="إختر حاله الطلب "
                 android:textSize="@dimen/_22sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/FollowinOrderSetting_SelectClerk"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/FollowingOrderSetting_SelectClerk" />
 
             <androidx.appcompat.widget.AppCompatSpinner
 
-                android:id="@+id/FollowinOrderSetting_SelectState"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:id="@+id/FollowingOrderSetting_SelectState"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SelectOrderStateTxt" />
 
-
-            />
-
+            <Button
+                android:id="@+id/FollowingOrder_Settings_update_btn"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_50sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/FollowingOrderSetting_SelectState"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="#000"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:text="تعديل"
+                android:textSize="22sp"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

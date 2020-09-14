@@ -1,5 +1,6 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Secretary.Adapters;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,10 @@ import android.widget.TextView;
 
 
 import com.anton46.stepsview.StepsView;
+import com.zerotime.zerotime.Secretary.Pojos.OrderState;
+import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.Secretary.FollowingOrderSettings;
+import com.zerotime.zerotime.Secretary.Secretary_UserData;
 
 import java.util.List;
 
@@ -63,13 +68,13 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
 
 
 
-        holder.settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, FollowingOrderSettings.class);
-                context.startActivity(intent);
+        holder.settings.setOnClickListener(view -> {
 
-            }
+            Intent intent = new Intent(context, FollowingOrderSettings.class);
+            intent.putExtra("OrderDate",orderState.getDate());
+            context.startActivity(intent);
+            ((Activity)context).finish();
+
         });
 
 

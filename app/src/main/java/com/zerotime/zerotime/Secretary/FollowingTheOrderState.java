@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Secretary.Pojos.OrderState;
+import com.zerotime.zerotime.Secretary.Adapters.FollowingOrderAdapter;
 import com.zerotime.zerotime.databinding.ActivityFollowingTheOrderStateBinding;
 
 import java.util.ArrayList;
