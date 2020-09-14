@@ -1,38 +1,38 @@
 package com.zerotime.zerotime;
 
 public class Chat {
-    private String message,sender,receiver;
+    private String Message,Sender,Receiver;
 
     public Chat(String message, String sender, String receiver) {
-        this.message = message;
-        this.sender = sender;
-        this.receiver = receiver;
+        Message = message;
+        Sender = sender;
+        Receiver = receiver;
     }
 
     public Chat() {
     }
 
     public String getMessage() {
-        return message;
+        return Message;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        Message = message;
     }
 
     public String getSender() {
-        return sender;
+        return Sender;
     }
 
     public void setSender(String sender) {
-        this.sender = sender;
+        Sender = sender;
     }
 
     public String getReceiver() {
-        return receiver;
+        return Receiver;
     }
 
     public void setReceiver(String receiver) {
-        this.receiver = receiver;
+        Receiver = receiver;
     }
 }
