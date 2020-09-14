@@ -27,12 +27,13 @@ public class Login extends AppCompatActivity {
     private ActivityLoginBinding binding;
     SharedPreferences.Editor editor;
 
-     AlphaAnimation inAnimation;
-     AlphaAnimation outAnimation;
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
 
     private DatabaseReference usersRef;
     private String userToken = "";
-    public UserState userState ;
+    public UserState userState;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +41,8 @@ public class Login extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         //animation
-        inAnimation = new AlphaAnimation(0f,2f);
-        outAnimation = new AlphaAnimation(2f,0f);
+        inAnimation = new AlphaAnimation(0f, 2f);
+        outAnimation = new AlphaAnimation(2f, 0f);
         // Initialize User State
         userState = new UserState();
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -53,10 +54,11 @@ public class Login extends AppCompatActivity {
         //Return To Sign Up
         binding.loginSignUpTextView.setOnClickListener(view12 -> goToSignUp());
     }
+
     private void checkData() {
         //Moderator Case
         if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("0")
-                && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("0")){
+                && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("0")) {
             Intent intent = new Intent(Login.this, ModeratorHome.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -65,42 +67,38 @@ public class Login extends AppCompatActivity {
         }
         //Secretary Case
         if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString().equals("1")
-                && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("1")){
+                && Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString().equals("1")) {
             Intent intent = new Intent(Login.this, FollowingTheOrderState.class);
             editor.putString("UserType", "secretary");
             editor.apply();
-
-
-
-
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             this.finish();
             return;
         }
         //Phone Validation
-        if (TextUtils.isEmpty(binding.loginUserPhoneEditTxt.getText())){
+        if (TextUtils.isEmpty(binding.loginUserPhoneEditTxt.getText())) {
             binding.loginUserPhoneEditTxt.setError("ادخل رقم الهاتف الاول من فضلك !");
             binding.loginUserPhoneEditTxt.requestFocus();
             return;
         }
-        if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).length() != 11){
+        if (Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).length() != 11) {
             binding.loginUserPhoneEditTxt.setError("رقم الهاتف يجب ان يتكون من 11 رقم فقط !");
             binding.loginUserPhoneEditTxt.requestFocus();
             return;
         }
-        if (!binding.loginUserPhoneEditTxt.getText().toString().startsWith("01")){
+        if (!binding.loginUserPhoneEditTxt.getText().toString().startsWith("01")) {
             binding.loginUserPhoneEditTxt.setError("رقم الهاتف يجب ان يبدأ بـ 01 !");
             binding.loginUserPhoneEditTxt.requestFocus();
             return;
         }
         //User Password Validation
-        if (TextUtils.isEmpty(binding.loginUserPasswordEditTxt.getText())){
+        if (TextUtils.isEmpty(binding.loginUserPasswordEditTxt.getText())) {
             binding.loginUserPasswordEditTxt.setError("ادخل كلمة السر من فضلك !");
             binding.loginUserPasswordEditTxt.requestFocus();
             return;
         }
-        if (Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).length() < 8){
+        if (Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).length() < 8) {
             binding.loginUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من 8 حروف او ارقام !");
             binding.loginUserPasswordEditTxt.requestFocus();
             return;
@@ -108,8 +106,11 @@ public class Login extends AppCompatActivity {
 
         signIn();
     }
-    private void signIn(){
+
+    private void signIn() {
         //Progress Bar
+        editor.putString("UserType", "User");
+        editor.apply();
         binding.loginProgressBarHolder.setAnimation(inAnimation);
         binding.loginProgressBarHolder.setVisibility(View.VISIBLE);
         getWindow().setFlags(
@@ -122,23 +123,23 @@ public class Login extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    if (snapshot.hasChildren()){
+                if (snapshot.exists()) {
+                    if (snapshot.hasChildren()) {
                         String userPassword = snapshot.child("UserPassword").getValue(String.class);
                         String userPhone = snapshot.child("UserPrimaryPhone").getValue(String.class);
                         assert userPassword != null;
-                        if (userPassword.equals(Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString())){
+                        if (userPassword.equals(Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString())) {
                             //clear progress bar
                             binding.loginProgressBarHolder.setAnimation(outAnimation);
                             binding.loginProgressBarHolder.setVisibility(View.GONE);
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             //Save User State
-                            editor.putString("isLogged",userPhone);
+                            editor.putString("isLogged", userPhone);
                             editor.apply();
                             //Go To Home Activity
                             goToHome();
 
-                        }else {
+                        } else {
                             //clear progress bar
                             binding.loginProgressBarHolder.setAnimation(outAnimation);
                             binding.loginProgressBarHolder.setVisibility(View.GONE);
@@ -157,14 +158,16 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    public void goToHome(){
-        Intent intent = new Intent(Login.this,Home.class);
+
+    public void goToHome() {
+        Intent intent = new Intent(Login.this, Home.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         this.finish();
     }
-    public void goToSignUp(){
-        Intent intent = new Intent(Login.this,SignUp.class);
+
+    public void goToSignUp() {
+        Intent intent = new Intent(Login.this, SignUp.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         this.finish();
