@@ -16,7 +16,7 @@ import com.zerotime.zerotime.databinding.ActivityModeratorAddClerckBinding;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class ModeratorAddClerck extends AppCompatActivity {
+public class ModeratorAddClerk extends AppCompatActivity {
     private ActivityModeratorAddClerckBinding binding;
     private DatabaseReference clerksRef;
     private HashMap<String, String> clerksMap;
@@ -76,11 +76,11 @@ public class ModeratorAddClerck extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(ModeratorAddClerck.this.getApplicationContext(), "تمت الإضافه بنجاح ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModeratorAddClerk.this.getApplicationContext(), "تمت الإضافه بنجاح ", Toast.LENGTH_SHORT).show();
 
                 } else {
 
-                    Toast.makeText(ModeratorAddClerck.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ModeratorAddClerk.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

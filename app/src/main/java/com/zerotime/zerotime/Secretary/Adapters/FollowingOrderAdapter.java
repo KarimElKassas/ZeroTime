@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAdapter.FollowingOrderViewHolder> {
     private List<OrderState> ordersList;
@@ -46,6 +49,17 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
 
     @Override
     public void onBindViewHolder(@NonNull FollowingOrderViewHolder holder, int position) {
+        SharedPreferences prefs = context.getSharedPreferences("UserState", MODE_PRIVATE);
+        String userType = prefs.getString("UserType","");
+        if (userType != null){
+            if (userType.equals("secretary")){
+                holder.settings.setVisibility(View.VISIBLE);
+                holder.userData.setVisibility(View.VISIBLE);
+            }else {
+                holder.settings.setVisibility(View.INVISIBLE);
+                holder.userData.setVisibility(View.INVISIBLE);
+            }
+        }
         final OrderState orderState = ordersList.get(position);
         holder.name.setText(orderState.getName());
         holder.address.setText(orderState.getAddress());

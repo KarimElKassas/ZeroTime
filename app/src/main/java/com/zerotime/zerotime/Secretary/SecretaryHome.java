@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.SecretaryDisplayChats;
 import com.zerotime.zerotime.databinding.ActivitySecretaryHomeBinding;
 
 public class SecretaryHome extends AppCompatActivity {

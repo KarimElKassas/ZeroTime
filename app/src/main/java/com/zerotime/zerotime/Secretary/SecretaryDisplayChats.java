@@ -1,14 +1,11 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Secretary;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +47,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String userPrimaryPhone = ds.child("Receiver").getValue(String.class);
+                    String userPrimaryPhone = ds.child("Receiver_ID").getValue(String.class);
                     ChatList chatList = new ChatList();
                     chatList.setUserPrimaryPhone(userPrimaryPhone);
                     userList.add(chatList);
@@ -117,7 +114,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String userPrimaryPhone = ds.child("Receiver").getValue(String.class);
+                    String userPrimaryPhone = ds.child("Receiver_ID").getValue(String.class);
                     ChatList chatList = new ChatList();
                     chatList.setUserPrimaryPhone(userPrimaryPhone);
                     userList.add(chatList);

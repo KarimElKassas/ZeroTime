@@ -10,15 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Message"></activity>
-        <activity android:name=".FollowingOrderSettings" />
-        <activity android:name=".Secretary_UserData" />
-        <activity android:name=".FollowingTheOrderState" />
-        <activity android:name=".Moderator.M_DisplayUserData" />
-        <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
-        <activity android:name=".SecretaryHome" />
-        <activity android:name=".Moderator.ModeratorAddClerck" />
+        <!--Moderator-->
+        <activity android:name=".Moderator.ModeratorAddOffer"/>
+        <activity android:name=".Moderator.ModeratorAddClerk" />
         <activity android:name=".Moderator.ModeratorViewClerks" />
         <activity android:name=".Moderator.ModeratorHome" />
+        <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
+        <activity android:name=".Moderator.M_DisplayUserData" />
+        <!--Secretary-->
+        <activity android:name=".Secretary.SecretaryDisplayChats"/>
+        <activity android:name=".Secretary.FollowingTheOrderState" />
+        <activity android:name=".Secretary.Secretary_UserData" />
+        <activity android:name=".Secretary.FollowingOrderSettings" />
+        <activity android:name=".Secretary.SecretaryHome" />
+        <!--Users-->
+        <activity android:name=".Login" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".Home" />
+        <!--Global-->
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
-        <activity android:name=".SignUp" />
-        <activity android:name=".Home" />
+
     </application>
 
 </manifest>
