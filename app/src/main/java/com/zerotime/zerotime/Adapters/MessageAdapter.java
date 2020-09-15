@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.zerotime.zerotime.Secretary.Pojos.Chat;
+import com.zerotime.zerotime.Pojos.ChatPojo;
+import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 
 import java.util.List;
 
@@ -18,11 +20,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public static final int msgTypeLeft = 0;
     public static final int msgTypeRight = 1;
     Context context;
-    private List<Chat> Chats;
+    private List<ChatPojo> ChatPojos;
 
-    public MessageAdapter(Context context, List<Chat> Chats) {
+    public MessageAdapter(Context context, List<ChatPojo> ChatPojos) {
         this.context = context;
-        this.Chats = Chats;
+        this.ChatPojos = ChatPojos;
     }
 
     @NonNull
@@ -41,35 +43,42 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        Chat mchat = Chats.get(position);
+        ChatPojo mchat = ChatPojos.get(position);
         holder.showMessage.setText(mchat.getMessage());
+        if (position == ChatPojos.size() - 1){
 
+            if (mchat.isSeen()){
+                holder.seen.setText("Seen");
+            }else holder.seen.setText("Delivered");
+
+        }else holder.seen.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return Chats.size();
+        return ChatPojos.size();
     }
 
-    public void setList(List<Chat> moviesList) {
-        this.Chats = moviesList;
+    public void setList(List<ChatPojo> moviesList) {
+        this.ChatPojos = moviesList;
         notifyDataSetChanged();
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
-        TextView showMessage;
+        TextView showMessage,seen;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             showMessage = itemView.findViewById(R.id.showMessage);
+            seen = itemView.findViewById(R.id.isSeen_text_view);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (Chats.get(position).getSender().equals("Zero Time")) {
-            return msgTypeRight;
-        } else return msgTypeLeft;
+        if (ChatPojos.get(position).getSender().equals("Zero Time")) {
+            return msgTypeLeft;
+        } else return msgTypeRight;
 
     }
 }

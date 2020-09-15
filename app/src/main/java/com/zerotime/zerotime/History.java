@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,14 +14,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
-import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
-import com.zerotime.zerotime.Moderator.Pojos.Clerks;
+import com.zerotime.zerotime.Adapters.HistoryAdapter;
+import com.zerotime.zerotime.Pojos.HistoryPojo;
 import com.zerotime.zerotime.databinding.ActivityHistoryBinding;
-import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class History extends AppCompatActivity {
     private ActivityHistoryBinding binding;
@@ -39,7 +35,6 @@ public class History extends AppCompatActivity {
         setContentView(view);
         binding.historyRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setStackFromEnd(true);
         binding.historyRecycler.setLayoutManager(linearLayoutManager);
 
         preferences = getSharedPreferences("UserState", MODE_PRIVATE);

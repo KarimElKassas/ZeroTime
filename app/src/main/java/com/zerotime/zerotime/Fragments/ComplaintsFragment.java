@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;

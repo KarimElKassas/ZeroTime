@@ -18,7 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.UserState;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 import com.zerotime.zerotime.databinding.ActivityModeratorViewClerksBinding;
 

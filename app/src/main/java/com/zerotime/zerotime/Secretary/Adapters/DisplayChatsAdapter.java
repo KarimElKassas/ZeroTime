@@ -20,10 +20,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Message;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Secretary.Pojos.Chat;
+import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
+import com.zerotime.zerotime.Secretary.SecretaryMessage;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
         lastMessage(user.getUserPrimaryPhone(), holder.lastMsg);
         holder.chatCard.setOnClickListener(v -> {
 
-            Intent intent = new Intent(context, Message.class);
+            Intent intent = new Intent(context, SecretaryMessage.class);
             intent.putExtra("UserID",user.getUserPrimaryPhone());
             intent.putExtra("UniqueID","DisplayChatsAdapter");
             context.startActivity(intent);
@@ -87,14 +87,14 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Chat chat = new Chat();
-                    chat.setSender(snapshot.child("Sender").getValue(String.class));
-                    chat.setReceiver(snapshot.child("Receiver").getValue(String.class));
-                    chat.setMessage(snapshot.child("Message").getValue(String.class));
+                    SecretaryChatPojo secretaryChatPojo = new SecretaryChatPojo();
+                    secretaryChatPojo.setSender(snapshot.child("Sender").getValue(String.class));
+                    secretaryChatPojo.setReceiver(snapshot.child("Receiver").getValue(String.class));
+                    secretaryChatPojo.setMessage(snapshot.child("Message").getValue(String.class));
 
-                    if (chat.getSender().equals("Zero Time") && chat.getReceiver().equals(userPrimaryPhone) ||
-                            chat.getSender().equals(userPrimaryPhone) && chat.getReceiver().equals("Zero Time")) {
-                        theLastMessage = chat.getMessage();
+                    if (secretaryChatPojo.getSender().equals("Zero Time") && secretaryChatPojo.getReceiver().equals(userPrimaryPhone) ||
+                            secretaryChatPojo.getSender().equals(userPrimaryPhone) && secretaryChatPojo.getReceiver().equals("Zero Time")) {
+                        theLastMessage = secretaryChatPojo.getMessage();
 
                     }
                 }

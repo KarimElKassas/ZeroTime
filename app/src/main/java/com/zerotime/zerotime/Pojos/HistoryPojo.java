@@ -1,6 +1,6 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Pojos;
 
-class HistoryPojo {
+public class HistoryPojo {
     private String description, date, price, size, Raddress, Rname, Rphone1, Rphone2;
 
     public HistoryPojo(String description, String date, String price, String size, String raddress, String rname, String rphone1, String rphone2) {

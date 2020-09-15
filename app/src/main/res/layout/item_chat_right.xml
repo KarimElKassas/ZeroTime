@@ -5,18 +5,30 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/showMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:background="@drawable/background_right"
+        android:padding="@dimen/_8sdp"
         android:text="Hello"
-        android:layout_margin="@dimen/_8sdp"
-android:padding="@dimen/_8sdp"
         android:textColor="#fff"
-        android:id="@+id/showMessage"
         android:textSize="@dimen/_18sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <TextView
+        android:id="@+id/isSeen_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/showMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:textColor="#7C7B7B"
+        android:textStyle="bold"
+        android:textSize="@dimen/_14sdp"
+        android:letterSpacing="0.2"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

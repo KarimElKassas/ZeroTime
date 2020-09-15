@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,20 +15,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Adapters.MessageAdapter;
-import com.zerotime.zerotime.Pojos.ChatPojo;
+import com.zerotime.zerotime.Secretary.Adapters.SecretaryMessageAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-import com.zerotime.zerotime.databinding.ActivityMessageBinding;
+import com.zerotime.zerotime.databinding.ActivitySecretaryMessageBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class Message extends AppCompatActivity {
-    private ActivityMessageBinding binding;
+public class SecretaryMessage extends AppCompatActivity {
+    private ActivitySecretaryMessageBinding binding;
     SharedPreferences prefs;
-    MessageAdapter adapter;
-    List<ChatPojo> chatPojos;
+    SecretaryMessageAdapter adapter;
+    List<SecretaryChatPojo> secretaryChatPojoList;
     DatabaseReference reference;
     ValueEventListener seenListener;
     String userId, intentFrom;
@@ -36,41 +36,36 @@ public class Message extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMessageBinding.inflate(getLayoutInflater());
+        binding = ActivitySecretaryMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.messageRecycler.setHasFixedSize(true);
+        binding.secretaryMessageRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
-        binding.messageRecycler.setLayoutManager(linearLayoutManager);
+        binding.secretaryMessageRecycler.setLayoutManager(linearLayoutManager);
 
         if (getIntent().getStringExtra("UniqueID") != null) {
-            if (Objects.requireNonNull(getIntent().getStringExtra("UniqueID")).equals("ContactFragment")) {
+            if (Objects.requireNonNull(getIntent().getStringExtra("UniqueID")).equals("DisplayChatsAdapter")) {
+                intentFrom = "DisplayChatsAdapter";
                 userId = getIntent().getStringExtra("UserID");
-                intentFrom = "ContactFragment";
 
             }
         }
-
-
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
-        binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
+        binding.secretaryMessageSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String msg = binding.messageWriteMSGEdt.getText().toString();
+                String msg = binding.secretaryMessageWriteMSGEdt.getText().toString();
                 if (!msg.equals("")) {
                     if (intentFrom != null) {
-                        if (intentFrom.equals("ContactFragment")) {
-                            sendMessage(userId
-                                    , "Zero Time", msg);
-
-                        }
+                        sendMessage("Zero Time", userId, msg);
                     }
 
+
                 } else
-                    Toast.makeText(Message.this, "You Cant't Sent Empty Message!!", Toast.LENGTH_SHORT).show();
-                binding.messageWriteMSGEdt.setText("");
+                    Toast.makeText(SecretaryMessage.this, "You Cant't Sent Empty Message!!", Toast.LENGTH_SHORT).show();
+                binding.secretaryMessageWriteMSGEdt.setText("");
             }
         });
         ReadMessages();
@@ -83,9 +78,9 @@ public class Message extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    ChatPojo chat = snapshot.getValue(ChatPojo.class);
+                    SecretaryChatPojo chat = snapshot.getValue(SecretaryChatPojo.class);
                     assert chat != null;
-                    if (chat.getReceiver().equals(userid) && chat.getSender().equals("Zero Time")){
+                    if (chat.getReceiver().equals("Zero Time") && chat.getSender().equals(userid)){
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isSeen", true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -99,6 +94,35 @@ public class Message extends AppCompatActivity {
             }
         });
     }
+
+    /*private void seenMessage(final String userPrimaryPhone) {
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        seenListener = reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    SecretaryChatPojo secretaryChatPojo = snapshot.getValue(SecretaryChatPojo.class);
+                    //Secretary Case
+                    if (intentFrom.equals("DisplayChatsAdapter")) {
+                        assert secretaryChatPojo != null;
+                        if (secretaryChatPojo.getReceiver().equals("Zero Time") && secretaryChatPojo.getSender().equals(userPrimaryPhone)) {
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("isSeen", true);
+                            snapshot.getRef().updateChildren(hashMap);
+                        }
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
+
     private void sendMessage(String Sender, String Receiver, String Message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -111,20 +135,20 @@ public class Message extends AppCompatActivity {
     }
 
     private void ReadMessages() {
-        chatPojos = new ArrayList<>();
+        secretaryChatPojoList = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                chatPojos.clear();
+                secretaryChatPojoList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ChatPojo mChatPojo = dataSnapshot.getValue(ChatPojo.class);
-                    if (mChatPojo != null && (mChatPojo.getReceiver().equals("Zero Time") && mChatPojo.getSender().equals(userId) ||
-                            mChatPojo.getReceiver().equals(userId) && mChatPojo.getSender().equals("Zero Time"))) {
-                        chatPojos.add(mChatPojo);
+                    SecretaryChatPojo mSecretaryChatPojo = dataSnapshot.getValue(SecretaryChatPojo.class);
+                    if (mSecretaryChatPojo != null && (mSecretaryChatPojo.getReceiver().equals("Zero Time") && mSecretaryChatPojo.getSender().equals(userId) ||
+                            mSecretaryChatPojo.getReceiver().equals(userId) && mSecretaryChatPojo.getSender().equals("Zero Time"))) {
+                        secretaryChatPojoList.add(mSecretaryChatPojo);
                     }
-                    adapter = new MessageAdapter(Message.this, chatPojos);
-                    binding.messageRecycler.setAdapter(adapter);
+                    adapter = new SecretaryMessageAdapter(SecretaryMessage.this, secretaryChatPojoList);
+                    binding.secretaryMessageRecycler.setAdapter(adapter);
                 }
 
 
@@ -159,10 +183,10 @@ public class Message extends AppCompatActivity {
         chatRefReceiver.child("Receiver_ID").setValue(userId);
 
     }
-
     @Override
     protected void onPause() {
         super.onPause();
         reference.removeEventListener(seenListener);
     }
+
 }

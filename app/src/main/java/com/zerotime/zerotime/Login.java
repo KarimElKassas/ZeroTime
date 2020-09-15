@@ -18,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
-import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
 import com.zerotime.zerotime.Secretary.SecretaryHome;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 
@@ -34,7 +33,6 @@ public class Login extends AppCompatActivity {
 
     private DatabaseReference usersRef;
     private String userToken = "";
-    public UserState userState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,6 @@ public class Login extends AppCompatActivity {
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
         // Initialize User State
-        userState = new UserState();
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         editor = getSharedPreferences("UserState", MODE_PRIVATE).edit();
         editor.putString("isLogged", "null");
