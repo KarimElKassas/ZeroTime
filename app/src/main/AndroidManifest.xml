@@ -20,27 +20,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Moderator.Moderator_complaints"></activity>
         <!-- Moderator -->
         <activity android:name=".Moderator.ModeratorAddOffer" />
         <activity android:name=".Moderator.ModeratorAddClerk" />
         <activity android:name=".Moderator.ModeratorViewClerks" />
         <activity android:name=".Moderator.ModeratorHome" />
         <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
-        <activity android:name=".Moderator.M_DisplayUserData" />
-        <!-- Secretary -->
+        <activity android:name=".Moderator.M_DisplayUserData" /> <!-- Secretary -->
         <activity android:name=".Secretary.SecretaryDisplayChats" />
         <activity android:name=".Secretary.FollowingTheOrderState" />
         <activity android:name=".Secretary.Secretary_UserData" />
         <activity android:name=".Secretary.FollowingOrderSettings" />
         <activity android:name=".Secretary.SecretaryHome" />
-        <activity android:name=".Secretary.SecretaryMessage" />
-        <!-- Users -->
+        <activity android:name=".Secretary.SecretaryMessage" /> <!-- Users -->
         <activity android:name=".Login" />
         <activity android:name=".SignUp" />
         <activity android:name=".Home" />
         <activity android:name=".Message" />
-        <activity android:name=".History" />
-        <!-- Global -->
+        <activity android:name=".History" /> <!-- Global -->
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

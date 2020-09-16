@@ -54,5 +54,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Moderator_Home_viewClercks_btn" />
 
+<Button
+        android:id="@+id/Moderator_Home_complaints_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:text="عرض الشكاوي"
+        android:textSize="@dimen/_22sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Moderator_Home_addOffers_btn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

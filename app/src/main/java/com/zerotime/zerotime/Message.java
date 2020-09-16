@@ -1,19 +1,27 @@
 package com.zerotime.zerotime;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Gallery;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.zerotime.zerotime.Adapters.MessageAdapter;
 import com.zerotime.zerotime.Pojos.ChatPojo;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
@@ -77,15 +85,16 @@ public class Message extends AppCompatActivity {
 
         seenMessage(userId);
     }
-    private void seenMessage(final String userid){
+
+    private void seenMessage(final String userid) {
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ChatPojo chat = snapshot.getValue(ChatPojo.class);
                     assert chat != null;
-                    if (chat.getReceiver().equals(userid) && chat.getSender().equals("Zero Time")){
+                    if (chat.getReceiver().equals(userid) && chat.getSender().equals("Zero Time")) {
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isSeen", true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -99,6 +108,8 @@ public class Message extends AppCompatActivity {
             }
         });
     }
+
+
     private void sendMessage(String Sender, String Receiver, String Message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();

@@ -2,6 +2,7 @@ package com.zerotime.zerotime;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
+import com.zerotime.zerotime.Room.Data.UserDao;
+import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.Secretary.SecretaryHome;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 
@@ -34,12 +37,25 @@ public class Login extends AppCompatActivity {
     private DatabaseReference usersRef;
     private String userToken = "";
 
+    // Room DB
+    UserDao db;
+    UserDataBase dataBase;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+
+        //Room DB
+        dataBase = Room.databaseBuilder(this, UserDataBase.class, "User")
+                .allowMainThreadQueries().build();
+        db = dataBase.getUserDao();
+
+
         //animation
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
@@ -108,56 +124,59 @@ public class Login extends AppCompatActivity {
         signIn();
     }
 
+
     private void signIn() {
         //Progress Bar
         editor.putString("UserType", "User");
         editor.apply();
-        binding.loginProgressBarHolder.setAnimation(inAnimation);
-        binding.loginProgressBarHolder.setVisibility(View.VISIBLE);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+            binding.loginProgressBarHolder.setAnimation(inAnimation);
+            binding.loginProgressBarHolder.setVisibility(View.VISIBLE);
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
-        Query query;
-        query = usersRef.child(Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString());
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.hasChildren()) {
-                        String userPassword = snapshot.child("UserPassword").getValue(String.class);
-                        String userPhone = snapshot.child("UserPrimaryPhone").getValue(String.class);
-                        assert userPassword != null;
-                        if (userPassword.equals(Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString())) {
-                            //clear progress bar
-                            binding.loginProgressBarHolder.setAnimation(outAnimation);
-                            binding.loginProgressBarHolder.setVisibility(View.GONE);
-                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            //Save User State
-                            editor.putString("isLogged", userPhone);
-                            editor.apply();
-                            //Go To Home Activity
-                            goToHome();
+            Query query;
+            query = usersRef.child(Objects.requireNonNull(binding.loginUserPhoneEditTxt.getText()).toString());
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        if (snapshot.hasChildren()) {
+                            String userPassword = snapshot.child("UserPassword").getValue(String.class);
+                            String userPhone = snapshot.child("UserPrimaryPhone").getValue(String.class);
+                            assert userPassword != null;
+                            if (userPassword.equals(Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).toString())) {
+                                //clear progress bar
+                                binding.loginProgressBarHolder.setAnimation(outAnimation);
+                                binding.loginProgressBarHolder.setVisibility(View.GONE);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                //Save User State
+                                editor.putString("isLogged", userPhone);
+                                editor.apply();
+                                //Go To Home Activity
+                                goToHome();
 
-                        } else {
-                            //clear progress bar
-                            binding.loginProgressBarHolder.setAnimation(outAnimation);
-                            binding.loginProgressBarHolder.setVisibility(View.GONE);
-                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            // Wrong Password Helper
-                            binding.loginUserPasswordEditTxt.setError("كلمة المرور غير صحيحة !");
-                            binding.loginUserPasswordEditTxt.requestFocus();
+                            } else {
+                                //clear progress bar
+                                binding.loginProgressBarHolder.setAnimation(outAnimation);
+                                binding.loginProgressBarHolder.setVisibility(View.GONE);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                // Wrong Password Helper
+                                binding.loginUserPasswordEditTxt.setError("كلمة المرور غير صحيحة !");
+                                binding.loginUserPasswordEditTxt.requestFocus();
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+
     }
 
     public void goToHome() {

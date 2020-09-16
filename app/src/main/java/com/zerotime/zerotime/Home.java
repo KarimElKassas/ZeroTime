@@ -24,7 +24,6 @@ import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
 import com.zerotime.zerotime.Fragments.SettingsFragment;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-import com.zerotime.zerotime.Secretary.SecretaryHome;
 import com.zerotime.zerotime.databinding.ActivityHomeBinding;
 
 public class Home extends AppCompatActivity {
