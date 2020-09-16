@@ -11,6 +11,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.zerotime.zerotime.Notifications.Token;
 import com.zerotime.zerotime.Secretary.Adapters.DisplayChatsAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.ChatList;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
@@ -18,6 +20,7 @@ import com.zerotime.zerotime.databinding.ActivitySecretaryDisplayChatsBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SecretaryDisplayChats extends AppCompatActivity {
     private ActivitySecretaryDisplayChatsBinding binding;
@@ -26,7 +29,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
     private List<Users> mUsers;
     private List<ChatList> userList;
     private DatabaseReference chatListRef1,chatListRef2;
-
+    String userToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,20 @@ public class SecretaryDisplayChats extends AppCompatActivity {
 
             }
         });
+        //Update User Token ID
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                userToken = Objects.requireNonNull(task.getResult()).getToken();
+                refreshToken(userToken);
+            }
+        });
 
+
+    }
+    private void refreshToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child("Zero Time").setValue(token1);
     }
     private void chatList() {
         mUsers = new ArrayList<>();

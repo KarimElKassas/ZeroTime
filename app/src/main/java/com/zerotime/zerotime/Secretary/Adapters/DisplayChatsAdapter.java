@@ -79,7 +79,8 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
 
     private void lastMessage(final String userPrimaryPhone, final TextView last_msg) {
         theLastMessage = "default";
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        SecretaryChatPojo secretaryChatPojo = new SecretaryChatPojo();
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -87,10 +88,10 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    SecretaryChatPojo secretaryChatPojo = new SecretaryChatPojo();
                     secretaryChatPojo.setSender(snapshot.child("Sender").getValue(String.class));
                     secretaryChatPojo.setReceiver(snapshot.child("Receiver").getValue(String.class));
                     secretaryChatPojo.setMessage(snapshot.child("Message").getValue(String.class));
+                    secretaryChatPojo.setType(snapshot.child("Type").getValue(String.class));
 
                     if (secretaryChatPojo.getSender().equals("Zero Time") && secretaryChatPojo.getReceiver().equals(userPrimaryPhone) ||
                             secretaryChatPojo.getSender().equals(userPrimaryPhone) && secretaryChatPojo.getReceiver().equals("Zero Time")) {
@@ -102,7 +103,9 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
                 if ("default".equals(theLastMessage)) {
                     last_msg.setText("لا توجد رسائل");
                 } else {
-                    last_msg.setText(theLastMessage);
+                    if (secretaryChatPojo.getType().equals("Text")){
+                        last_msg.setText(theLastMessage);
+                    }else last_msg.setText("Picture");
                 }
 
                 theLastMessage = "default";

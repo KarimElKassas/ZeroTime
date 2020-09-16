@@ -1,17 +1,18 @@
 package com.zerotime.zerotime.Secretary.Pojos;
 
 public class SecretaryChatPojo {
-    private String Message,Sender,Receiver;
+    private String Message,Sender,Receiver,Type;
     public boolean isSeen;
 
 
     public SecretaryChatPojo() {
     }
 
-    public SecretaryChatPojo(String message, String sender, String receiver, boolean isSeen) {
+    public SecretaryChatPojo(String message, String sender, String receiver, String type, boolean isSeen) {
         Message = message;
         Sender = sender;
         Receiver = receiver;
+        Type = type;
         this.isSeen = isSeen;
     }
 
@@ -37,6 +38,14 @@ public class SecretaryChatPojo {
 
     public void setReceiver(String receiver) {
         Receiver = receiver;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 
     public boolean isSeen() {

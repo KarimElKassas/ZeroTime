@@ -17,8 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.FragmentAddOrderBinding;
 
@@ -36,9 +39,10 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
 
     private boolean doubleBackToExitPressedOnce = false;
     FragmentAddOrderBinding binding;
-    DatabaseReference ordersRef;
+    DatabaseReference ordersRef,deliveredOrdersCountRef,deliveredOrdersRef;
 
     String userPhone;
+    int deliveredOrdersCount;
     HashMap<String,String> ordersMap = new HashMap<>();
     private static final String[] sizes = {"صغير", "متوسط", "كبير"};
     Context context;
@@ -54,6 +58,8 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
 
         ordersRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
+        deliveredOrdersCountRef = FirebaseDatabase.getInstance().getReference("OrdersCount");
+        deliveredOrdersRef = FirebaseDatabase.getInstance().getReference("DeliveredOrders");
         //Sizes Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, sizes);
@@ -65,6 +71,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         binding.addOrderRequestBtn.setOnClickListener(view1 -> {
             checkData();
         });
+
         return view;
     }
     private void checkData(){
@@ -152,7 +159,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         }else {
             ordersMap.put("ArrivalNotes",Objects.requireNonNull(binding.addOrderArrivalDateNotesEditText.getText()).toString());
         }
-        ordersRef.child(currentTime.toString()).setValue(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        ordersRef.child(currentTime).setValue(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){

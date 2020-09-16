@@ -23,10 +23,13 @@ import java.util.HashMap;
 
 public class FollowingOrderSettings extends AppCompatActivity {
     private ActivityFollowingOrderSettingsBinding binding;
+
     private HashMap<String, String> ordersMap;
-    private DatabaseReference orderRef, clerkRef, progressOrdersRef, deliveredOrdersRef;
-    String currentOrderState, currentOrderUnique, currentOrderNewState, clerkPhone;
+    private DatabaseReference orderRef, clerkRef, deliveredOrdersCountRef, deliveredOrdersRef;
     ArrayList<String> clerksList;
+
+    String currentOrderState, currentOrderUnique, currentOrderNewState, clerkPhone, userPrimaryPhone;
+    long deliveredOrdersCount;
 
     @Override
     public void onBackPressed() {
@@ -43,10 +46,14 @@ public class FollowingOrderSettings extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        deliveredOrdersCount = 0;
+
         ordersMap = new HashMap<>();
         clerksList = new ArrayList<>();
 
         currentOrderUnique = getIntent().getStringExtra("OrderDate");
+        deliveredOrdersCountRef = FirebaseDatabase.getInstance().getReference("OrdersCount");
+        deliveredOrdersRef = FirebaseDatabase.getInstance().getReference("DeliveredOrders");
         orderRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
         orderRef.child(currentOrderUnique).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -65,6 +72,29 @@ public class FollowingOrderSettings extends AppCompatActivity {
                         String receiverAddress = dataSnapshot.child("ReceiverAddress").getValue(String.class);
                         String receiverPrimaryPhone = dataSnapshot.child("ReceiverPrimaryPhone").getValue(String.class);
                         String receiverSecondaryPhone = dataSnapshot.child("ReceiverSecondaryPhone").getValue(String.class);
+
+                        userPrimaryPhone = userPhone;
+                        //Getting Delivered Orders Count
+                        deliveredOrdersRef.orderByChild("UserPrimaryPhone").equalTo(userPrimaryPhone).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()){
+                                    if (snapshot.hasChildren()){
+                                        //for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                            deliveredOrdersCount = snapshot.getChildrenCount();
+                                        //}
+                                    }else {
+                                        deliveredOrdersCount = 0;
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                         ordersMap.put("ArrivalNotes",orderNotes);
                         ordersMap.put("OrderDescription",orderDescription);
@@ -233,12 +263,16 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                 });
 
                             }else if (currentOrderNewState.equals("تم التوصيل")){
-                                deliveredOrdersRef = FirebaseDatabase.getInstance().getReference("DeliveredOrders");
                                 ordersMap.put("ClerkName",binding.FollowingOrderSettingSelectClerk.getSelectedItem().toString());
 
                                 orderRef.child(currentOrderUnique).removeValue().addOnSuccessListener(aVoid ->
                                         deliveredOrdersRef.child(currentOrderUnique).setValue(ordersMap).addOnCompleteListener(task -> {
                                             if (task.isSuccessful()){
+
+                                                Toast.makeText(getApplicationContext(), String.valueOf(deliveredOrdersCount), Toast.LENGTH_SHORT).show();
+
+                                                deliveredOrdersCountRef.child(userPrimaryPhone).child("OrdersCount").setValue(deliveredOrdersCount);
+
                                                 Intent intent = new Intent(FollowingOrderSettings.this,FollowingTheOrderState.class);
                                                 startActivity(intent);
                                                 finish();

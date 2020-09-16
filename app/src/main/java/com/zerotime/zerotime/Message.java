@@ -1,22 +1,37 @@
 package com.zerotime.zerotime;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.zerotime.zerotime.Adapters.MessageAdapter;
+import com.zerotime.zerotime.Interfaces.ApiService;
+import com.zerotime.zerotime.Notifications.Client;
+import com.zerotime.zerotime.Notifications.Data;
+import com.zerotime.zerotime.Notifications.MyResponse;
+import com.zerotime.zerotime.Notifications.Sender;
+import com.zerotime.zerotime.Notifications.Token;
 import com.zerotime.zerotime.Pojos.ChatPojo;
-import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.ActivityMessageBinding;
 
 import java.util.ArrayList;
@@ -24,21 +39,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Message extends AppCompatActivity {
     private ActivityMessageBinding binding;
+    private static final int GALLERY_PICK = 0;
+    ApiService apiService;
+
     SharedPreferences prefs;
     MessageAdapter adapter;
     List<ChatPojo> chatPojos;
-    DatabaseReference reference;
+    DatabaseReference chatRef,userRef;
     ValueEventListener seenListener;
-    String userId, intentFrom;
-
+    String userId, intentFrom,userName;
+    boolean notify = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(ApiService.class);
 
         binding.messageRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -53,12 +77,13 @@ public class Message extends AppCompatActivity {
             }
         }
 
-
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
+
         binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String msg = binding.messageWriteMSGEdt.getText().toString();
+                notify = true;
+                String msg = Objects.requireNonNull(binding.messageWriteMSGEdt.getText()).toString();
                 if (!msg.equals("")) {
                     if (intentFrom != null) {
                         if (intentFrom.equals("ContactFragment")) {
@@ -71,15 +96,61 @@ public class Message extends AppCompatActivity {
                 } else
                     Toast.makeText(Message.this, "You Cant't Sent Empty Message!!", Toast.LENGTH_SHORT).show();
                 binding.messageWriteMSGEdt.setText("");
+
             }
+        });
+        binding.messageSendImage.setOnClickListener(view1 -> {
+            Intent galleryIntent = new Intent();
+            galleryIntent.setType("image/*");
+            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
         });
         ReadMessages();
 
         seenMessage(userId);
+
+    }
+    private void sendNotification(final String userName, String message){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo("Zero Time");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Token token = dataSnapshot.getValue(Token.class);
+
+                    Data data = new Data(userId,userName + ": " + message,"لديك رسالة جديدة",userId,R.mipmap.ic_launcher_round);
+
+                    assert token != null;
+                    Sender sender = new Sender(data,token.getToken());
+                    apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
+                        @Override
+                        public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                            if (response.code() == 200){
+                                assert response.body() != null;
+                                if (response.body().success != 1){
+                                    Toast.makeText(Message.this, "Failed !", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     private void seenMessage(final String userid){
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        seenListener = reference.addValueEventListener(new ValueEventListener() {
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        seenListener = chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -106,14 +177,36 @@ public class Message extends AppCompatActivity {
         hashMap.put("Receiver", Receiver);
         hashMap.put("Message", Message);
         hashMap.put("isSeen", false);
+        hashMap.put("Type", "Text");
         reference.child("Chats").push().setValue(hashMap);
 
+        final String msg = Objects.requireNonNull(binding.messageWriteMSGEdt.getText()).toString();
+        userRef = FirebaseDatabase.getInstance().getReference("Users");
+        userRef.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    if (snapshot.hasChildren()){
+                        userName = snapshot.child("UserName").getValue(String.class);
+                        if (notify){
+                            sendNotification(userName,msg);
+                        }
+                        notify = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void ReadMessages() {
         chatPojos = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        reference.addValueEventListener(new ValueEventListener() {
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chatPojos.clear();
@@ -161,8 +254,50 @@ public class Message extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK){
+            Uri imageUri = data.getData();
+
+            final String currentUserRef = "messages/" + userId + "/" + "Zero Time";
+            final String chatUserRef = "messages/" + "Zero Time" + "/" + userId;
+
+            DatabaseReference userMessagePush = FirebaseDatabase.getInstance()
+                    .getReference("Messages").child(userId).child("Zero Time").push();
+            final String pushID = userMessagePush.getKey();
+
+            StorageReference filePath = FirebaseStorage.getInstance().getReference("Messages")
+                    .child("MessageImages").child(pushID + ".jpg");
+            assert imageUri != null;
+            filePath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()){
+                        FirebaseStorage.getInstance().getReference("Messages")
+                                .child("MessageImages").child(pushID + ".jpg")
+                                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String downloadUrl = uri.toString();
+                                HashMap<String, Object> hashMap = new HashMap<>();
+                                hashMap.put("Sender", userId);
+                                hashMap.put("Receiver", "Zero Time");
+                                hashMap.put("Message", downloadUrl);
+                                hashMap.put("isSeen", false);
+                                hashMap.put("Type", "Image");
+                                chatRef.push().setValue(hashMap);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        reference.removeEventListener(seenListener);
+        chatRef.removeEventListener(seenListener);
     }
 }
