@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 
@@ -42,7 +45,15 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         SecretaryChatPojo mchat = secretaryChatPojos.get(position);
-        holder.showMessage.setText(mchat.getMessage());
+        if (mchat.getType().equals("Text")){
+            holder.showMessage.setText(mchat.getMessage());
+        }else {
+            holder.showMessage.setVisibility(View.GONE);
+            holder.showMessageImageCard.setVisibility(View.VISIBLE);
+            Glide.with(context.getApplicationContext())
+                    .load(mchat.getMessage())
+                    .into(holder.showMessageImage);
+        }
         if (position == secretaryChatPojos.size() - 1){
 
             if (mchat.isSeen()){
@@ -64,10 +75,13 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView showMessage,seen;
-
+        ImageView showMessageImage;
+        CardView showMessageImageCard;
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             showMessage = itemView.findViewById(R.id.showMessage);
+            showMessageImage = itemView.findViewById(R.id.showMessageImage);
+            showMessageImageCard = itemView.findViewById(R.id.showMessageImageCard);
             seen = itemView.findViewById(R.id.isSeen_text_view);
         }
     }

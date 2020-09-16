@@ -82,6 +82,7 @@ public class SecretaryHome extends AppCompatActivity {
                     builder.setContentIntent(resultPendingIntent);*/
 
                     notificationManager.notify(notificationID, builder.build());
+
                     /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         String CHANNEL_ID = "my_channel_02";
                         CharSequence name = "my_channel";

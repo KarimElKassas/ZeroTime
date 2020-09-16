@@ -1,20 +1,30 @@
 package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Adapters.MessageAdapter;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.zerotime.zerotime.Interfaces.ApiService;
+import com.zerotime.zerotime.Notifications.Client;
 import com.zerotime.zerotime.Secretary.Adapters.SecretaryMessageAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.ActivitySecretaryMessageBinding;
@@ -26,10 +36,14 @@ import java.util.Objects;
 
 public class SecretaryMessage extends AppCompatActivity {
     private ActivitySecretaryMessageBinding binding;
+    private static final int GALLERY_PICK = 0;
+
+    ApiService apiService;
+
     SharedPreferences prefs;
     SecretaryMessageAdapter adapter;
     List<SecretaryChatPojo> secretaryChatPojoList;
-    DatabaseReference reference;
+    DatabaseReference chatRef;
     ValueEventListener seenListener;
     String userId, intentFrom;
 
@@ -39,6 +53,9 @@ public class SecretaryMessage extends AppCompatActivity {
         binding = ActivitySecretaryMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(ApiService.class);
+
 
         binding.secretaryMessageRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -68,19 +85,26 @@ public class SecretaryMessage extends AppCompatActivity {
                 binding.secretaryMessageWriteMSGEdt.setText("");
             }
         });
+        binding.secretaryMessageSendImage.setOnClickListener(view1 -> {
+            Intent galleryIntent = new Intent();
+            galleryIntent.setType("image/*");
+            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
+        });
         ReadMessages();
 
         seenMessage(userId);
     }
-    private void seenMessage(final String userid){
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        seenListener = reference.addValueEventListener(new ValueEventListener() {
+
+    private void seenMessage(final String userid) {
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        seenListener = chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     SecretaryChatPojo chat = snapshot.getValue(SecretaryChatPojo.class);
                     assert chat != null;
-                    if (chat.getReceiver().equals("Zero Time") && chat.getSender().equals(userid)){
+                    if (chat.getReceiver().equals("Zero Time") && chat.getSender().equals(userid)) {
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isSeen", true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -95,34 +119,6 @@ public class SecretaryMessage extends AppCompatActivity {
         });
     }
 
-    /*private void seenMessage(final String userPrimaryPhone) {
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        seenListener = reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    SecretaryChatPojo secretaryChatPojo = snapshot.getValue(SecretaryChatPojo.class);
-                    //Secretary Case
-                    if (intentFrom.equals("DisplayChatsAdapter")) {
-                        assert secretaryChatPojo != null;
-                        if (secretaryChatPojo.getReceiver().equals("Zero Time") && secretaryChatPojo.getSender().equals(userPrimaryPhone)) {
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("isSeen", true);
-                            snapshot.getRef().updateChildren(hashMap);
-                        }
-
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
     private void sendMessage(String Sender, String Receiver, String Message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -130,14 +126,15 @@ public class SecretaryMessage extends AppCompatActivity {
         hashMap.put("Receiver", Receiver);
         hashMap.put("Message", Message);
         hashMap.put("isSeen", false);
+        hashMap.put("Type", "Text");
         reference.child("Chats").push().setValue(hashMap);
 
     }
 
     private void ReadMessages() {
         secretaryChatPojoList = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("Chats");
-        reference.addValueEventListener(new ValueEventListener() {
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 secretaryChatPojoList.clear();
@@ -183,10 +180,43 @@ public class SecretaryMessage extends AppCompatActivity {
         chatRefReceiver.child("Receiver_ID").setValue(userId);
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        reference.removeEventListener(seenListener);
+        chatRef.removeEventListener(seenListener);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+
+            DatabaseReference userMessagePush = FirebaseDatabase.getInstance()
+                    .getReference("Messages").child("Zero Time").child(userId).push();
+            final String pushID = userMessagePush.getKey();
+
+            StorageReference filePath = FirebaseStorage.getInstance().getReference("Messages")
+                    .child("MessageImages").child(pushID + ".jpg");
+            assert imageUri != null;
+            filePath.putFile(imageUri).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    FirebaseStorage.getInstance().getReference("Messages")
+                            .child("MessageImages").child(pushID + ".jpg")
+                            .getDownloadUrl().addOnSuccessListener(uri -> {
+                        String downloadUrl = uri.toString();
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("Sender", "Zero Time");
+                        hashMap.put("Receiver", userId);
+                        hashMap.put("Message", downloadUrl);
+                        hashMap.put("isSeen", false);
+                        hashMap.put("Type", "Image");
+                        chatRef.push().setValue(hashMap);
+
+                    });
+                }
+            });
+        }
+    }
 }
