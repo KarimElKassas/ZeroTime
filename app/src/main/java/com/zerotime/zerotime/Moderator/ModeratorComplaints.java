@@ -19,7 +19,7 @@ import com.zerotime.zerotime.databinding.ActivityModeratorComplaintsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Moderator_complaints extends AppCompatActivity {
+public class ModeratorComplaints extends AppCompatActivity {
     private ActivityModeratorComplaintsBinding binding;
     // Room DB
     UserDao db;
@@ -67,7 +67,7 @@ public class Moderator_complaints extends AppCompatActivity {
 
 
         }
-        adapter = new ComplaintAdapter(complaint_pojos, Moderator_complaints.this);
+        adapter = new ComplaintAdapter(complaint_pojos, ModeratorComplaints.this);
         binding.recyclerComplaints.setAdapter(adapter);
         binding.deleteAllComplaints.setOnClickListener(new View.OnClickListener() {
             @Override
