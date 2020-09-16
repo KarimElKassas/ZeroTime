@@ -5,6 +5,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import android.os.Bundle;
 import android.view.View;
@@ -35,15 +41,16 @@ public class Moderator_complaints extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         complaint_pojos = new ArrayList<>();
+        adapter = new ComplaintAdapter();
+        binding.recyclerComplaints.setAdapter(adapter);
+
 
         //Room DB
         dataBase = Room.databaseBuilder(this, UserDataBase.class, "Complaint")
                 .allowMainThreadQueries().build();
         db = dataBase.getUserDao();
 
-//        db.nukeTable();
-
-        List<Complaint> complaint = db.getComplaints();
+        //Single<List<Complaint>> complaint = db.getComplaints();
 
 
         binding.recyclerComplaints.setLayoutManager(new LinearLayoutManager(this));
@@ -52,7 +59,29 @@ public class Moderator_complaints extends AppCompatActivity {
 
         ctr = db.getCount();
 
-        for (int i = 0; i < ctr; i++) {
+
+        db.getComplaints().subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<Complaint>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(List<Complaint> complaints) {
+                        adapter.setList(complaints);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+
+
+       /* for (int i = 0; i < ctr; i++) {
 
             if (complaint != null) {
                 Complaint_Pojo complaint_pojo = new Complaint_Pojo();
@@ -66,9 +95,9 @@ public class Moderator_complaints extends AppCompatActivity {
             }
 
 
-        }
-        adapter = new ComplaintAdapter(complaint_pojos, Moderator_complaints.this);
-        binding.recyclerComplaints.setAdapter(adapter);
+        }*/
+
+
         binding.deleteAllComplaints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,6 +1,5 @@
 package com.zerotime.zerotime.Moderator.Pojos;
-
-public class Complaint_Pojo {
+ public class Complaint_Pojo {
     String name,phone,complaint,date;
 
     public Complaint_Pojo(String name, String phone, String complaint, String date) {

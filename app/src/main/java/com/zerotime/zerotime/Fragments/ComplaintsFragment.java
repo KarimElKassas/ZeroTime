@@ -10,6 +10,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Query;
 import androidx.room.Room;
 import androidx.room.migration.Migration;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -90,7 +94,23 @@ public class ComplaintsFragment extends Fragment {
 
                         userComplaint = Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString();
                         Complaint complaint = new Complaint(userPhone, userComplaint, currentTime, name);
-                        userDao.insertComplaint(complaint);
+                        userDao.insertComplaint(complaint).subscribeOn(Schedulers.computation())
+                                .subscribe(new CompletableObserver() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) {
+
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+                                });
                         Toast.makeText(getContext(),
                                 "تم ارسال الشكوى بنجاح سوف نرد عليك قريباً",
                                 Toast.LENGTH_LONG).show();

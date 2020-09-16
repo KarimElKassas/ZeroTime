@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Room.Data;
 import com.zerotime.zerotime.Room.Model.Complaint;
 
 import java.util.List;
+import java.util.Observable;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -10,15 +11,16 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 @Dao
 public
 interface UserDao {
 
 
-
     @Insert
-    void insertComplaint(Complaint complaint);
+    Completable insertComplaint(Complaint complaint);
 
     @Delete
     void delete(Complaint complaint);
@@ -34,7 +36,7 @@ interface UserDao {
     };
 
     @Query("SELECT * FROM Complaint")
-    List<Complaint> getComplaints();
+    Single<List<Complaint>> getComplaints();
 
     @Query("SELECT COUNT(date) FROM Complaint")
     int getCount();

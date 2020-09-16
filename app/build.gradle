@@ -72,4 +72,15 @@ dependencies {
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.3.72'
 
 
+
+    // RxJava
+
+
+    def rxJavaVersion = '2.1.1'
+    implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+
+
 }

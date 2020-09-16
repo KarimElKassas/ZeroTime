@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
+import com.zerotime.zerotime.Pojos.HistoryPojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Model.Complaint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,14 +26,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ClerkViewHolder> {
-    private ArrayList<Complaint_Pojo> complaints;
+    private List<Complaint> complaints=new ArrayList<>();
     private Context context;
 
-
-    public ComplaintAdapter(ArrayList<Complaint_Pojo> complaints, Context context) {
+/*
+    public ComplaintAdapter(ArrayList<Complaint> complaints, Context context) {
         this.complaints = complaints;
         this.context = context;
-    }
+    }*/
 
 
     @NonNull
@@ -43,10 +45,10 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
     @Override
     public void onBindViewHolder(@NonNull ClerkViewHolder holder, int position) {
 
-        final Complaint_Pojo complaint = complaints.get(position);
+        final Complaint complaint = complaints.get(position);
         holder.name.setText(complaint.getName());
-        holder.phone.setText(complaint.getPhone());
-        holder.complaint.setText(complaint.getComplaint());
+        holder.phone.setText(complaint.getUserPhone());
+        holder.complaint.setText(complaint.getUserComplaint());
         holder.date.setText(complaint.getDate());
 
 
@@ -57,6 +59,10 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
         return complaints.size();
     }
 
+    public void setList(List<Complaint> complaintsList) {
+        this.complaints =  complaintsList;
+        notifyDataSetChanged();
+    }
 
     public class ClerkViewHolder extends RecyclerView.ViewHolder {
         private TextView name, phone, complaint, date;
