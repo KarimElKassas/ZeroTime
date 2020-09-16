@@ -1,5 +1,6 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,9 @@ import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.databinding.FragmentFollowMyOrdersBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FollowMyOrdersFragment extends Fragment {
 
@@ -37,13 +41,16 @@ public class FollowMyOrdersFragment extends Fragment {
         binding = FragmentFollowMyOrdersBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
+        SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
+        String userPhone = prefs.getString("isLogged","");
+
         binding.followingMyOrdersFragmentRecycler.setHasFixedSize(true);
         binding.followingMyOrdersFragmentRecycler.setLayoutManager(new LinearLayoutManager(container.getContext()));
 
         ordersList = new ArrayList<>();
 
         ordersRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
-        Query query = ordersRef.orderByChild("UserPrimaryPhone");
+        Query query = ordersRef.orderByChild("UserPrimaryPhone").equalTo(userPhone);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override

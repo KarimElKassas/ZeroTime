@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -39,7 +40,6 @@ public class FollowingTheOrderState extends AppCompatActivity {
         binding = ActivityFollowingTheOrderStateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
 
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
