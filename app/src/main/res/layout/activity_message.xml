@@ -15,15 +15,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <Button
+        android:id="@+id/message_send_image"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:background="@drawable/ic_baseline_image_24"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message_recycler"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/message_writeMSG_edt"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="monospace"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:hint="Write Your Message Here"
         android:padding="8dp"
         android:textAlignment="textStart"
@@ -32,12 +45,14 @@
         android:textSize="14sp"
         app:backgroundTint="#000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/message_recycler"
+        app:layout_constraintStart_toEndOf="@id/message_send_image"
+        app:layout_constraintEnd_toStartOf="@id/message_send_btn"/>
 
     <ImageButton
         android:id="@+id/message_send_btn"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/ic_baseline_send_24"
         android:scaleType="centerCrop"
