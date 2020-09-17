@@ -18,10 +18,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_72sdp"
             android:layout_marginEnd="@dimen/_24sdp"
-            android:background="#FB3908"
+            android:background="@drawable/btn_back_fb3908"
             android:textColor="#FFF"
             android:gravity="center"
-            android:text="اضافة طلب"
+            android:text="@string/home_frag_add_order_btn_text"
             android:textSize="22sp"
             android:textStyle="bold"/>
 
@@ -30,30 +30,44 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_marginTop="@dimen/_72sdp"
-            android:background="#087804"
+            android:background="@drawable/btn_back_087804"
             android:gravity="center"
-            android:text="عروض الشهر"
+            android:text="@string/home_frag_month_offers_btn_text"
             android:textColor="#FFF"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/_24sdp"/>
+
         <Button
             android:id="@+id/homeFragment_our_products_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
-            app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="#DFB005"
-            android:textColor="#FFF"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@drawable/btn_back_087804"
             android:gravity="center"
             android:text="منتجاتنا"
+            android:textColor="#FFF"
             android:textSize="22sp"
-            android:textStyle="bold"/>
-
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn"
+            android:layout_marginTop="@dimen/_76sdp"/>
+        <Button
+            android:id="@+id/homeFragment_about_us_btn"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:background="@drawable/btn_back_fb3908"
+            android:gravity="center"
+            android:text="من نحن ؟"
+            android:textColor="#FFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn"
+            android:layout_marginTop="@dimen/_76sdp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

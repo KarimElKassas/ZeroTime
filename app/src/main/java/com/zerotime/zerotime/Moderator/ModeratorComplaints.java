@@ -25,7 +25,7 @@ import com.zerotime.zerotime.databinding.ActivityModeratorComplaintsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Moderator_complaints extends AppCompatActivity {
+public class ModeratorComplaints extends AppCompatActivity {
     private ActivityModeratorComplaintsBinding binding;
     // Room DB
     UserDao db;

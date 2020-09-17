@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.AboutUsFragment;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.FragmentHomeBinding;
 
@@ -39,6 +40,18 @@ public class HomeFragment extends Fragment {
         binding.homeFragmentAddOrderBtn.setOnClickListener(view1 -> {
             // Create new fragment and transaction
             Fragment newFragment = new AddOrderFragment();
+            assert getFragmentManager() != null;
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.Frame_Content, newFragment);
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+        });
+        //About Us Button
+        binding.homeFragmentAboutUsBtn.setOnClickListener(view1 -> {
+            // Create new fragment and transaction
+            Fragment newFragment = new AboutUsFragment();
             assert getFragmentManager() != null;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
