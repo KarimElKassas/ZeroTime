@@ -25,14 +25,14 @@ import com.zerotime.zerotime.databinding.ActivityModeratorComplaintsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Moderator_complaints extends AppCompatActivity {
+public class ModeratorComplaints extends AppCompatActivity {
     private ActivityModeratorComplaintsBinding binding;
+
     // Room DB
     UserDao db;
     int ctr = 0;
     UserDataBase dataBase;
     ComplaintAdapter adapter;
-    ArrayList<Complaint_Pojo> complaint_pojos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,6 @@ public class Moderator_complaints extends AppCompatActivity {
         binding = ActivityModeratorComplaintsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        complaint_pojos = new ArrayList<>();
         adapter = new ComplaintAdapter();
         binding.recyclerComplaints.setAdapter(adapter);
 
@@ -50,15 +49,9 @@ public class Moderator_complaints extends AppCompatActivity {
                 .allowMainThreadQueries().build();
         db = dataBase.getUserDao();
 
-        //Single<List<Complaint>> complaint = db.getComplaints();
-
-
         binding.recyclerComplaints.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.recyclerComplaints.setLayoutManager(mLayoutManager);
-
-        ctr = db.getCount();
-
 
         db.getComplaints().subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,21 +74,6 @@ public class Moderator_complaints extends AppCompatActivity {
                 });
 
 
-       /* for (int i = 0; i < ctr; i++) {
-
-            if (complaint != null) {
-                Complaint_Pojo complaint_pojo = new Complaint_Pojo();
-                complaint_pojo.setName(complaint.get(i).getName());
-                complaint_pojo.setComplaint(complaint.get(i).getUserComplaint());
-                complaint_pojo.setPhone(complaint.get(i).getUserPhone());
-                complaint_pojo.setDate(complaint.get(i).getDate());
-
-                complaint_pojos.add(complaint_pojo);
-
-            }
-
-
-        }*/
 
 
         binding.deleteAllComplaints.setOnClickListener(new View.OnClickListener() {

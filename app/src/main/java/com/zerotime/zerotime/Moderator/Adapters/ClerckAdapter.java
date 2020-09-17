@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 
 import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
+import com.zerotime.zerotime.Moderator.Moderator_Clerks_History;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
 
@@ -29,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewHolder> {
     private ArrayList<Clerks> clerkList;
     private Context context;
-
 
 
     public ClerckAdapter(ArrayList<Clerks> clerksList, Context context) {
@@ -59,7 +59,7 @@ public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewH
         holder.arrowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.expandableView.getVisibility()==View.GONE){
+                if (holder.expandableView.getVisibility() == View.GONE) {
                     //TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
                     holder.expandableView.setVisibility(View.VISIBLE);
                     holder.arrowBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
@@ -77,13 +77,17 @@ public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewH
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + clerks.getPhone1()));
-                context.startActivity(intent);             }
+                context.startActivity(intent);
+            }
         });
 
         holder.viewOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "go to orders activity...", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(context, Moderator_Clerks_History.class);
+                i.putExtra("ClerkPhone",holder.ClerkPhone1.getText().toString());
+                context.startActivity(i);
             }
         });
 
@@ -98,15 +102,16 @@ public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewH
 
     public class ClerkViewHolder extends RecyclerView.ViewHolder {
         private TextView ClerkName, ClerkPhone1, ClerkPhone2, ClerkAge, ClerkAddress, ClerkVehiclel;
-        private Button viewOrders,arrowBtn;
+        private Button viewOrders, arrowBtn;
         private ImageView callClerk;
         ConstraintLayout expandableView;
         CardView cardView;
+
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);
-            expandableView=itemView.findViewById(R.id.expandableView);
-            cardView=itemView.findViewById(R.id.cardView);
-            arrowBtn=itemView.findViewById(R.id.arrowBtn);
+            expandableView = itemView.findViewById(R.id.expandableView);
+            cardView = itemView.findViewById(R.id.cardView);
+            arrowBtn = itemView.findViewById(R.id.arrowBtn);
 
             ClerkName = itemView.findViewById(R.id.ViewClerk_clerkName_txt);
             ClerkPhone1 = itemView.findViewById(R.id.ViewClerk_phone1_txt);

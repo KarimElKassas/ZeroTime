@@ -48,5 +48,11 @@ public class ModeratorHome extends AppCompatActivity {
             startActivity(i);
         });
 
+        //View Clerks number of order Button
+        binding.ModeratorHomeNumberOFOrdersBtn.setOnClickListener(view12 -> {
+            Intent i = new Intent(ModeratorHome.this, ModeratorNumberOfOrders.class);
+            startActivity(i);
+        });
+
     }
 }

@@ -25,16 +25,17 @@ public class FollowingOrderSettings extends AppCompatActivity {
     private ActivityFollowingOrderSettingsBinding binding;
 
     private HashMap<String, String> ordersMap;
-    private DatabaseReference orderRef, clerkRef, deliveredOrdersCountRef, deliveredOrdersRef;
+    String userName;
+    private DatabaseReference orderRef, clerkRef, deliveredOrdersCountRef, deliveredOrdersRef, usersRef;
     ArrayList<String> clerksList;
-
+    HashMap<String, Object> orderCountMap;
     String currentOrderState, currentOrderUnique, currentOrderNewState, clerkPhone, userPrimaryPhone;
     long deliveredOrdersCount;
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(FollowingOrderSettings.this,FollowingTheOrderState.class);
+        Intent intent = new Intent(FollowingOrderSettings.this, FollowingTheOrderState.class);
         startActivity(intent);
         finish();
     }
@@ -49,9 +50,11 @@ public class FollowingOrderSettings extends AppCompatActivity {
         deliveredOrdersCount = 0;
 
         ordersMap = new HashMap<>();
+        orderCountMap = new HashMap<>();
         clerksList = new ArrayList<>();
 
         currentOrderUnique = getIntent().getStringExtra("OrderDate");
+        usersRef = FirebaseDatabase.getInstance().getReference("Users");
         deliveredOrdersCountRef = FirebaseDatabase.getInstance().getReference("OrdersCount");
         deliveredOrdersRef = FirebaseDatabase.getInstance().getReference("DeliveredOrders");
         orderRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
@@ -74,16 +77,17 @@ public class FollowingOrderSettings extends AppCompatActivity {
                         String receiverSecondaryPhone = dataSnapshot.child("ReceiverSecondaryPhone").getValue(String.class);
 
                         userPrimaryPhone = userPhone;
+
                         //Getting Delivered Orders Count
                         deliveredOrdersRef.orderByChild("UserPrimaryPhone").equalTo(userPrimaryPhone).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()){
-                                    if (snapshot.hasChildren()){
-                                        //for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                            deliveredOrdersCount = snapshot.getChildrenCount();
-                                        //}
-                                    }else {
+                                if (snapshot.exists()) {
+                                    if (snapshot.hasChildren()) {
+
+                                        deliveredOrdersCount = snapshot.getChildrenCount();
+
+                                    } else {
                                         deliveredOrdersCount = 0;
                                     }
                                 }
@@ -96,16 +100,16 @@ public class FollowingOrderSettings extends AppCompatActivity {
                             }
                         });
 
-                        ordersMap.put("ArrivalNotes",orderNotes);
-                        ordersMap.put("OrderDescription",orderDescription);
-                        ordersMap.put("OrderDate",orderDate);
-                        ordersMap.put("OrderPrice",orderPrice);
-                        ordersMap.put("OrderSize",orderSize);
-                        ordersMap.put("UserPrimaryPhone",userPhone);
-                        ordersMap.put("ReceiverName",receiverName);
-                        ordersMap.put("ReceiverAddress",receiverAddress);
-                        ordersMap.put("ReceiverPrimaryPhone",receiverPrimaryPhone);
-                        ordersMap.put("ReceiverSecondaryPhone",receiverSecondaryPhone);
+                        ordersMap.put("ArrivalNotes", orderNotes);
+                        ordersMap.put("OrderDescription", orderDescription);
+                        ordersMap.put("OrderDate", orderDate);
+                        ordersMap.put("OrderPrice", orderPrice);
+                        ordersMap.put("OrderSize", orderSize);
+                        ordersMap.put("UserPrimaryPhone", userPhone);
+                        ordersMap.put("ReceiverName", receiverName);
+                        ordersMap.put("ReceiverAddress", receiverAddress);
+                        ordersMap.put("ReceiverPrimaryPhone", receiverPrimaryPhone);
+                        ordersMap.put("ReceiverSecondaryPhone", receiverSecondaryPhone);
 
                         if (currentOrderState != null) {
                             switch (currentOrderState) {
@@ -140,6 +144,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                     });
                                     break;
                                 case "تم الاستلام":
+                                    binding.FollowingOrderSettingSelectClerk.setEnabled(true);
                                     String[] states2 = {"جارى التوصيل", "تم التوصيل"};
                                     ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(FollowingOrderSettings.this,
                                             android.R.layout.simple_spinner_item, states2);
@@ -166,7 +171,6 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                     });
                                     break;
                                 case "جارى التوصيل":
-                                    binding.FollowingOrderSettingSelectClerk.setEnabled(false);
                                     String[] states3 = {"تم التوصيل"};
                                     ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(FollowingOrderSettings.this,
                                             android.R.layout.simple_spinner_item, states3);
@@ -176,6 +180,8 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                         @Override
                                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                                             if (position == 0) {
+                                                binding.FollowingOrderSettingSelectClerk.setEnabled(true);
+
                                                 currentOrderNewState = "تم التوصيل";
                                             }
                                         }
@@ -212,10 +218,10 @@ public class FollowingOrderSettings extends AppCompatActivity {
         clerkRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String clerkName = dataSnapshot.child("ClerkName").getValue(String.class);
                     clerkPhone = dataSnapshot.child("ClerkPhone1").getValue(String.class);
-                    if (clerkName != null){
+                    if (clerkName != null) {
                         clerksList.add(clerkName);
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(FollowingOrderSettings.this,
                                 android.R.layout.simple_spinner_item, clerksList);
@@ -232,7 +238,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
             }
         });
         binding.FollowingOrderSettingsUpdateBtn.setOnClickListener(view1 -> {
-            if (currentOrderNewState != null && clerkPhone != null){
+            if (currentOrderNewState != null && clerkPhone != null) {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
                 builder1.setTitle("تأكيد ...");
                 builder1.setMessage("هل تريد تعديل بيانات هذا الطلب ؟");
@@ -241,44 +247,89 @@ public class FollowingOrderSettings extends AppCompatActivity {
                 builder1.setPositiveButton(
                         "نعم",
                         (dialog, id) -> {
-                            if (currentOrderNewState.equals("تم الاستلام")){
+                            if (currentOrderNewState.equals("تم الاستلام")) {
                                 orderRef.child(currentOrderUnique).child("OrderState").setValue(currentOrderNewState)
                                         .addOnCompleteListener(task -> {
-                                            if (task.isSuccessful()){
-                                                Toast.makeText(getApplicationContext(),"تم تحديث حالة الاوردر",Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(FollowingOrderSettings.this,FollowingTheOrderState.class);
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getApplicationContext(), "تم تحديث حالة الاوردر", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(FollowingOrderSettings.this, FollowingTheOrderState.class);
                                                 startActivity(intent);
                                                 finish();
-                                            }else {
-                                                Toast.makeText(getApplicationContext(),"فشل تحديث الاوردر",Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "فشل تحديث الاوردر", Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                            }else if (currentOrderNewState.equals("جارى التوصيل")){
-                                ordersMap.put("OrderState",currentOrderNewState);
+                            } else if (currentOrderNewState.equals("جارى التوصيل")) {
+                                ordersMap.put("OrderState", currentOrderNewState);
 
                                 orderRef.child(currentOrderUnique).setValue(ordersMap).addOnSuccessListener(aVoid -> {
-                                    Intent intent = new Intent(FollowingOrderSettings.this,FollowingTheOrderState.class);
+                                    Intent intent = new Intent(FollowingOrderSettings.this, FollowingTheOrderState.class);
                                     startActivity(intent);
                                     finish();
                                 });
 
-                            }else if (currentOrderNewState.equals("تم التوصيل")){
-                                ordersMap.put("ClerkName",binding.FollowingOrderSettingSelectClerk.getSelectedItem().toString());
+                            } else if (currentOrderNewState.equals("تم التوصيل")) {
+                                ordersMap.put("ClerkName", binding.FollowingOrderSettingSelectClerk.getSelectedItem().toString());
+                                clerkRef.orderByChild("ClerkName")
+                                        .equalTo(binding.FollowingOrderSettingSelectClerk.getSelectedItem().toString())
+                                        .addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists()) {
+                                                    if (snapshot.hasChildren()) {
+                                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                                            String clerkPhone = dataSnapshot.child("ClerkPhone1").getValue(String.class);
+                                                            ordersMap.put("ClerkPhone1", clerkPhone);
+                                                        }
+
+
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
 
                                 orderRef.child(currentOrderUnique).removeValue().addOnSuccessListener(aVoid ->
                                         deliveredOrdersRef.child(currentOrderUnique).setValue(ordersMap).addOnCompleteListener(task -> {
-                                            if (task.isSuccessful()){
+                                            if (task.isSuccessful()) {
 
-                                                Toast.makeText(getApplicationContext(), String.valueOf(deliveredOrdersCount), Toast.LENGTH_SHORT).show();
 
-                                                deliveredOrdersCountRef.child(userPrimaryPhone).child("OrdersCount").setValue(deliveredOrdersCount);
+                                                usersRef.orderByChild("UserPrimaryPhone").equalTo(userPrimaryPhone).addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        if (snapshot.exists()) {
+                                                            if (snapshot.hasChildren()) {
+                                                                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                                                                    userName = dataSnapshot.child("UserName").getValue(String.class);
+                                                                    orderCountMap.put("UserName", userName);
+                                                                    Toast.makeText(FollowingOrderSettings.this, ""+userName, Toast.LENGTH_SHORT).show();
+                                                                    orderCountMap.put("OrdersCount", deliveredOrdersCount);
+                                                                    deliveredOrdersCountRef.child(userPrimaryPhone).setValue(orderCountMap);
+                                                                    Intent intent = new Intent(FollowingOrderSettings.this, FollowingTheOrderState.class);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                    Toast.makeText(getApplicationContext(), "Delivered Order Ref Done", Toast.LENGTH_SHORT).show();
 
-                                                Intent intent = new Intent(FollowingOrderSettings.this,FollowingTheOrderState.class);
-                                                startActivity(intent);
-                                                finish();
-                                                Toast.makeText(getApplicationContext(),"Delivered Order Ref Done",Toast.LENGTH_SHORT).show();
+                                                                }
 
-                                            }else Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+
+
+
+                                            } else
+                                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }));
                             }
 
@@ -292,8 +343,8 @@ public class FollowingOrderSettings extends AppCompatActivity {
                 alert11.show();
 
 
-            }else {
-                Toast.makeText(this,"new state null",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "new state null", Toast.LENGTH_SHORT).show();
             }
         });
     }

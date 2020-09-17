@@ -29,12 +29,6 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
     private List<Complaint> complaints=new ArrayList<>();
     private Context context;
 
-/*
-    public ComplaintAdapter(ArrayList<Complaint> complaints, Context context) {
-        this.complaints = complaints;
-        this.context = context;
-    }*/
-
 
     @NonNull
     @Override

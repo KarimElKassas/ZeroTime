@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zerotime.zerotime">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -23,28 +26,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- Moderator -->
+        <activity android:name=".Moderator.Moderator_Clerks_History"></activity>
+        <activity android:name=".Moderator.ModeratorNumberOfOrders" /> <!-- Moderator -->
         <activity android:name=".Moderator.ModeratorAddOffer" />
         <activity android:name=".Moderator.ModeratorAddClerk" />
         <activity android:name=".Moderator.ModeratorViewClerks" />
         <activity android:name=".Moderator.ModeratorHome" />
         <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
         <activity android:name=".Moderator.M_DisplayUserData" />
-        <activity android:name=".Moderator.ModeratorComplaints" />
-        <!-- Secretary -->
+        <activity android:name=".Moderator.ModeratorComplaints" /> <!-- Secretary -->
         <activity android:name=".Secretary.SecretaryDisplayChats" />
         <activity android:name=".Secretary.FollowingTheOrderState" />
         <activity android:name=".Secretary.Secretary_UserData" />
         <activity android:name=".Secretary.FollowingOrderSettings" />
         <activity android:name=".Secretary.SecretaryHome" />
-        <activity android:name=".Secretary.SecretaryMessage" />
-        <!-- Users -->
+        <activity android:name=".Secretary.SecretaryMessage" /> <!-- Users -->
         <activity android:name=".Login" />
         <activity android:name=".SignUp" />
         <activity android:name=".Home" />
         <activity android:name=".Message" />
-        <activity android:name=".History" />
-        <!-- Global -->
+        <activity android:name=".History" /> <!-- Global -->
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,6 +53,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".Notifications.MyFirebaseMessaging"
             android:enabled="true"
