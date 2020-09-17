@@ -2,4 +2,20 @@
     <string name="app_name">ZeroTime</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="splash_screen_zero_time">Zero Time</string>
+    <string name="signup_user_name_hint">الاسم بالكامل</string>
+    <string name="signup_user_password_hint">كلمة السر</string>
+    <string name="signup_primary_phone_hint">رقم الهاتف الاول</string>
+    <string name="signup_secondary_phone_hint">رقم الهاتف الثانى</string>
+    <string name="signup_address_hint">العنوان بالتفصيل</string>
+    <string name="signup_create_account">انشاء حساب</string>
+    <string name="signup_or_login_text">او تسجيل الدخول ؟</string>
+    <string name="login_login_text">قم بتسجيل الدخول</string>
+    <string name="login_phone_hint">رقم الهاتف</string>
+    <string name="login_password_hint">كلمة السر</string>
+    <string name="login_sign_in_text">تسجيل الدخول</string>
+    <string name="login_or_create_new_account_text">او انشاء حساب جديد ؟</string>
+    <string name="home_frag_add_order_btn_text">اضافة طلب</string>
+    <string name="home_frag_month_offers_btn_text">عروض الشهر</string>
 </resources>

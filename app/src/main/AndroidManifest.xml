@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zerotime.zerotime">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -12,8 +18,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -26,8 +30,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Moderator.Moderator_Clerks_History"></activity>
-        <activity android:name=".Moderator.ModeratorNumberOfOrders" /> <!-- Moderator -->
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity">
+
+        </activity>
+        <!-- Moderator -->
         <activity android:name=".Moderator.ModeratorAddOffer" />
         <activity android:name=".Moderator.ModeratorAddClerk" />
         <activity android:name=".Moderator.ModeratorViewClerks" />
@@ -41,8 +61,12 @@
         <activity android:name=".Secretary.FollowingOrderSettings" />
         <activity android:name=".Secretary.SecretaryHome" />
         <activity android:name=".Secretary.SecretaryMessage" /> <!-- Users -->
-        <activity android:name=".Login" />
-        <activity android:name=".SignUp" />
+        <activity
+            android:name=".Login"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".SignUp"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Home" />
         <activity android:name=".Message" />
         <activity android:name=".History" /> <!-- Global -->
@@ -70,6 +94,19 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
