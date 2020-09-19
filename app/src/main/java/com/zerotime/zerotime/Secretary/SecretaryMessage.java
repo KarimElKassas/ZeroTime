@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.zerotime.zerotime.Notifications.Client;
 import com.zerotime.zerotime.Secretary.Adapters.SecretaryMessageAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.ActivitySecretaryMessageBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +55,7 @@ public class SecretaryMessage extends AppCompatActivity {
         binding = ActivitySecretaryMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        checkInternetConnection();
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(ApiService.class);
 
@@ -218,5 +221,11 @@ public class SecretaryMessage extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
     }
 }

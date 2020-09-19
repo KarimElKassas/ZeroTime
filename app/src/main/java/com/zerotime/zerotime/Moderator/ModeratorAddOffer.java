@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Moderator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.databinding.ActivityModeratorAddOfferBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -30,6 +32,7 @@ public class ModeratorAddOffer extends AppCompatActivity {
         binding = ActivityModeratorAddOfferBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        checkInternetConnection();
         offersRef = FirebaseDatabase.getInstance().getReference("Offers");
 
         offersRef.child("Offers").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -182,5 +185,12 @@ public class ModeratorAddOffer extends AppCompatActivity {
         Objects.requireNonNull(binding.moderatorAddOfferFourthFixedOfferEditText.getText()).clear();
         Objects.requireNonNull(binding.moderatorAddOfferFifthFixedOfferEditText.getText()).clear();
         Objects.requireNonNull(binding.moderatorAddOfferSixthFixedOfferEditText.getText()).clear();
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
+
     }
 }

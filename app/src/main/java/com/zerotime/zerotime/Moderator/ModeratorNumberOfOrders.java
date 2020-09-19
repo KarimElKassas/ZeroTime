@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.zerotime.zerotime.Pojos.HistoryPojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivityMDisplayUserDataBinding;
 import com.zerotime.zerotime.databinding.ActivityModeratorNumberOfOrdersBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -42,6 +44,7 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
         binding = ActivityModeratorNumberOfOrdersBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        checkInternetConnection();
         binding.recyclerOrdersNumber.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerOrdersNumber.setLayoutManager(linearLayoutManager);
@@ -80,6 +83,13 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
             }
         });
 
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }

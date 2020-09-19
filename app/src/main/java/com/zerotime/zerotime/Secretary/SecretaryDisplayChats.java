@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Secretary;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import com.zerotime.zerotime.Secretary.Adapters.DisplayChatsAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.ChatList;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
 import com.zerotime.zerotime.databinding.ActivitySecretaryDisplayChatsBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
         binding = ActivitySecretaryDisplayChatsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
         binding.secretaryDisplayChatsRecycler.setHasFixedSize(true);
         binding.secretaryDisplayChatsRecycler.setLayoutManager(new LinearLayoutManager(this));
 
@@ -146,5 +148,12 @@ public class SecretaryDisplayChats extends AppCompatActivity {
 
             }
         });
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
+
     }
 }

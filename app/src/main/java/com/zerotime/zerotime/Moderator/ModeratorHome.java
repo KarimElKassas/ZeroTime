@@ -3,12 +3,14 @@ package com.zerotime.zerotime.Moderator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
 import com.zerotime.zerotime.databinding.ActivityModeratorHomeBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 public class ModeratorHome extends AppCompatActivity {
     private ActivityModeratorHomeBinding binding;
@@ -19,8 +21,7 @@ public class ModeratorHome extends AppCompatActivity {
         binding = ActivityModeratorHomeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        Toast.makeText(this, "Moderator", Toast.LENGTH_SHORT).show();
-
+        checkInternetConnection();
         //New Orders Button
         binding.ModeratorHomeOrdersBtn.setOnClickListener(view1 -> {
             Intent i = new Intent(ModeratorHome.this, FollowingTheOrderState.class);
@@ -53,6 +54,13 @@ public class ModeratorHome extends AppCompatActivity {
             Intent i = new Intent(ModeratorHome.this, ModeratorNumberOfOrders.class);
             startActivity(i);
         });
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.Secretary.Adapters.FollowingOrderAdapter;
 import com.zerotime.zerotime.databinding.ActivityFollowingTheOrderStateBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
@@ -40,7 +42,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
         binding = ActivityFollowingTheOrderStateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.OrderStateRecycler.setLayoutManager(mLayoutManager);
@@ -102,6 +104,12 @@ public class FollowingTheOrderState extends AppCompatActivity {
         });
 
     }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
+    }
 
 }
