@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +26,13 @@ public class DisplayOffersFragment extends Fragment {
     private FragmentDisplayOffersBinding binding;
 
     private DatabaseReference offersRef;
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentDisplayOffersBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
+        view = binding.getRoot();
 
         offersRef = FirebaseDatabase.getInstance().getReference("Offers");
 
@@ -96,6 +98,26 @@ public class DisplayOffersFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+    }
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+
+            if( keyCode == KeyEvent.KEYCODE_BACK )
+            {
+
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
+
+                return true;
+            }
+
+            return false;
         });
     }
 }

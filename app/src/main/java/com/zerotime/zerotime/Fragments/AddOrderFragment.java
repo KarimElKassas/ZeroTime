@@ -1,12 +1,16 @@
 package com.zerotime.zerotime.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -39,20 +44,21 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
 
     private boolean doubleBackToExitPressedOnce = false;
     FragmentAddOrderBinding binding;
-    DatabaseReference ordersRef,deliveredOrdersCountRef,deliveredOrdersRef;
+    DatabaseReference ordersRef, deliveredOrdersCountRef, deliveredOrdersRef;
 
     String userPhone;
     int deliveredOrdersCount;
-    HashMap<String,String> ordersMap = new HashMap<>();
+    HashMap<String, String> ordersMap = new HashMap<>();
     private static final String[] sizes = {"صغير", "متوسط", "كبير"};
     Context context;
-
+    View view;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentAddOrderBinding.inflate(inflater,container,false);
-        View view =  binding.getRoot();
+        view = binding.getRoot();
+        context = container.getContext();
         // Getting User Phone
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
         userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
@@ -74,72 +80,74 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
 
         return view;
     }
-    private void checkData(){
+
+    private void checkData() {
         //Order Description Validation
-        if (TextUtils.isEmpty(binding.addOrderOrderDescriptionEditText.getText())){
+        if (TextUtils.isEmpty(binding.addOrderOrderDescriptionEditText.getText())) {
             binding.addOrderOrderDescriptionEditText.setError("من فضلك ادخل وصف الطلب !");
             binding.addOrderOrderDescriptionEditText.requestFocus();
             return;
         }
         //Receiver Name Validation
-        if (TextUtils.isEmpty(binding.addOrderReceiverNameEditText.getText())){
+        if (TextUtils.isEmpty(binding.addOrderReceiverNameEditText.getText())) {
             binding.addOrderReceiverNameEditText.setError("من فضلك ادخل اسم المستلم");
             binding.addOrderReceiverNameEditText.requestFocus();
             return;
         }
         //Primary Phone Validation
-        if (TextUtils.isEmpty(binding.addOrderReceiverPrimaryPhoneEditText.getText())){
+        if (TextUtils.isEmpty(binding.addOrderReceiverPrimaryPhoneEditText.getText())) {
             binding.addOrderReceiverPrimaryPhoneEditText.setError("ادخل رقم الهاتف الاول للمستلم من فضلك !");
             binding.addOrderReceiverPrimaryPhoneEditText.requestFocus();
             return;
         }
-        if (Objects.requireNonNull(binding.addOrderReceiverPrimaryPhoneEditText.getText()).length() != 11){
+        if (Objects.requireNonNull(binding.addOrderReceiverPrimaryPhoneEditText.getText()).length() != 11) {
             binding.addOrderReceiverPrimaryPhoneEditText.setError("رقم الهاتف يجب ان يتكون من 11 رقم فقط !");
             binding.addOrderReceiverPrimaryPhoneEditText.requestFocus();
             return;
         }
-        if (!binding.addOrderReceiverPrimaryPhoneEditText.getText().toString().startsWith("01")){
+        if (!binding.addOrderReceiverPrimaryPhoneEditText.getText().toString().startsWith("01")) {
             binding.addOrderReceiverPrimaryPhoneEditText.setError("رقم الهاتف يجب ان يبدأ بـ 01 !");
             binding.addOrderReceiverPrimaryPhoneEditText.requestFocus();
             return;
         }
         //Secondary Phone Validation
-        if (TextUtils.isEmpty(binding.addOrderReceiverSecondaryPhoneEditText.getText())){
+        if (TextUtils.isEmpty(binding.addOrderReceiverSecondaryPhoneEditText.getText())) {
             binding.addOrderReceiverSecondaryPhoneEditText.setError("ادخل رقم الهاتف الثانى للمستلم من فضلك !");
             binding.addOrderReceiverSecondaryPhoneEditText.requestFocus();
             return;
         }
-        if (Objects.requireNonNull(binding.addOrderReceiverSecondaryPhoneEditText.getText()).length() != 11){
+        if (Objects.requireNonNull(binding.addOrderReceiverSecondaryPhoneEditText.getText()).length() != 11) {
             binding.addOrderReceiverSecondaryPhoneEditText.setError("رقم الهاتف يجب ان يتكون من 11 رقم فقط !");
             binding.addOrderReceiverSecondaryPhoneEditText.requestFocus();
             return;
         }
-        if (!binding.addOrderReceiverSecondaryPhoneEditText.getText().toString().startsWith("01")){
+        if (!binding.addOrderReceiverSecondaryPhoneEditText.getText().toString().startsWith("01")) {
             binding.addOrderReceiverSecondaryPhoneEditText.setError("رقم الهاتف يجب ان يبدأ بـ 01 !");
             binding.addOrderReceiverSecondaryPhoneEditText.requestFocus();
             return;
         }
         String primaryPhone = binding.addOrderReceiverPrimaryPhoneEditText.getText().toString();
         String secondaryPhone = binding.addOrderReceiverSecondaryPhoneEditText.getText().toString();
-        if (primaryPhone.equals(secondaryPhone)){
-            Toast.makeText(getContext(),"من فضلك ادخل رقمين مختلفين !",Toast.LENGTH_SHORT).show();
+        if (primaryPhone.equals(secondaryPhone)) {
+            Toast.makeText(getContext(), "من فضلك ادخل رقمين مختلفين !", Toast.LENGTH_SHORT).show();
             return;
         }
         //User Address Validation
-        if (TextUtils.isEmpty(binding.addOrderReceiverAddressEditText.getText())){
+        if (TextUtils.isEmpty(binding.addOrderReceiverAddressEditText.getText())) {
             binding.addOrderReceiverAddressEditText.setError("ادخل عنوان المستلم بالتفصيل من فضلك !");
             binding.addOrderReceiverAddressEditText.requestFocus();
             return;
         }
         //Order Price Validation
-        if (TextUtils.isEmpty(binding.addOrderOrderPriceEditText.getText())){
+        if (TextUtils.isEmpty(binding.addOrderOrderPriceEditText.getText())) {
             binding.addOrderOrderPriceEditText.setError("من فضلك ادخل مبلغ الطلب !");
             binding.addOrderOrderPriceEditText.requestFocus();
             return;
         }
         requestOrder();
     }
-    private void requestOrder(){
+
+    private void requestOrder() {
         @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
         String currentTime = df.format(Calendar.getInstance().getTime());
 
@@ -149,35 +157,36 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         ordersMap.put("ReceiverSecondaryPhone", Objects.requireNonNull(binding.addOrderReceiverSecondaryPhoneEditText.getText()).toString());
         ordersMap.put("ReceiverAddress", Objects.requireNonNull(binding.addOrderReceiverAddressEditText.getText()).toString());
         ordersMap.put("OrderPrice", Objects.requireNonNull(binding.addOrderOrderPriceEditText.getText()).toString());
-        ordersMap.put("OrderDate",currentTime);
-        ordersMap.put("OrderState","لم يتم الاستلام");
-        ordersMap.put("UserPrimaryPhone",userPhone);
+        ordersMap.put("OrderDate", currentTime);
+        ordersMap.put("OrderState", "لم يتم الاستلام");
+        ordersMap.put("UserPrimaryPhone", userPhone);
 
-        if (binding.addOrderArrivalDateNotesEditText.getText() == null || TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText()) ){
-            ordersMap.put("ArrivalNotes","لا توجد");
+        if (binding.addOrderArrivalDateNotesEditText.getText() == null || TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText())) {
+            ordersMap.put("ArrivalNotes", "لا توجد");
 
-        }else {
-            ordersMap.put("ArrivalNotes",Objects.requireNonNull(binding.addOrderArrivalDateNotesEditText.getText()).toString());
+        } else {
+            ordersMap.put("ArrivalNotes", Objects.requireNonNull(binding.addOrderArrivalDateNotesEditText.getText()).toString());
         }
         ordersRef.child(currentTime).setValue(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(getContext(),"تم ارسال الطلب بنجاح",Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "تم ارسال الطلب بنجاح", Toast.LENGTH_SHORT).show();
                     clearTools();
                 }
             }
         });
 
     }
-    private void clearTools(){
+
+    private void clearTools() {
         Objects.requireNonNull(binding.addOrderOrderDescriptionEditText.getText()).clear();
         Objects.requireNonNull(binding.addOrderReceiverNameEditText.getText()).clear();
         Objects.requireNonNull(binding.addOrderReceiverPrimaryPhoneEditText.getText()).clear();
         Objects.requireNonNull(binding.addOrderReceiverSecondaryPhoneEditText.getText()).clear();
         Objects.requireNonNull(binding.addOrderReceiverAddressEditText.getText()).clear();
         Objects.requireNonNull(binding.addOrderOrderPriceEditText.getText()).clear();
-        if (!TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText())){
+        if (!TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText())) {
             Objects.requireNonNull(binding.addOrderArrivalDateNotesEditText.getText()).clear();
         }
         binding.addOrderOrderSizeSpinner.setSelection(0);
@@ -187,15 +196,15 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         switch (position) {
             case 0:
-                ordersMap.put("OrderSize","صغير");
+                ordersMap.put("OrderSize", "صغير");
                 // Whatever you want to happen when the first item gets selected
                 break;
             case 1:
-                ordersMap.put("OrderSize","متوسط");
+                ordersMap.put("OrderSize", "متوسط");
                 // Whatever you want to happen when the second item gets selected
                 break;
             case 2:
-                ordersMap.put("OrderSize","كبير");
+                ordersMap.put("OrderSize", "كبير");
                 // Whatever you want to happen when the thrid item gets selected
                 break;
 
@@ -206,25 +215,19 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
     @Override
     public void onResume() {
 
         super.onResume();
-
-        Objects.requireNonNull(getView()).setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener((v, keyCode, event) -> {
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
 
             if( keyCode == KeyEvent.KEYCODE_BACK )
             {
-                Fragment newFragment = new HomeFragment();
                 assert getFragmentManager() != null;
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.Frame_Content, newFragment);
-                transaction.addToBackStack(null);
-
-                transaction.commit();
+                getFragmentManager().popBackStackImmediate();
                 return true;
             }
 

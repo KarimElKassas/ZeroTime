@@ -2,6 +2,7 @@ package com.zerotime.zerotime;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.NotificationChannel;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 
+import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +34,28 @@ public class Home extends AppCompatActivity {
     public int notificationID;
     NotificationManager notificationManager;
     String userId;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 0){
+            this.finish();
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 1) {
+            binding.bottomNav.setCurrentActiveItem(0);
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 2) {
+            binding.bottomNav.setCurrentActiveItem(0);
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
+            binding.bottomNav.setCurrentActiveItem(0);
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +64,7 @@ public class Home extends AppCompatActivity {
         setContentView(view);
 
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
-        userId = prefs.getString("isLogged","");
+        userId = prefs.getString("isLogged", "");
 
         chatRef = FirebaseDatabase.getInstance().getReference("Chats");
         chatRef.addValueEventListener(new ValueEventListener() {
@@ -73,7 +97,7 @@ public class Home extends AppCompatActivity {
                         notificationManager.createNotificationChannel(mChannel);
                     }
                     notificationID = (int) System.currentTimeMillis();
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(Home.this,"my_channel_01")
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(Home.this, "my_channel_01")
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setVibrate(new long[]{1000, 1000})
                             .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -122,6 +146,7 @@ public class Home extends AppCompatActivity {
                     */
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -129,48 +154,48 @@ public class Home extends AppCompatActivity {
         });
 
         // Default Fragment To Open
-        getSupportFragmentManager().beginTransaction().replace(R.id.Frame_Content,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.Frame_Content, new HomeFragment()).commit();
 
         //Attach Listener To Bottom Nav
-        binding.bottomNav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        //binding.bottomNav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
+        binding.bottomNav.setNavigationChangeListener(new BubbleNavigationChangeListener() {
+            @Override
+            public void onNavigationChanged(View view, int position) {
+                //navigation changed, do something
+                switch (position) {
+                    case 0:
+                        Fragment newFragment = new HomeFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.Frame_Content, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+                        break;
+                    case 1:
+                        ProfileFragment fragment2 = new ProfileFragment();
+                        FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction2.replace(R.id.Frame_Content, fragment2);
+                        fragmentTransaction2.addToBackStack(null);
+                        fragmentTransaction2.commit();
+                        break;
+                    case 2:
+                        ContactFragment fragment3 = new ContactFragment();
+                        FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction3.replace(R.id.Frame_Content, fragment3);
+                        fragmentTransaction3.addToBackStack(null);
+                        fragmentTransaction3.commit();
+                        break;
+                    case 3:
+                        SettingsFragment fragment4 = new SettingsFragment();
+                        FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction4.replace(R.id.Frame_Content, fragment4);
+                        fragmentTransaction4.addToBackStack(null);
+                        fragmentTransaction4.commit();
+                        break;
+                }
+            }
+        });
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = menuItem -> {
-        switch (menuItem.getItemId()){
-
-            case R.id.bottom_nav_home :
-                HomeFragment fragment1 = new HomeFragment();
-                FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction1.replace(R.id.Frame_Content,fragment1);
-                fragmentTransaction1.commit();
-                return true;
-
-            case R.id.bottom_nav_profile :
-                ProfileFragment fragment2 = new ProfileFragment();
-                FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction2.replace(R.id.Frame_Content,fragment2);
-                fragmentTransaction2.commit();
-                return true;
-
-            case R.id.bottom_nav_contact :
-                ContactFragment fragment3 = new ContactFragment();
-                FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction3.replace(R.id.Frame_Content,fragment3);
-                fragmentTransaction3.commit();
-                return true;
-
-            case R.id.bottom_nav_settings :
-                SettingsFragment fragment4 = new SettingsFragment();
-                FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction4.replace(R.id.Frame_Content,fragment4);
-                fragmentTransaction4.commit();
-                return true;
-
-
-        }
-
-        return false;
-    };
 
 }

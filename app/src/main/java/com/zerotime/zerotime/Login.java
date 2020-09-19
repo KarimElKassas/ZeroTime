@@ -66,6 +66,7 @@ public class Login extends AppCompatActivity {
         editor.putString("isLogged", "null");
         editor.apply();
 
+        //Login With User
         binding.loginLoginBtn.setOnClickListener(view1 -> checkData());
         //Return To Sign Up
         binding.loginSignUpTextView.setOnClickListener(view12 -> goToSignUp());

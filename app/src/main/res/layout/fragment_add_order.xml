@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Frame_Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,7 +15,7 @@
         android:fillViewport="true"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/addOrder_hidden_bottom_nav">
+        app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -191,7 +192,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/addOrder_hidden_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -201,7 +202,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@drawable/bottom_nav_icon_back"
-        app:menu="@menu/bottom_nav_menu"/>
+        app:menu="@menu/bottom_nav_menu"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
 <!--
 <com.google.android.material.bottomnavigation.BottomNavigationView

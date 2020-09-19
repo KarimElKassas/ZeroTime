@@ -48,6 +48,8 @@
 
         </activity>
         <!-- Moderator -->
+        <activity android:name=".Moderator.Moderator_Clerks_History"/>
+        <activity android:name=".Moderator.ModeratorNumberOfOrders"/>
         <activity android:name=".Moderator.ModeratorAddOffer" />
         <activity android:name=".Moderator.ModeratorAddClerk" />
         <activity android:name=".Moderator.ModeratorViewClerks" />
