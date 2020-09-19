@@ -15,6 +15,9 @@ import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
 import com.zerotime.zerotime.Moderator.Adapters.NewOrdersAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.NewOrders;
 import com.zerotime.zerotime.databinding.ActivityModeratorNewOrdersDisplayBinding;
+import com.zerotime.zerotime.myBroadCast;
+
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,7 +37,7 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
         binding = ActivityModeratorNewOrdersDisplayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
         binding.displayOrdersRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.displayOrdersRecycler.setLayoutManager(mLayoutManager);
@@ -83,6 +86,13 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
 
             }
         });
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }

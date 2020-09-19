@@ -3,6 +3,7 @@ package com.zerotime.zerotime;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,8 @@ public class SplashScreen extends AppCompatActivity {
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+
         //-------------------------------------------------------------------------------
         //Animation
         animation();
@@ -39,8 +42,10 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             prefs.getString("isLogged", "");
             if (!Objects.requireNonNull(prefs.getString("isLogged", "null")).equals("null")) {
+                checkInternetConnection();
                 goToHome();
             } else {
+                checkInternetConnection();
                 goToLogin();
             }
 
@@ -66,5 +71,12 @@ public class SplashScreen extends AppCompatActivity {
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
+
     }
 }

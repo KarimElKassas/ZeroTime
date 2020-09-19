@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivitySecretaryUserDataBinding;
 import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ public class Secretary_UserData extends AppCompatActivity {
         binding = ActivitySecretaryUserDataBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        checkInternetConnection();
         Intent intent = getIntent();
         phone = intent.getStringExtra("UserPhone");
 
@@ -62,4 +65,12 @@ public class Secretary_UserData extends AppCompatActivity {
         });
 
     }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
+
+    }
+
 }

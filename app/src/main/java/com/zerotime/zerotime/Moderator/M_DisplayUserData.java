@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Moderator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.databinding.ActivityMDisplayUserDataBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.Objects;
 
@@ -31,7 +33,7 @@ public class M_DisplayUserData extends AppCompatActivity implements AdapterView.
         binding = ActivityMDisplayUserDataBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
         userPrimaryPhone = getIntent().getStringExtra("UserPhone");
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         //Regions Spinner
@@ -81,6 +83,13 @@ public class M_DisplayUserData extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }

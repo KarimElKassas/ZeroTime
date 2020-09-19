@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.databinding.ActivityFollowingOrderSettingsBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +48,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
         binding = ActivityFollowingOrderSettingsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
         deliveredOrdersCount = 0;
 
         ordersMap = new HashMap<>();
@@ -347,5 +349,12 @@ public class FollowingOrderSettings extends AppCompatActivity {
                 Toast.makeText(this, "new state null", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
+
     }
 }

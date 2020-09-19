@@ -63,6 +63,10 @@ public class Home extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+
+
+
+
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         userId = prefs.getString("isLogged", "");
 

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,6 +22,7 @@ import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivityHomeBinding;
 import com.zerotime.zerotime.databinding.ActivityModeratorClerksHistoryBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -39,7 +41,7 @@ public class Moderator_Clerks_History extends AppCompatActivity {
         binding = ActivityModeratorClerksHistoryBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
         ClerkPhone = getIntent().getStringExtra("ClerkPhone");
         binding.recyclerClerksHistory.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -88,6 +90,13 @@ public class Moderator_Clerks_History extends AppCompatActivity {
             }
         });
 
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }

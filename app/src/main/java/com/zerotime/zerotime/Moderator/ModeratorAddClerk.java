@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Moderator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zerotime.zerotime.databinding.ActivityModeratorAddClerckBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -29,6 +31,8 @@ public class ModeratorAddClerk extends AppCompatActivity {
         binding = ActivityModeratorAddClerckBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        checkInternetConnection();
+
         clerksRef = FirebaseDatabase.getInstance().getReference("Clerks");
         clerksMap = new HashMap<>();
 
@@ -85,6 +89,13 @@ public class ModeratorAddClerk extends AppCompatActivity {
             }
         });
 
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }

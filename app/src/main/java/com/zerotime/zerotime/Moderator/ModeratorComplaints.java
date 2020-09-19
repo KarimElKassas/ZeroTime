@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,6 +22,7 @@ import com.zerotime.zerotime.Room.Data.UserDao;
 import com.zerotime.zerotime.Room.Model.Complaint;
 import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.databinding.ActivityModeratorComplaintsBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class ModeratorComplaints extends AppCompatActivity {
         adapter = new ComplaintAdapter();
         binding.recyclerComplaints.setAdapter(adapter);
 
-
+        checkInternetConnection();
         //Room DB
         dataBase = Room.databaseBuilder(this, UserDataBase.class, "Complaint")
                 .allowMainThreadQueries().build();
@@ -83,6 +85,13 @@ public class ModeratorComplaints extends AppCompatActivity {
                 notifyAll();
             }
         });
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 

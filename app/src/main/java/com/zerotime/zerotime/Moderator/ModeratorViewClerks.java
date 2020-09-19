@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,7 @@ import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 import com.zerotime.zerotime.databinding.ActivityModeratorViewClerksBinding;
+import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
@@ -37,7 +39,7 @@ public class ModeratorViewClerks extends AppCompatActivity {
         binding = ActivityModeratorViewClerksBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        checkInternetConnection();
 
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
@@ -83,6 +85,13 @@ public class ModeratorViewClerks extends AppCompatActivity {
 
             }
         });
+
+    }
+    private void checkInternetConnection(){
+        myBroadCast broadCast=new myBroadCast();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast,intentFilter);
 
     }
 }
