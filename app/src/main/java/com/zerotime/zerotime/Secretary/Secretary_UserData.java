@@ -65,6 +65,15 @@ public class Secretary_UserData extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Secretary_UserData.this, FollowingTheOrderState.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void checkInternetConnection(){
         myBroadCast broadCast=new myBroadCast();
         IntentFilter intentFilter=new IntentFilter();

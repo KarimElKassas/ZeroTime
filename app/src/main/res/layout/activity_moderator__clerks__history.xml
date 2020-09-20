@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Moderator.Moderator_Clerks_History">
+    tools:context=".Moderator.ModeratorClerksHistory">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_clerks_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_slide_right"
+
         tools:listitem="@layout/clerk_history_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/OrderStateRecycler"
         android:layout_width="match_parent"
+        android:layoutAnimation="@anim/layout_slide_right"
         android:layout_height="match_parent"
         tools:listitem="@layout/following_order_item"
         android:layout_margin="@dimen/_8sdp"/>

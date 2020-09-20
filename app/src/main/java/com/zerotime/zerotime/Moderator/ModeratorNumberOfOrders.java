@@ -2,13 +2,18 @@ package com.zerotime.zerotime.Moderator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +54,8 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
         binding.recyclerOrdersNumber.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerOrdersNumber.setLayoutManager(linearLayoutManager);
+        binding.recyclerOrdersNumber.setItemAnimator(new DefaultItemAnimator());
+
         preferences = getSharedPreferences("UserState", MODE_PRIVATE);
         ordersNumbers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("OrdersCount");
@@ -86,7 +93,17 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
 
 
     }
+    private void layoutAnimation(RecyclerView recyclerView) {
 
+        Context context = recyclerView.getContext();
+        LayoutAnimationController animationController =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_right);
+        recyclerView.setLayoutAnimation(animationController);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
+
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -18,6 +18,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Login;
+import com.zerotime.zerotime.Moderator.ModeratorHome;
+import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.ActivitySecretaryHomeBinding;
@@ -90,6 +93,7 @@ public class SecretaryHome extends AppCompatActivity {
 
         binding.secretaryHomeOrdersBtn.setOnClickListener(view1 -> {
             Intent intent = new Intent(SecretaryHome.this,FollowingTheOrderState.class);
+           intent.putExtra("from","S");
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
@@ -98,7 +102,6 @@ public class SecretaryHome extends AppCompatActivity {
         binding.secretaryHomeChatsBtn.setOnClickListener(view1 -> {
             Intent intent = new Intent(SecretaryHome.this, SecretaryDisplayChats.class);
             startActivity(intent);
-
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
 
@@ -106,6 +109,13 @@ public class SecretaryHome extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(SecretaryHome.this, Login.class);
+        startActivity(i);
+        finish();
     }
     private void checkInternetConnection(){
         myBroadCast broadCast=new myBroadCast();

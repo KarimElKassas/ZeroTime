@@ -2,23 +2,31 @@ package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Fragments.ProfileFragment;
+import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.Moderator.ModeratorNumberOfOrders;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.Secretary.Adapters.FollowingOrderAdapter;
 import com.zerotime.zerotime.databinding.ActivityFollowingTheOrderStateBinding;
@@ -39,16 +47,50 @@ public class FollowingTheOrderState extends AppCompatActivity {
             android.R.layout.simple_spinner_item, states);*/
 
 
- /*  @Override
-   public void onBackPressed() {
-       super.onBackPressed();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
+        String userType = prefs.getString("UserType", "");
+
+        if (userType != null) {
+            switch (userType) {
+                case "Secretary":
+                    Intent i = new Intent(FollowingTheOrderState.this, SecretaryHome.class);
+                    startActivity(i);
+                    finish();
+                    break;
+
+                case "Moderator":
+                    Intent ii = new Intent(FollowingTheOrderState.this, ModeratorHome.class);
+                    startActivity(ii);
+                    finish();
+                    break;
+
+                case "User":
+                    Intent intent = new Intent(FollowingTheOrderState.this, ProfileFragment.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+
+            }
+        }
 
 
-           Intent i = new Intent(FollowingTheOrderState.this, ModeratorHome.class);
-           startActivity(i);
-           finish();
+    }
 
-   }*/
+    private void layoutAnimation(RecyclerView recyclerView) {
+
+        Context context = recyclerView.getContext();
+        LayoutAnimationController animationController =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_right);
+        recyclerView.setLayoutAnimation(animationController);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +102,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.OrderStateRecycler.setLayoutManager(mLayoutManager);
-
+        binding.OrderStateRecycler.setItemAnimator(new DefaultItemAnimator());
         ordersList = new ArrayList<>();
 
         OrderStateRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
@@ -118,11 +160,12 @@ public class FollowingTheOrderState extends AppCompatActivity {
         });
 
     }
-    private void checkInternetConnection(){
-        myBroadCast broadCast=new myBroadCast();
-        IntentFilter intentFilter=new IntentFilter();
+
+    private void checkInternetConnection() {
+        myBroadCast broadCast = new myBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast,intentFilter);
+        registerReceiver(broadCast, intentFilter);
 
     }
 

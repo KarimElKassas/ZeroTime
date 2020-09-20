@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
 import com.zerotime.zerotime.databinding.ActivityModeratorHomeBinding;
 import com.zerotime.zerotime.myBroadCast;
@@ -25,6 +26,7 @@ public class ModeratorHome extends AppCompatActivity {
         //New Orders Button
         binding.ModeratorHomeOrdersBtn.setOnClickListener(view1 -> {
             Intent i = new Intent(ModeratorHome.this, FollowingTheOrderState.class);
+            i.putExtra("from", "M");
             startActivity(i);
             finish();
         });
@@ -62,11 +64,20 @@ public class ModeratorHome extends AppCompatActivity {
         });
 
     }
-    private void checkInternetConnection(){
-        myBroadCast broadCast=new myBroadCast();
-        IntentFilter intentFilter=new IntentFilter();
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ModeratorHome.this, Login.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void checkInternetConnection() {
+        myBroadCast broadCast = new myBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast,intentFilter);
+        registerReceiver(broadCast, intentFilter);
 
     }
 }

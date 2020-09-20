@@ -60,6 +60,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
                     holder.userData.setVisibility(View.VISIBLE);
                     break;
                 case "Moderator":
+
                     holder.settings.setVisibility(View.INVISIBLE);
                     holder.userData.setVisibility(View.VISIBLE);
                     break;

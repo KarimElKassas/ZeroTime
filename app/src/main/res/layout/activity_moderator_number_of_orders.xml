@@ -11,6 +11,7 @@
     android:layout_height="match_parent"
     android:id="@+id/recycler_ordersNumber"
     tools:listitem="@layout/orders_number_item"
+    android:layoutAnimation="@anim/layout_slide_right"
 
     />
 </androidx.constraintlayout.widget.ConstraintLayout>

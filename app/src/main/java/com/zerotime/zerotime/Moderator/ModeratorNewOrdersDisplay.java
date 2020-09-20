@@ -2,6 +2,7 @@ package com.zerotime.zerotime.Moderator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +15,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
 import com.zerotime.zerotime.Moderator.Adapters.NewOrdersAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.NewOrders;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivityModeratorNewOrdersDisplayBinding;
 import com.zerotime.zerotime.myBroadCast;
 
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import java.util.ArrayList;
 
@@ -41,7 +46,8 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
         binding.displayOrdersRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.displayOrdersRecycler.setLayoutManager(mLayoutManager);
-
+        binding.displayOrdersRecycler.setItemAnimator(new DefaultItemAnimator());
+        layoutAnimation(binding.displayOrdersRecycler);
         ordersList = new ArrayList<>();
 
         pendingOrderRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
@@ -86,6 +92,17 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
 
             }
         });
+
+    }
+    private void layoutAnimation(RecyclerView recyclerView) {
+
+        Context context = recyclerView.getContext();
+        LayoutAnimationController animationController =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_right);
+        recyclerView.setLayoutAnimation(animationController);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
 
     }
     private void checkInternetConnection(){

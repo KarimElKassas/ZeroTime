@@ -2,32 +2,32 @@ package com.zerotime.zerotime.Moderator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
 import com.zerotime.zerotime.Moderator.Adapters.Clerk_History_Adapter;
 import com.zerotime.zerotime.Moderator.Pojos.Clerk_History;
-import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ActivityHomeBinding;
 import com.zerotime.zerotime.databinding.ActivityModeratorClerksHistoryBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class Moderator_Clerks_History extends AppCompatActivity {
+public class ModeratorClerksHistory extends AppCompatActivity {
     private ActivityModeratorClerksHistoryBinding binding;
 
     private DatabaseReference ClerksRef;
@@ -46,6 +46,8 @@ public class Moderator_Clerks_History extends AppCompatActivity {
         binding.recyclerClerksHistory.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.recyclerClerksHistory.setLayoutManager(mLayoutManager);
+        binding.recyclerClerksHistory.setItemAnimator(new DefaultItemAnimator());
+
         ClerksRef = FirebaseDatabase.getInstance().getReference().child("DeliveredOrders");
         clerksList = new ArrayList<>();
 
@@ -79,7 +81,7 @@ public class Moderator_Clerks_History extends AppCompatActivity {
                 }
 
 
-                adapter = new Clerk_History_Adapter(clerksList, Moderator_Clerks_History.this);
+                adapter = new Clerk_History_Adapter(clerksList, ModeratorClerksHistory.this);
                 binding.recyclerClerksHistory.setAdapter(adapter);
 
             }
@@ -89,6 +91,17 @@ public class Moderator_Clerks_History extends AppCompatActivity {
 
             }
         });
+
+
+    }
+    private void layoutAnimation(RecyclerView recyclerView) {
+
+        Context context = recyclerView.getContext();
+        LayoutAnimationController animationController =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_right);
+        recyclerView.setLayoutAnimation(animationController);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
 
 
     }

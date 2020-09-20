@@ -3,24 +3,19 @@ package com.zerotime.zerotime.Moderator.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
-import com.zerotime.zerotime.Moderator.Moderator_Clerks_History;
+import com.zerotime.zerotime.Moderator.ModeratorClerksHistory;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -85,7 +80,7 @@ public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewH
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(context, Moderator_Clerks_History.class);
+                Intent i = new Intent(context, ModeratorClerksHistory.class);
                 i.putExtra("ClerkPhone",holder.ClerkPhone1.getText().toString());
                 context.startActivity(i);
             }
