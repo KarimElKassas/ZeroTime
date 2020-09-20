@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,6 +17,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -37,21 +40,23 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class AddOrderFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class AddOrderFragment extends Fragment {
 
-    private boolean doubleBackToExitPressedOnce = false;
     FragmentAddOrderBinding binding;
     DatabaseReference ordersRef, deliveredOrdersCountRef, deliveredOrdersRef;
 
     String userPhone;
-    int deliveredOrdersCount;
     HashMap<String, String> ordersMap = new HashMap<>();
-    private static final String[] sizes = {"صغير", "متوسط", "كبير"};
     Context context;
     View view;
+
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +64,15 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         binding = FragmentAddOrderBinding.inflate(inflater,container,false);
         view = binding.getRoot();
         context = container.getContext();
+        //animation
+        inAnimation = new AlphaAnimation(0f, 2f);
+        outAnimation = new AlphaAnimation(2f, 0f);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         // Getting User Phone
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
         userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
@@ -66,19 +80,10 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         ordersRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
         deliveredOrdersCountRef = FirebaseDatabase.getInstance().getReference("OrdersCount");
         deliveredOrdersRef = FirebaseDatabase.getInstance().getReference("DeliveredOrders");
-        //Sizes Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, sizes);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.addOrderOrderSizeSpinner.setAdapter(adapter);
-        binding.addOrderOrderSizeSpinner.setOnItemSelectedListener(this);
 
         binding.addOrderRequestBtn.setOnClickListener(view1 -> {
             checkData();
         });
-
-        return view;
     }
 
     private void checkData() {
@@ -86,6 +91,12 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         if (TextUtils.isEmpty(binding.addOrderOrderDescriptionEditText.getText())) {
             binding.addOrderOrderDescriptionEditText.setError("من فضلك ادخل وصف الطلب !");
             binding.addOrderOrderDescriptionEditText.requestFocus();
+            return;
+        }
+        //Order Price Validation
+        if (TextUtils.isEmpty(binding.addOrderOrderPriceEditText.getText())) {
+            binding.addOrderOrderPriceEditText.setError("من فضلك ادخل مبلغ الطلب !");
+            binding.addOrderOrderPriceEditText.requestFocus();
             return;
         }
         //Receiver Name Validation
@@ -129,7 +140,7 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         String primaryPhone = binding.addOrderReceiverPrimaryPhoneEditText.getText().toString();
         String secondaryPhone = binding.addOrderReceiverSecondaryPhoneEditText.getText().toString();
         if (primaryPhone.equals(secondaryPhone)) {
-            Toast.makeText(getContext(), "من فضلك ادخل رقمين مختلفين !", Toast.LENGTH_SHORT).show();
+            Toasty.error(context,"من فضلك ادخل رقمين مختلفين !",Toasty.LENGTH_SHORT,true).show();
             return;
         }
         //User Address Validation
@@ -138,18 +149,35 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
             binding.addOrderReceiverAddressEditText.requestFocus();
             return;
         }
-        //Order Price Validation
-        if (TextUtils.isEmpty(binding.addOrderOrderPriceEditText.getText())) {
-            binding.addOrderOrderPriceEditText.setError("من فضلك ادخل مبلغ الطلب !");
-            binding.addOrderOrderPriceEditText.requestFocus();
+
+        //Order Size Validation
+        if (!binding.addOrderBigOrderRadioBtn.isChecked() && !binding.addOrderMediumOrderRadioBtn.isChecked() && !binding.addOrderSmallOrderRadioBtn.isChecked()){
+            Toasty.error(context,"من فضلك قم باختيار حجم الطلب !",Toasty.LENGTH_SHORT,true).show();
             return;
         }
+        getOrderSize();
         requestOrder();
     }
+    private void getOrderSize(){
+        if (binding.addOrderBigOrderRadioBtn.isChecked()){
+            ordersMap.put("OrderSize","كبير");
+        }else if (binding.addOrderMediumOrderRadioBtn.isChecked()){
+            ordersMap.put("OrderSize","متوسط");
+        }else if (binding.addOrderSmallOrderRadioBtn.isChecked()){
+            ordersMap.put("OrderSize","صغير");
+        }
 
+    }
     private void requestOrder() {
         @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
         String currentTime = df.format(Calendar.getInstance().getTime());
+
+        //Progress Bar
+        binding.addOrderProgressBarHolder.setAnimation(inAnimation);
+        binding.addOrderProgressBarHolder.setVisibility(View.VISIBLE);
+        ((Activity)context).getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         ordersMap.put("OrderDescription", Objects.requireNonNull(binding.addOrderOrderDescriptionEditText.getText()).toString());
         ordersMap.put("ReceiverName", Objects.requireNonNull(binding.addOrderReceiverNameEditText.getText()).toString());
@@ -171,8 +199,23 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "تم ارسال الطلب بنجاح", Toast.LENGTH_SHORT).show();
+                    //clear progress bar
+                    binding.addOrderProgressBarHolder.setAnimation(outAnimation);
+                    binding.addOrderProgressBarHolder.setVisibility(View.GONE);
+                    ((Activity)context).getWindow()
+                            .clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    Toasty.success(context,"تم ارسال الطلب بنجاح",Toasty.LENGTH_SHORT,true).show();
                     clearTools();
+                }else {
+                    //clear progress bar
+                    binding.addOrderProgressBarHolder.setAnimation(outAnimation);
+                    binding.addOrderProgressBarHolder.setVisibility(View.GONE);
+                    ((Activity)context).getWindow()
+                            .clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                    Toasty.error(context,
+                            Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage())
+                            ,Toasty.LENGTH_SHORT,true).show();
                 }
             }
         });
@@ -189,31 +232,9 @@ public class AddOrderFragment extends Fragment implements AdapterView.OnItemSele
         if (!TextUtils.isEmpty(binding.addOrderArrivalDateNotesEditText.getText())) {
             Objects.requireNonNull(binding.addOrderArrivalDateNotesEditText.getText()).clear();
         }
-        binding.addOrderOrderSizeSpinner.setSelection(0);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        switch (position) {
-            case 0:
-                ordersMap.put("OrderSize", "صغير");
-                // Whatever you want to happen when the first item gets selected
-                break;
-            case 1:
-                ordersMap.put("OrderSize", "متوسط");
-                // Whatever you want to happen when the second item gets selected
-                break;
-            case 2:
-                ordersMap.put("OrderSize", "كبير");
-                // Whatever you want to happen when the thrid item gets selected
-                break;
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+        binding.addOrderSmallOrderRadioBtn.setChecked(false);
+        binding.addOrderMediumOrderRadioBtn.setChecked(false);
+        binding.addOrderBigOrderRadioBtn.setChecked(false);
     }
 
     @Override

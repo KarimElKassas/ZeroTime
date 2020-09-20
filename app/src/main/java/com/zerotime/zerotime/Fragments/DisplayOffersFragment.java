@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -36,16 +37,25 @@ public class DisplayOffersFragment extends Fragment {
 
         offersRef = FirebaseDatabase.getInstance().getReference("Offers");
 
-        gettingOffers();
 
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        gettingOffers();
+
+    }
+
     private void gettingOffers(){
         offersRef.child("Offers").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     if (snapshot.hasChildren()){
+                        binding.displayOffersFragmentProgress.setVisibility(View.GONE);
+                        binding.scrollLayout.setVisibility(View.VISIBLE);
                         String firstOffer = snapshot.child("FirstOffer").getValue(String.class);
                         String secondOffer = snapshot.child("SecondOffer").getValue(String.class);
                         String thirdOffer = snapshot.child("ThirdOffer").getValue(String.class);

@@ -20,6 +20,7 @@ public class myBroadCast extends BroadcastReceiver {
         }
         else{
             Intent i=new Intent(context,No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }
     }
