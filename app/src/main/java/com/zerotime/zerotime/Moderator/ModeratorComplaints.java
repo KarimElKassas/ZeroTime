@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
@@ -93,6 +94,13 @@ public class ModeratorComplaints extends AppCompatActivity {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(broadCast,intentFilter);
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(ModeratorComplaints.this,ModeratorHome.class);
+        startActivity(i);
+        finish();
     }
 
 }

@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Moderator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,13 @@ public class ModeratorAddClerk extends AppCompatActivity {
     private String name, phone1, phone2, hasTayara, address;
     private int age;
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(ModeratorAddClerk.this,ModeratorHome.class);
+        startActivity(i);
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
