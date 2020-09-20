@@ -18,4 +18,15 @@
     <string name="login_or_create_new_account_text">او انشاء حساب جديد ؟</string>
     <string name="home_frag_add_order_btn_text">اضافة طلب</string>
     <string name="home_frag_month_offers_btn_text">عروض الشهر</string>
+    <string name="add_order_order_description_hint">وصف الطلب ..</string>
+    <string name="small">صغير</string>
+    <string name="medium">متوسط</string>
+    <string name="big">كبير</string>
+    <string name="add_order_order_price_hint">المبلغ بالجنيه المصرى</string>
+    <string name="add_order_order_notes_hint">ملاحظة عن ميعاد التسليم ( اختيارى )</string>
+    <string name="add_order_receiver_name_hint">اسم المستلم</string>
+    <string name="add_order_receiver_primary_phone_hint">رقم الهاتف الاول للمستلم</string>
+    <string name="add_order_receiver_secondary_phone_hint">رقم الهاتف الثانى للمستلم</string>
+    <string name="add_order_receiver_address_hint">عنوان المستلم بالتفصيل</string>
+    <string name="add_order_order_button_hint">اطلب</string>
 </resources>

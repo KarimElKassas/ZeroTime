@@ -14,19 +14,23 @@
         android:fitsSystemWindows="true"
         android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavDisplayOffers">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/display_offers_fragment_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp">
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_first_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_135sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_8sdp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="@dimen/_12sdp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -36,14 +40,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
-
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_second_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_135sdp"
@@ -51,7 +55,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_8sdp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="@dimen/_12sdp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -62,12 +68,13 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_third_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_135sdp"
@@ -75,7 +82,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_8sdp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="@dimen/_12sdp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -86,12 +95,13 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_fourth_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_135sdp"
@@ -99,7 +109,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_8sdp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="@dimen/_12sdp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -110,12 +122,13 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_fifth_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_135sdp"
@@ -123,7 +136,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_8sdp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="@dimen/_12sdp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -134,12 +149,13 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_sixth_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_135sdp"
@@ -147,7 +163,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:padding="@dimen/_8sdp">
+                android:padding="@dimen/_8sdp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardCornerRadius="@dimen/_12sdp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -158,24 +176,25 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavDisplayOffers"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/display_offers_fragment_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@drawable/bottom_nav_icon_back"
-        app:menu="@menu/bottom_nav_menu"
-        android:visibility="invisible"/>
+        android:indeterminate="true"
+        android:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

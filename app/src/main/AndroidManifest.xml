@@ -64,7 +64,9 @@
         <activity
             android:name=".SignUp"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Home" />
+        <activity
+            android:name=".Home"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Message" />
         <activity android:name=".History" /> <!-- Global -->
         <activity android:name=".SplashScreen">
@@ -94,7 +96,8 @@
 
         <receiver android:name="myBroadCast">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"
+                <action
+                    android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
 
             </intent-filter>
