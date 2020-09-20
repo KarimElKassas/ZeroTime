@@ -18,9 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Secretary.Adapters.FollowingOrderAdapter;
-import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
 import com.zerotime.zerotime.Secretary.Pojos.OrderState;
-import com.zerotime.zerotime.databinding.FragmentFollowMyOrdersBinding;
+import com.zerotime.zerotime.databinding.UserFragmentFollowMyOrdersBinding;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -29,7 +28,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FollowMyOrdersFragment extends Fragment {
 
-    private FragmentFollowMyOrdersBinding binding;
+    private UserFragmentFollowMyOrdersBinding binding;
     private FollowingOrderAdapter adapter;
 
     private DatabaseReference ordersRef;
@@ -38,7 +37,7 @@ public class FollowMyOrdersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentFollowMyOrdersBinding.inflate(getLayoutInflater());
+        binding = UserFragmentFollowMyOrdersBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);

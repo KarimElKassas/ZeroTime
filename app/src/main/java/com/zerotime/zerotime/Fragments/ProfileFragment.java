@@ -13,17 +13,17 @@ import android.view.ViewGroup;
 
 import com.zerotime.zerotime.History;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentProfileBinding;
+import com.zerotime.zerotime.databinding.UserFragmentProfileBinding;
 
 
 public class ProfileFragment extends Fragment {
 
-    FragmentProfileBinding binding;
+    UserFragmentProfileBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = UserFragmentProfileBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         binding.profileOrdersHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override

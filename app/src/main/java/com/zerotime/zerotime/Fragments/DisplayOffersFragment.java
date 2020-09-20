@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,21 +19,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentDisplayOffersBinding;
+import com.zerotime.zerotime.databinding.UserFragmentDisplayOffersBinding;
 
 import java.util.Objects;
 
 
 public class DisplayOffersFragment extends Fragment {
-    private FragmentDisplayOffersBinding binding;
+    private UserFragmentDisplayOffersBinding binding;
 
     private DatabaseReference offersRef;
     View view;
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentDisplayOffersBinding.inflate(getLayoutInflater());
+        binding = UserFragmentDisplayOffersBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
 
         offersRef = FirebaseDatabase.getInstance().getReference("Offers");
@@ -110,6 +113,7 @@ public class DisplayOffersFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onResume() {
 

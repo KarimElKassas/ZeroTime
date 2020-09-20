@@ -17,14 +17,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.databinding.ActivityFollowingOrderSettingsBinding;
+import com.zerotime.zerotime.databinding.SecretaryActivityFollowingOrderSettingsBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FollowingOrderSettings extends AppCompatActivity {
-    private ActivityFollowingOrderSettingsBinding binding;
+    private SecretaryActivityFollowingOrderSettingsBinding binding;
 
     private HashMap<String, String> ordersMap;
     String userName;
@@ -45,7 +45,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityFollowingOrderSettingsBinding.inflate(getLayoutInflater());
+        binding = SecretaryActivityFollowingOrderSettingsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

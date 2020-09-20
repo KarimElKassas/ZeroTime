@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.zerotime.zerotime.Moderator.Pojos.Clerk_History;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Room.Model.Complaint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +15,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class Clerk_History_Adapter extends RecyclerView.Adapter<Clerk_History_Adapter.ClerkViewHolder> {
+public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapter.ClerkViewHolder> {
     private List<Clerk_History> clerk_histories=new ArrayList<>();
     private Context context;
 
-    public Clerk_History_Adapter(List<Clerk_History> clerk_histories, Context context) {
+    public ClerkHistoryAdapter(List<Clerk_History> clerk_histories, Context context) {
         this.clerk_histories = clerk_histories;
         this.context = context;
     }
@@ -28,7 +27,7 @@ public class Clerk_History_Adapter extends RecyclerView.Adapter<Clerk_History_Ad
     @NonNull
     @Override
     public ClerkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.clerk_history_item, parent, false));
+        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_clerk_history, parent, false));
     }
 
     @Override

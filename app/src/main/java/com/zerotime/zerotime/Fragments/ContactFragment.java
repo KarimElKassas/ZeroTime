@@ -11,21 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zerotime.zerotime.Message;
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentContactBinding;
-import com.zerotime.zerotime.databinding.FragmentHomeBinding;
+import com.zerotime.zerotime.databinding.UserFragmentContactBinding;
 
 import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class ContactFragment extends Fragment {
-    FragmentContactBinding binding;
+    UserFragmentContactBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentContactBinding.inflate(inflater,container,false);
+        binding = UserFragmentContactBinding.inflate(inflater,container,false);
         View view =  binding.getRoot();
 
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);

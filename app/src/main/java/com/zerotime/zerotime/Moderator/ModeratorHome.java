@@ -6,20 +6,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.Secretary.FollowingTheOrderState;
-import com.zerotime.zerotime.databinding.ActivityModeratorHomeBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityHomeBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 public class ModeratorHome extends AppCompatActivity {
-    private ActivityModeratorHomeBinding binding;
+    private ModeratorActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorHomeBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityHomeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

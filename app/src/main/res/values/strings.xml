@@ -29,4 +29,7 @@
     <string name="add_order_receiver_secondary_phone_hint">رقم الهاتف الثانى للمستلم</string>
     <string name="add_order_receiver_address_hint">عنوان المستلم بالتفصيل</string>
     <string name="add_order_order_button_hint">اطلب</string>
+    <string name="profile_update_data_text">تعديل بياناتك</string>
+    <string name="profile_previous_orders_text">الطلبات السابقة</string>
+    <string name="profile_follow_orders_text">متابعة الطلبات</string>
 </resources>

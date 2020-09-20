@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,15 +14,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ActivitySecretaryUserDataBinding;
-import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
+import com.zerotime.zerotime.databinding.SecretaryActivityUserDataBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
 public class Secretary_UserData extends AppCompatActivity {
-    private ActivitySecretaryUserDataBinding binding;
+    private SecretaryActivityUserDataBinding binding;
     String phone;
     private ArrayList<Clerks> UsersList;
     private DatabaseReference UserRef;
@@ -31,7 +28,7 @@ public class Secretary_UserData extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySecretaryUserDataBinding.inflate(getLayoutInflater());
+        binding = SecretaryActivityUserDataBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

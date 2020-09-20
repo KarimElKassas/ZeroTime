@@ -10,27 +10,25 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.databinding.ActivityModeratorAddOfferBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityAddOfferBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 public class ModeratorAddOffer extends AppCompatActivity {
-    private ActivityModeratorAddOfferBinding binding;
+    private ModeratorActivityAddOfferBinding binding;
     private DatabaseReference offersRef;
     private HashMap<String,String> offersMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorAddOfferBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityAddOfferBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

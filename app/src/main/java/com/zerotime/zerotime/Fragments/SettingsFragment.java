@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentSettingsBinding;
+import com.zerotime.zerotime.databinding.UserFragmentSettingsBinding;
 
 import java.util.Objects;
 
@@ -25,14 +25,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsFragment extends Fragment {
 
-    FragmentSettingsBinding binding;
+    UserFragmentSettingsBinding binding;
     SharedPreferences.Editor editor;
     Context context;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentSettingsBinding.inflate(inflater,container,false);
+        binding = UserFragmentSettingsBinding.inflate(inflater,container,false);
         View view =  binding.getRoot();
         context = container.getContext();
 

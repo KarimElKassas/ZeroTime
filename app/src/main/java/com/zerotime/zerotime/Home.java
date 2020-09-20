@@ -14,25 +14,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.Toast;
 
-import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Fragments.AddOrderFragment;
 import com.zerotime.zerotime.Fragments.ContactFragment;
 import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
 import com.zerotime.zerotime.Fragments.SettingsFragment;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-import com.zerotime.zerotime.databinding.ActivityHomeBinding;
+import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
 
 public class Home extends AppCompatActivity {
-    private ActivityHomeBinding binding;
+    private UserActivityHomeBinding binding;
     private DatabaseReference chatRef;
     public int notificationID;
     NotificationManager notificationManager;
@@ -62,7 +58,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = UserActivityHomeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 

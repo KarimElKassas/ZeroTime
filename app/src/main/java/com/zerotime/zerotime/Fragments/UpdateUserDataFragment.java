@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -26,9 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.SignUp;
-import com.zerotime.zerotime.databinding.FragmentUpdateUserDataBinding;
+import com.zerotime.zerotime.databinding.UserFragmentUpdateUserDataBinding;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -38,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class UpdateUserDataFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
-    FragmentUpdateUserDataBinding binding;
+    UserFragmentUpdateUserDataBinding binding;
     DatabaseReference usersRef;
     HashMap<String,Object> usersMap;
 
@@ -54,7 +51,7 @@ public class UpdateUserDataFragment extends Fragment implements AdapterView.OnIt
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentUpdateUserDataBinding.inflate(inflater, container, false);
+        binding = UserFragmentUpdateUserDataBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         usersMap = new HashMap<>();
         binding.updateDataFragmentPrimaryPhoneEditTxt.setEnabled(false);

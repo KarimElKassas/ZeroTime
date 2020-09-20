@@ -16,12 +16,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Adapters.HistoryAdapter;
 import com.zerotime.zerotime.Pojos.HistoryPojo;
-import com.zerotime.zerotime.databinding.ActivityHistoryBinding;
+import com.zerotime.zerotime.databinding.UserActivityHistoryBinding;
 
 import java.util.ArrayList;
 
 public class History extends AppCompatActivity {
-    private ActivityHistoryBinding binding;
+    private UserActivityHistoryBinding binding;
     DatabaseReference reference;
     SharedPreferences preferences;
     ArrayList<HistoryPojo> historyPojos;
@@ -30,7 +30,7 @@ public class History extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityHistoryBinding.inflate(getLayoutInflater());
+        binding = UserActivityHistoryBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         binding.historyRecycler.setHasFixedSize(true);

@@ -17,7 +17,7 @@ import com.zerotime.zerotime.Notifications.Token;
 import com.zerotime.zerotime.Secretary.Adapters.DisplayChatsAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.ChatList;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
-import com.zerotime.zerotime.databinding.ActivitySecretaryDisplayChatsBinding;
+import com.zerotime.zerotime.databinding.SecretaryActivityDisplayChatsBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class SecretaryDisplayChats extends AppCompatActivity {
-    private ActivitySecretaryDisplayChatsBinding binding;
+    private SecretaryActivityDisplayChatsBinding binding;
 
     private DisplayChatsAdapter userAdapter;
     private List<Users> mUsers;
@@ -35,7 +35,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySecretaryDisplayChatsBinding.inflate(getLayoutInflater());
+        binding = SecretaryActivityDisplayChatsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

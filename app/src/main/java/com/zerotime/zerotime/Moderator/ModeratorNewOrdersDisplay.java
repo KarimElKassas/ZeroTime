@@ -12,11 +12,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
 import com.zerotime.zerotime.Moderator.Adapters.NewOrdersAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.NewOrders;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ActivityModeratorNewOrdersDisplayBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityNewOrdersDisplayBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import android.content.Context;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 
 public class ModeratorNewOrdersDisplay extends AppCompatActivity {
 
-    private ActivityModeratorNewOrdersDisplayBinding binding;
+    private ModeratorActivityNewOrdersDisplayBinding binding;
     private NewOrdersAdapter adapter;
     private DatabaseReference pendingOrderRef;
     ArrayList<NewOrders> ordersList;
@@ -39,7 +38,7 @@ public class ModeratorNewOrdersDisplay extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorNewOrdersDisplayBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityNewOrdersDisplayBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

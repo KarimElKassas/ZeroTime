@@ -14,22 +14,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Adapters.HistoryAdapter;
-import com.zerotime.zerotime.History;
 import com.zerotime.zerotime.Moderator.Adapters.NumberOrdersAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.OrdersNumber;
-import com.zerotime.zerotime.Pojos.HistoryPojo;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ActivityMDisplayUserDataBinding;
-import com.zerotime.zerotime.databinding.ActivityModeratorNumberOfOrdersBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityNumberOfOrdersBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
@@ -42,12 +36,12 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
     NumberOrdersAdapter adapter;
 
 
-    private ActivityModeratorNumberOfOrdersBinding binding;
+    private ModeratorActivityNumberOfOrdersBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorNumberOfOrdersBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityNumberOfOrdersBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

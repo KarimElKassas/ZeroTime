@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zerotime.zerotime.databinding.ActivityHomeBinding;
 import com.zerotime.zerotime.databinding.ActivityNoInternetConnectionBinding;
 
 public class No_Internet_Connection extends AppCompatActivity {

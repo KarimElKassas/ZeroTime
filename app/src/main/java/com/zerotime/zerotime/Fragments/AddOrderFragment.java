@@ -3,14 +3,12 @@ package com.zerotime.zerotime.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -19,24 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentAddOrderBinding;
+import com.zerotime.zerotime.databinding.UserFragmentAddOrderBinding;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -47,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AddOrderFragment extends Fragment {
 
-    FragmentAddOrderBinding binding;
+    UserFragmentAddOrderBinding binding;
     DatabaseReference ordersRef, deliveredOrdersCountRef, deliveredOrdersRef;
 
     String userPhone;
@@ -61,7 +51,7 @@ public class AddOrderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentAddOrderBinding.inflate(inflater,container,false);
+        binding = UserFragmentAddOrderBinding.inflate(inflater,container,false);
         view = binding.getRoot();
         context = container.getContext();
         //animation

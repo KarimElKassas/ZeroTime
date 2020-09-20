@@ -15,17 +15,11 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.M_DisplayUserData;
+import com.zerotime.zerotime.Moderator.ModeratorDisplayUserData;
 import com.zerotime.zerotime.Moderator.ModeratorNewOrdersDisplay;
 import com.zerotime.zerotime.Moderator.Pojos.NewOrders;
 import com.zerotime.zerotime.R;
@@ -47,7 +41,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
     @NonNull
     @Override
     public NewOrdersAdapter.NewOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NewOrdersAdapter.NewOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.orders_item, parent, false));
+        return new NewOrdersAdapter.NewOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orders, parent, false));
     }
 
     @Override
@@ -70,7 +64,7 @@ public class NewOrdersAdapter extends RecyclerView.Adapter<NewOrdersAdapter.NewO
         //CardView On Long Click
         holder.cardView.setOnLongClickListener(view -> {
 
-            Intent intent = new Intent(context, M_DisplayUserData.class);
+            Intent intent = new Intent(context, ModeratorDisplayUserData.class);
             intent.putExtra("UserPhone", orders.getUserPrimaryPhone());
             context.startActivity(intent);
             ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

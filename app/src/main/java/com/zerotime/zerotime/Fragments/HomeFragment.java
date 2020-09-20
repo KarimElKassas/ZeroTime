@@ -2,7 +2,6 @@ package com.zerotime.zerotime.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,20 +18,21 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentHomeBinding;
+import com.zerotime.zerotime.databinding.UserFragmentHomeBinding;
 
-import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class HomeFragment extends Fragment {
-    FragmentHomeBinding binding;
+    UserFragmentHomeBinding binding;
     boolean doubleBackToExitPressedOnce = false;
     Context context;
     View view;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater,container,false);
+        binding = UserFragmentHomeBinding.inflate(inflater,container,false);
         view = binding.getRoot();
         context = container.getContext();
 
@@ -45,10 +45,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         // Our Products Button
         binding.homeFragmentOurProductsBtn.setOnClickListener(view1 -> {
-            Toast.makeText(getContext(), "قريباً", Toast.LENGTH_SHORT).show();
+            Toasty.info(context, "قريباً", Toasty.LENGTH_SHORT,true).show();
         });
+
         //Month Offers Button
         binding.homeFragmentMonthOffersBtn.setOnClickListener(view1 -> {
             FragmentManager fragmentManager = getFragmentManager();

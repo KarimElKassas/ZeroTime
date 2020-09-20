@@ -8,20 +8,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.databinding.ActivityMDisplayUserDataBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityDisplayUserDataBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.Objects;
 
-public class M_DisplayUserData extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    private ActivityMDisplayUserDataBinding binding;
+public class ModeratorDisplayUserData extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    private ModeratorActivityDisplayUserDataBinding binding;
     String userPrimaryPhone;
     private DatabaseReference usersRef;
     private static final String[] regions = {"القاهرة", "الاسكندرية", "الجيزة"};
@@ -30,7 +29,7 @@ public class M_DisplayUserData extends AppCompatActivity implements AdapterView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMDisplayUserDataBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityDisplayUserDataBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

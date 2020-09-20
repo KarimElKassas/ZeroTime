@@ -50,7 +50,7 @@
         <activity android:name=".Moderator.ModeratorViewClerks" />
         <activity android:name=".Moderator.ModeratorHome" />
         <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
-        <activity android:name=".Moderator.M_DisplayUserData" />
+        <activity android:name=".Moderator.ModeratorDisplayUserData" />
         <activity android:name=".Moderator.ModeratorComplaints" /> <!-- Secretary -->
         <activity android:name=".Secretary.SecretaryDisplayChats" />
         <activity android:name=".Secretary.FollowingTheOrderState" />

@@ -13,14 +13,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.zerotime.zerotime.databinding.ActivityModeratorAddClerckBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityAddClerckBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 public class ModeratorAddClerk extends AppCompatActivity {
-    private ActivityModeratorAddClerckBinding binding;
+    private ModeratorActivityAddClerckBinding binding;
     private DatabaseReference clerksRef;
     private HashMap<String, String> clerksMap;
     private String name, phone1, phone2, hasTayara, address;
@@ -36,7 +36,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorAddClerckBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityAddClerckBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

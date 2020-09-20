@@ -15,17 +15,15 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.Adapters.ClerckAdapter;
+import com.zerotime.zerotime.Moderator.Adapters.ClerkAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ActivityLoginBinding;
-import com.zerotime.zerotime.databinding.ActivityModeratorViewClerksBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityViewClerksBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
@@ -33,10 +31,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ModeratorViewClerks extends AppCompatActivity {
-    private ActivityModeratorViewClerksBinding binding;
+    private ModeratorActivityViewClerksBinding binding;
     private DatabaseReference ClerksRef;
     ArrayList<Clerks> clerksList;
-    private ClerckAdapter adapter;
+    private ClerkAdapter adapter;
 
 
     @Override
@@ -49,7 +47,7 @@ public class ModeratorViewClerks extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorViewClerksBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityViewClerksBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();
@@ -90,7 +88,7 @@ public class ModeratorViewClerks extends AppCompatActivity {
                 }
 
 
-                adapter = new ClerckAdapter(clerksList, ModeratorViewClerks.this);
+                adapter = new ClerkAdapter(clerksList, ModeratorViewClerks.this);
                 binding.recycler.setAdapter(adapter);
 
             }

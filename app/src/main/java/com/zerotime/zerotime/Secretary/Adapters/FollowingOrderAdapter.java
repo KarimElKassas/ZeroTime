@@ -43,9 +43,9 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     @Override
     public FollowingOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         clerksDialog = new Dialog(context);
-        clerksDialog.setContentView(R.layout.clercks_dialog);
+        clerksDialog.setContentView(R.layout.dialog_clercks);
 
-        return new FollowingOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.following_order_item, parent, false));
+        return new FollowingOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_following_order, parent, false));
     }
 
     @SuppressLint("PrivateResource")

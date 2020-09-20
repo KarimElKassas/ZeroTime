@@ -9,8 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -20,7 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 
 import java.util.HashMap;
@@ -56,7 +53,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         animation();
         //Regions Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(SignUp.this,
-                R.layout.spinner_item, regions);
+                R.layout.item_spinner, regions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.signUpRegionsSpinner.setAdapter(adapter);
         binding.signUpRegionsSpinner.setOnItemSelectedListener(this);
@@ -268,5 +265,11 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         binding.signUpLoginTextView.animate().translationX(0f).alpha(1f).setDuration(2200).setStartDelay(500).start();
         //---------------------------------------------------------------------
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

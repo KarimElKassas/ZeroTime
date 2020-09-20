@@ -13,9 +13,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,12 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.zerotime.zerotime.Interfaces.ApiService;
 import com.zerotime.zerotime.Notifications.Client;
 import com.zerotime.zerotime.Secretary.Adapters.SecretaryMessageAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-import com.zerotime.zerotime.databinding.ActivitySecretaryMessageBinding;
+import com.zerotime.zerotime.databinding.SecretaryActivityMessageBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
@@ -37,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class SecretaryMessage extends AppCompatActivity {
-    private ActivitySecretaryMessageBinding binding;
+    private SecretaryActivityMessageBinding binding;
     private static final int GALLERY_PICK = 0;
 
     ApiService apiService;
@@ -52,7 +48,7 @@ public class SecretaryMessage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySecretaryMessageBinding.inflate(getLayoutInflater());
+        binding = SecretaryActivityMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,19 +22,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
-import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
-import com.zerotime.zerotime.Moderator.ModeratorNumberOfOrders;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.Secretary.Adapters.FollowingOrderAdapter;
-import com.zerotime.zerotime.databinding.ActivityFollowingTheOrderStateBinding;
+import com.zerotime.zerotime.databinding.SecretaryActivityFollowingTheOrderStateBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
 public class FollowingTheOrderState extends AppCompatActivity {
-    private ActivityFollowingTheOrderStateBinding binding;
+    private SecretaryActivityFollowingTheOrderStateBinding binding;
     private FollowingOrderAdapter adapter;
     private DatabaseReference OrderStateRef;
 
@@ -95,7 +92,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityFollowingTheOrderStateBinding.inflate(getLayoutInflater());
+        binding = SecretaryActivityFollowingTheOrderStateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

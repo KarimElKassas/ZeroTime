@@ -1,19 +1,11 @@
 package com.zerotime.zerotime.Moderator.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.zerotime.zerotime.Moderator.Pojos.Clerks;
-import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
-import com.zerotime.zerotime.Pojos.HistoryPojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Model.Complaint;
 
@@ -21,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ClerkViewHolder> {
@@ -33,7 +23,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
     @NonNull
     @Override
     public ClerkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.complaint_item, parent, false));
+        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_complaint, parent, false));
     }
 
     @Override

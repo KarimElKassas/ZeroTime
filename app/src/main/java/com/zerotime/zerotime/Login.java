@@ -225,4 +225,10 @@ public class Login extends AppCompatActivity {
         binding.loginSignUpTextView.animate().translationX(0f).alpha(1f).setDuration(1400).setStartDelay(500).start();
         //---------------------------------------------------------------------
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

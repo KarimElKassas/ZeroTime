@@ -19,26 +19,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.Adapters.Clerk_History_Adapter;
+import com.zerotime.zerotime.Moderator.Adapters.ClerkHistoryAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.Clerk_History;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ActivityModeratorClerksHistoryBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityClerksHistoryBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
 public class ModeratorClerksHistory extends AppCompatActivity {
-    private ActivityModeratorClerksHistoryBinding binding;
+    private ModeratorActivityClerksHistoryBinding binding;
 
     private DatabaseReference ClerksRef;
     ArrayList<Clerk_History> clerksList;
-    private Clerk_History_Adapter adapter;
+    private ClerkHistoryAdapter adapter;
     String ClerkPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityModeratorClerksHistoryBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityClerksHistoryBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();
@@ -81,7 +81,7 @@ public class ModeratorClerksHistory extends AppCompatActivity {
                 }
 
 
-                adapter = new Clerk_History_Adapter(clerksList, ModeratorClerksHistory.this);
+                adapter = new ClerkHistoryAdapter(clerksList, ModeratorClerksHistory.this);
                 binding.recyclerClerksHistory.setAdapter(adapter);
 
             }

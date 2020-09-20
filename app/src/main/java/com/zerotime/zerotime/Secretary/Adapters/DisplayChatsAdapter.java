@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +38,7 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.display_users_row, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_display_users, parent, false);
 
         return new DisplayChatsAdapter.ViewHolder(view);
     }

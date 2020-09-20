@@ -32,7 +32,7 @@ import com.zerotime.zerotime.Notifications.MyResponse;
 import com.zerotime.zerotime.Notifications.Sender;
 import com.zerotime.zerotime.Notifications.Token;
 import com.zerotime.zerotime.Pojos.ChatPojo;
-import com.zerotime.zerotime.databinding.ActivityMessageBinding;
+import com.zerotime.zerotime.databinding.UserActivityMessageBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Message extends AppCompatActivity {
-    private ActivityMessageBinding binding;
+    private UserActivityMessageBinding binding;
     private static final int GALLERY_PICK = 0;
     ApiService apiService;
 
@@ -58,7 +58,7 @@ public class Message extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMessageBinding.inflate(getLayoutInflater());
+        binding = UserActivityMessageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 

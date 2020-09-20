@@ -19,22 +19,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Login;
-import com.zerotime.zerotime.Moderator.ModeratorHome;
-import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-import com.zerotime.zerotime.databinding.ActivitySecretaryHomeBinding;
+import com.zerotime.zerotime.databinding.SecretaryActivityHomeBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 public class SecretaryHome extends AppCompatActivity {
-    private ActivitySecretaryHomeBinding binding;
+    private SecretaryActivityHomeBinding binding;
     private DatabaseReference chatRef;
     public int notificationID;
     NotificationManager notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySecretaryHomeBinding.inflate(getLayoutInflater());
+        binding = SecretaryActivityHomeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();

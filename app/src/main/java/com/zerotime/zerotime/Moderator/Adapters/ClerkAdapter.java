@@ -22,12 +22,12 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewHolder> {
+public class ClerkAdapter extends RecyclerView.Adapter<ClerkAdapter.ClerkViewHolder> {
     private ArrayList<Clerks> clerkList;
     private Context context;
 
 
-    public ClerckAdapter(ArrayList<Clerks> clerksList, Context context) {
+    public ClerkAdapter(ArrayList<Clerks> clerksList, Context context) {
         this.clerkList = clerksList;
         this.context = context;
     }
@@ -36,7 +36,7 @@ public class ClerckAdapter extends RecyclerView.Adapter<ClerckAdapter.ClerkViewH
     @NonNull
     @Override
     public ClerkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.clerk_item, parent, false));
+        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_clerk, parent, false));
     }
 
     @Override

@@ -3,27 +3,25 @@ package com.zerotime.zerotime.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.FragmentAboutUsBinding;
+import com.zerotime.zerotime.databinding.UserFragmentAboutUsBinding;
 
 import java.util.Objects;
 
 
 public class AboutUsFragment extends Fragment {
-    private FragmentAboutUsBinding binding;
+    private UserFragmentAboutUsBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentAboutUsBinding.inflate(getLayoutInflater());
+        binding = UserFragmentAboutUsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
 

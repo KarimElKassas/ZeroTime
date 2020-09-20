@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.zerotime.zerotime.Moderator.Pojos.OrdersNumber;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Room.Model.Complaint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class NumberOrdersAdapter extends RecyclerView.Adapter<NumberOrdersAdapte
     @NonNull
     @Override
     public ClerkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.orders_number_item, parent, false));
+        return new ClerkViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orders_number, parent, false));
     }
 
     @Override
