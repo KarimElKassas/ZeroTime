@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -85,6 +86,15 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(ModeratorNumberOfOrders.this,ModeratorHome.class);
+        startActivity(i);
+        finish();
+    }
+
     private void checkInternetConnection(){
         myBroadCast broadCast=new myBroadCast();
         IntentFilter intentFilter=new IntentFilter();

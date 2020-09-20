@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Moderator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -65,6 +66,13 @@ public class ModeratorAddOffer extends AppCompatActivity {
         binding.moderatorAddOfferSixthUpdateBtn.setOnClickListener(view1 -> {
             addOffer();
         });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(ModeratorAddOffer.this,ModeratorHome.class);
+        startActivity(i);
+        finish();
     }
     private void addOffer(){
         offersRef.child("Offers").addValueEventListener(new ValueEventListener() {

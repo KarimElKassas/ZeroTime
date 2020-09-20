@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,14 @@ public class ModeratorViewClerks extends AppCompatActivity {
     ArrayList<Clerks> clerksList;
     private ClerckAdapter adapter;
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i=new Intent(ModeratorViewClerks.this,ModeratorHome.class);
+        startActivity(i);
+        finish();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
