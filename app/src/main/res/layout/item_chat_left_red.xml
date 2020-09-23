@@ -4,15 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/_300sdp"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_8sdp">
+    android:padding="@dimen/_8sdp"
+    >
     <androidx.cardview.widget.CardView
         android:id="@+id/showMessageImageCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:background="@drawable/background_right"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:background="@drawable/background_left_red"
         android:visibility="gone">
         <ImageView
             android:id="@+id/showMessageImage"
@@ -25,31 +26,33 @@
             android:src="@drawable/me"
             />
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/showMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:background="@drawable/background_right"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:background="@drawable/background_left_red"
         android:padding="@dimen/_8sdp"
         android:text="Hello"
-        android:textColor="#fff"
+        android:textColor="#FFF"
         android:textSize="@dimen/_18sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <TextView
         android:id="@+id/isSeen_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/showMessage"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:textColor="#7C7B7B"
         android:textStyle="bold"
         android:textSize="@dimen/_10sdp"
         android:letterSpacing="0.1"
+        android:visibility="gone"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".No_Internet_Connection"></activity>
+        <activity android:name=".No_Internet_Connection" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,15 +43,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MapsActivity"></activity> <!-- Moderator -->
+        <!-- Moderator -->
         <activity android:name=".Moderator.ModeratorAddOffer" />
         <activity android:name=".Moderator.ModeratorNumberOfOrders" />
         <activity android:name=".Moderator.ModeratorAddClerk" />
         <activity android:name=".Moderator.ModeratorClerksHistory" />
         <activity android:name=".Moderator.ModeratorViewClerks" />
         <activity android:name=".Moderator.ModeratorHome" />
-        <activity android:name=".Moderator.ModeratorNewOrdersDisplay" />
-        <activity android:name=".Moderator.ModeratorDisplayUserData" />
         <activity android:name=".Moderator.ModeratorComplaints" /> <!-- Secretary -->
         <activity android:name=".Secretary.SecretaryDisplayChats" />
         <activity android:name=".Secretary.FollowingTheOrderState" />

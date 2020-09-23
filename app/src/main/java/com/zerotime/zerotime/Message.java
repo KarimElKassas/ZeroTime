@@ -79,11 +79,11 @@ public class Message extends AppCompatActivity {
 
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
 
-        binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
+        binding.secretaryMessageSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 notify = true;
-                String msg = Objects.requireNonNull(binding.messageWriteMSGEdt.getText()).toString();
+                String msg = Objects.requireNonNull(binding.secretaryMessageWriteMSGEdt.getText()).toString();
                 if (!msg.equals("")) {
                     if (intentFrom != null) {
                         if (intentFrom.equals("ContactFragment")) {
@@ -95,11 +95,11 @@ public class Message extends AppCompatActivity {
 
                 } else
                     Toast.makeText(Message.this, "You Cant't Sent Empty Message!!", Toast.LENGTH_SHORT).show();
-                binding.messageWriteMSGEdt.setText("");
+                binding.secretaryMessageWriteMSGEdt.setText("");
 
             }
         });
-        binding.messageSendImage.setOnClickListener(view1 -> {
+        binding.secretaryMessageSendImage.setOnClickListener(view1 -> {
             Intent galleryIntent = new Intent();
             galleryIntent.setType("image/*");
             galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -180,7 +180,7 @@ public class Message extends AppCompatActivity {
         hashMap.put("Type", "Text");
         reference.child("Chats").push().setValue(hashMap);
 
-        final String msg = Objects.requireNonNull(binding.messageWriteMSGEdt.getText()).toString();
+        final String msg = Objects.requireNonNull(binding.secretaryMessageWriteMSGEdt.getText()).toString();
         userRef = FirebaseDatabase.getInstance().getReference("Users");
         userRef.child(userId).addValueEventListener(new ValueEventListener() {
             @Override

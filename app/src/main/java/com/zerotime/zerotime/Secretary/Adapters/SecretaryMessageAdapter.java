@@ -32,11 +32,11 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == msgTypeRight){
-            View ItemView = LayoutInflater.from(context).inflate(R.layout.item_chat_right,parent,false);
+            View ItemView = LayoutInflater.from(context).inflate(R.layout.item_chat_right_red,parent,false);
             return new MessageViewHolder(ItemView);
         }
         else{
-            View ItemView = LayoutInflater.from(context).inflate(R.layout.item_chat_left,parent,false);
+            View ItemView = LayoutInflater.from(context).inflate(R.layout.item_chat_left_red,parent,false);
             return new MessageViewHolder(ItemView);
         }
 
