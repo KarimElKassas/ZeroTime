@@ -1,15 +1,22 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.zerotime.zerotime.History;
 import com.zerotime.zerotime.R;
@@ -19,42 +26,85 @@ import com.zerotime.zerotime.databinding.UserFragmentProfileBinding;
 public class ProfileFragment extends Fragment {
 
     UserFragmentProfileBinding binding;
-
+    View view;
+    Context context;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = UserFragmentProfileBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+        view = binding.getRoot();
+        context = container.getContext();
+
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         binding.profileOrdersHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), History.class);
                 startActivity(intent);
+                ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
 
         binding.profileUpdateUserDataBtn.setOnClickListener(view1 -> {
-            Fragment newFragment = new UpdateUserDataFragment();
-            assert getFragmentManager() != null;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-            transaction.replace(R.id.Frame_Content, newFragment);
-            transaction.addToBackStack(null);
-
-            transaction.commit();
+            FragmentManager fragmentManager = getFragmentManager();
+            UpdateUserDataFragment fragment = new UpdateUserDataFragment();
+            assert fragmentManager != null;
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content,fragment)
+                    .addToBackStack("ProfileFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
         });
         binding.profileOrderProgressBtn.setOnClickListener(view1 -> {
-            Fragment newFragment = new FollowMyOrdersFragment();
-            assert getFragmentManager() != null;
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-            transaction.replace(R.id.Frame_Content, newFragment);
-            transaction.addToBackStack(null);
-
-            transaction.commit();
+            FragmentManager fragmentManager = getFragmentManager();
+            FollowMyOrdersFragment fragment = new FollowMyOrdersFragment();
+            assert fragmentManager != null;
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content,fragment)
+                    .addToBackStack("ProfileFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
         });
-        
-        return view;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+
+            new Handler().postDelayed(() -> {
+
+                view.setFocusableInTouchMode(true);
+                view.requestFocus();
+                view.setOnKeyListener((v, keyCode, event) -> {
+
+                    if( keyCode == KeyEvent.KEYCODE_BACK )
+                    {
+                        Toast.makeText(context, "Back Pressed", Toast.LENGTH_SHORT).show();
+                        ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        ((Activity)context).finish();
+                        return true;
+                    }
+
+                    return false;
+                });
+
+            }, 1000000);
+        }catch (Exception e){
+            Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -61,6 +61,10 @@ dependencies {
     //-Toasty
     implementation 'com.github.GrenderG:Toasty:1.5.0'
     //------------------------------------
+    //-Material Edit Text
+    implementation 'com.github.florent37:materialtextfield:1.0.7'
+    implementation "ss.anoop:awesome-edittext:1.0.0"
+    //------------------------------------
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
