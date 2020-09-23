@@ -38,11 +38,6 @@ public class FollowingTheOrderState extends AppCompatActivity {
 
     private ArrayList<OrderState> ordersList;
 
-   /* private static final String[] states = {"تم الإستلام", "جارى التوصيل", "تم التوصيل"};
-
-    ArrayAdapter<String> SpinnerAdapter = new ArrayAdapter<String>(FollowingTheOrderState.this,
-            android.R.layout.simple_spinner_item, states);*/
-
 
     @Override
     public void onBackPressed() {

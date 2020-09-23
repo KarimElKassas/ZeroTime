@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
+        android:elevation="@dimen/_22sdp"
+        app:cardCornerRadius="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -71,8 +73,8 @@
                 android:padding="@dimen/_4sdp"
                 android:text="01122388139"
                 android:textColor="#000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/followingOrder_address" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/followingOrder_orderDescription" />
 
 
             <com.anton46.stepsview.StepsView xmlns:app="http://schemas.android.com/apk/res-auto"

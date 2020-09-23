@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zerotime.zerotime.CircularTextView;
 import com.zerotime.zerotime.Moderator.Pojos.OrdersNumber;
 import com.zerotime.zerotime.R;
 
@@ -37,7 +38,9 @@ public class NumberOrdersAdapter extends RecyclerView.Adapter<NumberOrdersAdapte
         holder.name.setText(ordersNumber.getName());
         holder.phone.setText(ordersNumber.getPhone());
         holder.ordersNumber.setText(String.valueOf(ordersNumber.getOrdersNumber()));
-
+        holder.ordersNumber.setSolidColor("#000000");
+        holder.ordersNumber.setStrokeColor("#FFFFFF");
+        holder.ordersNumber.setStrokeWidth(1);
 
     }
 
@@ -52,7 +55,8 @@ public class NumberOrdersAdapter extends RecyclerView.Adapter<NumberOrdersAdapte
     }
 
     public class ClerkViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, phone, ordersNumber;
+        private TextView name, phone;
+        private CircularTextView ordersNumber;
 
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);
