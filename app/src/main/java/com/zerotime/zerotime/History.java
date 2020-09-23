@@ -48,7 +48,7 @@ public class History extends AppCompatActivity {
                     if (snapshot.hasChildren()) {
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 
-                            String description = snapshot.child("OrderDescription").getValue(String.class);
+                            String description = dataSnapshot1.child("OrderDescription").getValue(String.class);
                             String date = dataSnapshot1.child("OrderDate").getValue(String.class);
                             String price = dataSnapshot1.child("OrderPrice").getValue(String.class);
                             String size = dataSnapshot1.child("OrderSize").getValue(String.class);
@@ -71,6 +71,7 @@ public class History extends AppCompatActivity {
 
 
                         }
+
                     }
                     adapter = new HistoryAdapter(historyPojos, History.this);
                     binding.historyRecycler.setAdapter(adapter);

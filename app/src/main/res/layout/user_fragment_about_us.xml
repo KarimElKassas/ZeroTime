@@ -1,108 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Frame_Content"
     android:layout_width="match_parent"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scroll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scroll_layout"
-        android:fitsSystemWindows="true"
         android:fillViewport="true"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp">
+
             <TextView
                 android:id="@+id/aboutUs_our_team_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="فريقنا"
-                android:textColor="@color/Red"
-                android:textStyle="bold"
-                android:textSize="36sp"
+                android:layout_marginTop="@dimen/_48sdp"
                 android:fontFamily="serif"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="Zero Time"
+                android:textColor="@color/DarkBlue"
+                android:textSize="36sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_48sdp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/aboutUs_members_pics_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/aboutUs_our_team_text"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_18sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_18sdp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aboutUs_our_team_text">
+
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/aboutUs_first_member_pic_image_view"
+                    android:id="@+id/aboutUs_logo"
                     android:layout_width="@dimen/_74sdp"
                     android:layout_height="@dimen/_74sdp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/aboutUs_second_member_pic_image_view"
-                    android:layout_marginStart="@dimen/_24sdp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/me"/>
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/aboutUs_second_member_pic_image_view"
-                    android:layout_width="@dimen/_74sdp"
-                    android:layout_height="@dimen/_74sdp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/avatar1"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/aboutUs_first_member_pic_image_view"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="@dimen/_24sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/me"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/aboutUs_missions_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="واجبنا"
-                android:textColor="@color/Red"
-                android:textStyle="bold"
-                android:textSize="36sp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:fontFamily="serif"
-                app:layout_constraintTop_toBottomOf="@id/aboutUs_members_pics_layout"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="من نحن"
+                android:textColor="@color/DarkBlue"
+                android:textSize="36sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_18sdp" />
-            <TextView
-                android:id="@+id/aboutUs_missions_value_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aboutUs_members_pics_layout" />
+<ScrollView
+    android:id="@+id/scroll"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/aboutUs_missions_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+            <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/expand_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا مهماتنا "
-                android:textColor="#D35B58"
-                android:textSize="24sp"
-                android:textAlignment="center"
-                android:fontFamily="serif"
-                app:layout_constraintTop_toBottomOf="@id/aboutUs_missions_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_12sdp" />
-            <TextView
-                android:id="@+id/aboutUs_address_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="عنواننا"
-                android:textColor="@color/Red"
-                android:textStyle="bold"
-                android:textSize="36sp"
-                android:fontFamily="serif"
-                app:layout_constraintTop_toBottomOf="@id/aboutUs_missions_value_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_18sdp" />
+                expandableTextView:animDuration="200"
+                expandableTextView:layout_constraintTop_toBottomOf="@+id/aboutUs_missions_text"
+                expandableTextView:maxCollapsedLines="4"
+
+
+                >
+
+                <TextView
+                    android:id="@id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/DarkBlue"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:background="@android:color/transparent"
+                    android:padding="16dp" />
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+</ScrollView>
+
+
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/aboutUs_map"
@@ -113,22 +122,23 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aboutUs_address_text" />
+                app:layout_constraintTop_toBottomOf="@id/scroll" />
+
             <TextView
                 android:id="@+id/aboutUs_address_value_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="عنواننا"
-                android:textColor="@color/Red"
-                android:textStyle="bold"
-                android:textSize="24sp"
-                android:fontFamily="serif"
-                app:layout_constraintTop_toBottomOf="@id/aboutUs_map"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"/>
+                android:fontFamily="serif"
+                android:text="جسر السويس - النزهه - شارع المدينه المنوره"
+                android:textColor="@color/DarkBlue"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aboutUs_map" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
