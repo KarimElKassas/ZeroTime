@@ -34,13 +34,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         HistoryPojo history = historyList.get(position);
-        holder.description.setText(history.getDescription());
+        holder.description.setText(" وصف الطلب : "+history.getDescription());
         holder.date.setText(history.getDate());
-        holder.price.setText(history.getPrice());
-        holder.size.setText(history.getSize());
-        holder.Raddress.setText(history.getRaddress());
-        holder.Rname.setText(history.getRname());
-        holder.Rphone1.setText(history.getRphone1());
+        holder.price.setText(" سعر الطلب : "+history.getPrice()+" جنيه مصري ");
+        holder.size.setText(" حجم الطلب : "+history.getSize());
+        holder.Raddress.setText(" عنوان المستلم : "+history.getRaddress());
+        holder.Rname.setText(" اسم المستلم : "+history.getRname());
+        holder.Rphone1.setText(history.getRphone1()+"    /    ");
         holder.Rphone2.setText(history.getRphone2());
 
     }

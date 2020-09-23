@@ -17,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentAboutUsBinding;
 
@@ -29,6 +30,11 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap googleMap;
     private GoogleApiClient mGoogleApiClient;
     protected Location mLastLocation;
+    ExpandableTextView expandableTextView;
+    String longText = "شركه زيرو تايم للنقل والشحن السريع , تأسست عام 2016 , لو عندك بيزنس اونلاين بتحتاج شركه شحن تحافظ على مستوى البراند وتوصل شحناتك بأمان وسرعه وثقه من غير اي حيره زيرو تايم هي راحتك وراحه عميله , زيرو تايم شركه مرخصه بريدياً ولديها سجل تجاري وبطاقه ضريبيه , زيرو تايم بتوصل لأغلب محافظات مصر  ولسه هنكمل لمحافظات مصر كلها ," +
+            "زيرو تايم بتستلم وتسلم الشحنات من الباب للباب وده بيكون من خلال مندوبنا المتدربين , زيرو تايم بتوصلك تحصيلك باكثر من طريقه وفي الميعاد الى بتحدده وانت اختار الى يناسبك , زيرو تايم بتساعدك  تريح عميلك من خلال خدمات اختياريه زي خدمه طرد مقابل طرد او خدمه فتح الشحنات وده بيكون بناءا على اختيارك انت , زيرو تايم بتسلم مرتجعاتك وده بيكون على مدار ثلاثه ايام في الأسبوع. \n" +
+            " خدمة عملاء متاحه لمساعدتك في الرد على جميع الاستفسارات وحل جميع المشاكل الي بتواجهها ";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,6 +42,9 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
         binding = UserFragmentAboutUsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
 
+
+        expandableTextView = view.findViewById(R.id.expand_text_view);
+        expandableTextView.setText(longText);
         binding.aboutUsMap.onCreate(savedInstanceState);
         binding.aboutUsMap.getMapAsync(this);
         /*assert getFragmentManager() != null;
@@ -47,6 +56,7 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
 
         return view;
     }
+
     @Override
     public void onResume() {
 
@@ -56,8 +66,7 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
         getView().requestFocus();
         getView().setOnKeyListener((v, keyCode, event) -> {
 
-            if( keyCode == KeyEvent.KEYCODE_BACK )
-            {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
                 return true;
