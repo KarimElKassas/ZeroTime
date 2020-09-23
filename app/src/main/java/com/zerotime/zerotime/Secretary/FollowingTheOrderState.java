@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -30,11 +32,11 @@ import com.zerotime.zerotime.databinding.SecretaryActivityFollowingTheOrderState
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FollowingTheOrderState extends AppCompatActivity {
     private SecretaryActivityFollowingTheOrderStateBinding binding;
     private FollowingOrderAdapter adapter;
-    private DatabaseReference OrderStateRef;
 
     private ArrayList<OrderState> ordersList;
 
@@ -78,7 +80,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
         LayoutAnimationController animationController =
                 AnimationUtils.loadLayoutAnimation(context, R.anim.layout_slide_right);
         recyclerView.setLayoutAnimation(animationController);
-        recyclerView.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
 
 
@@ -91,56 +93,70 @@ public class FollowingTheOrderState extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();
+
+        Drawable progressDrawable = binding.secretaryFollowingOrdersProgress.getIndeterminateDrawable().mutate();
+        progressDrawable.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+        binding.secretaryFollowingOrdersProgress.setProgressDrawable(progressDrawable);
+
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.OrderStateRecycler.setLayoutManager(mLayoutManager);
         binding.OrderStateRecycler.setItemAnimator(new DefaultItemAnimator());
         ordersList = new ArrayList<>();
 
-        OrderStateRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
+        DatabaseReference orderStateRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
 
 
-        OrderStateRef.addValueEventListener(new ValueEventListener() {
+        orderStateRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                if (snapshot.exists()){
+                    if(snapshot.hasChildren()){
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
-                    String orderDate = dataSnapshot.child("OrderDate").getValue(String.class);
-                    String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);
-                    String receiverName = dataSnapshot.child("ReceiverName").getValue(String.class);
-                    String OrderState = dataSnapshot.child("OrderState").getValue(String.class);
-                    String receiverAddress = dataSnapshot.child("ReceiverAddress").getValue(String.class);
-                    String receiverPrimaryPhone = dataSnapshot.child("ReceiverPrimaryPhone").getValue(String.class);
-                    String userPrimaryPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
+                            binding.OrderStateRecycler.setVisibility(View.VISIBLE);
+                            binding.secretaryFollowingOrdersProgress.setVisibility(View.GONE);
 
-
-                    OrderState orderState = new OrderState();
-
-                    orderState.setDescription(orderDescription);
-                    orderState.setDate(orderDate);
-                    orderState.setPrice(orderPrice);
-                    orderState.setName(receiverName);
-                    orderState.setAddress(receiverAddress);
-                    orderState.setPhone(receiverPrimaryPhone);
-                    orderState.setUser_Phone(userPrimaryPhone);
-
-                    if (OrderState.equals("لم يتم الاستلام"))
-                        orderState.setCurrentState(0);
-                    if (OrderState.equals("تم الاستلام"))
-                        orderState.setCurrentState(1);
-                    if (OrderState.equals("جارى التوصيل"))
-                        orderState.setCurrentState(2);
-                    if (OrderState.equals("تم التوصيل"))
-                        orderState.setCurrentState(3);
+                            String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
+                            String orderDate = dataSnapshot.child("OrderDate").getValue(String.class);
+                            String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);
+                            String receiverName = dataSnapshot.child("ReceiverName").getValue(String.class);
+                            String OrderState = dataSnapshot.child("OrderState").getValue(String.class);
+                            String receiverAddress = dataSnapshot.child("ReceiverAddress").getValue(String.class);
+                            String receiverPrimaryPhone = dataSnapshot.child("ReceiverPrimaryPhone").getValue(String.class);
+                            String userPrimaryPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
 
 
-                    ordersList.add(orderState);
+                            OrderState orderState = new OrderState();
+
+                            orderState.setDescription(orderDescription);
+                            orderState.setDate(orderDate);
+                            orderState.setPrice(orderPrice);
+                            orderState.setName(receiverName);
+                            orderState.setAddress(receiverAddress);
+                            orderState.setPhone(receiverPrimaryPhone);
+                            orderState.setUser_Phone(userPrimaryPhone);
+
+                            assert OrderState != null;
+                            if (OrderState.equals("لم يتم الاستلام"))
+                                orderState.setCurrentState(0);
+                            if (OrderState.equals("تم الاستلام"))
+                                orderState.setCurrentState(1);
+                            if (OrderState.equals("جارى التوصيل"))
+                                orderState.setCurrentState(2);
+                            if (OrderState.equals("تم التوصيل"))
+                                orderState.setCurrentState(3);
 
 
+                            ordersList.add(orderState);
+
+
+                        }
+                        adapter = new FollowingOrderAdapter(ordersList, FollowingTheOrderState.this);
+                        binding.OrderStateRecycler.setAdapter(adapter);
+
+                    }
                 }
-                adapter = new FollowingOrderAdapter(ordersList, FollowingTheOrderState.this);
-                binding.OrderStateRecycler.setAdapter(adapter);
 
 
             }

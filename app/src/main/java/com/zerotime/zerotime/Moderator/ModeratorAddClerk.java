@@ -29,10 +29,11 @@ public class ModeratorAddClerk extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i=new Intent(ModeratorAddClerk.this,ModeratorHome.class);
+        Intent i = new Intent(ModeratorAddClerk.this, ModeratorHome.class);
         startActivity(i);
         finish();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
         clerksMap = new HashMap<>();
 
 
-        binding.ModeratorAddClerckAddBtn.setOnClickListener(new View.OnClickListener() {
+        binding.ModeratorAddClerkAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addClerk();
@@ -57,23 +58,23 @@ public class ModeratorAddClerk extends AppCompatActivity {
 
     public void addClerk() {
 
-        if(!binding.radioHave.isChecked() && !binding.radioDonthave.isChecked()){
+        if (!binding.radioHave.isChecked() && !binding.radioDonthave.isChecked()) {
             Toast.makeText(this, "من فضلك اخبرنا إن كنت تمتلك طياره ام لا ", Toast.LENGTH_SHORT).show();
             return;
-        }else {
-            if(binding.radioHave.isChecked())hasTayara="يمتلك طياره";
-            if(binding.radioDonthave.isChecked())hasTayara="لا يمتلك طياره";
+        } else {
+            if (binding.radioHave.isChecked()) hasTayara = "يمتلك طياره";
+            if (binding.radioDonthave.isChecked()) hasTayara = "لا يمتلك طياره";
         }
 
 
         // getting data from user
-        name = binding.ModeratorAddClerckNameEdt.getText().toString();
-        phone1 = binding.ModeratorAddClerckPhone1Edt.getText().toString();
-        phone2 = binding.ModeratorAddClerckPhone2Edt.getText().toString();
-        age = Integer.valueOf(binding.ModeratorAddClerckAgeEdt.getText().toString());
-        address = binding.ModeratorAddClerckAddressEdt.getText().toString();
+        name = Objects.requireNonNull(binding.ModeratorAddClerkNameEdt.getText()).toString();
+        phone1 = Objects.requireNonNull(binding.ModeratorAddClerkPhone1Edt.getText()).toString();
+        phone2 = Objects.requireNonNull(binding.ModeratorAddClerkPhone2Edt.getText()).toString();
+        age = Integer.parseInt(Objects.requireNonNull(binding.ModeratorAddClerkAgeEdt.getText()).toString());
+        address = Objects.requireNonNull(binding.ModeratorAddClerkAddressEdt.getText()).toString();
 
-// full the map
+        // full the map
         clerksMap.put("ClerkName", name);
         clerksMap.put("ClerkPhone1", phone1);
         clerksMap.put("ClerkPhone2", phone2);
@@ -99,11 +100,12 @@ public class ModeratorAddClerk extends AppCompatActivity {
 
 
     }
-    private void checkInternetConnection(){
-        myBroadCast broadCast=new myBroadCast();
-        IntentFilter intentFilter=new IntentFilter();
+
+    private void checkInternetConnection() {
+        myBroadCast broadCast = new myBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast,intentFilter);
+        registerReceiver(broadCast, intentFilter);
 
     }
 }

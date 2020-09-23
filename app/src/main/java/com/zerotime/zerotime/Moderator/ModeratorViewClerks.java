@@ -62,34 +62,42 @@ public class ModeratorViewClerks extends AppCompatActivity {
         ClerksRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    if (snapshot.hasChildren()){
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            binding.moderatorViewClerkProgress.setVisibility(View.GONE);
+                            binding.recycler.setVisibility(View.VISIBLE);
 
-                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            String name = (String) dataSnapshot1.child("ClerkName").getValue();
+                            String address = (String) dataSnapshot1.child("ClerkAddress").getValue();
+                            String hasVehicle = (String) dataSnapshot1.child("hasVehicle").getValue();
+                            String phone1 = (String) dataSnapshot1.child("ClerkPhone1").getValue();
+                            String phone2 = (String) dataSnapshot1.child("ClerkPhone2").getValue();
+                            String age = (String) (dataSnapshot1.child("ClerkAge").getValue());
 
-                    String name = (String) dataSnapshot1.child("ClerkName").getValue();
-                    String address = (String) dataSnapshot1.child("ClerkAddress").getValue();
-                    String hasVehicle = (String) dataSnapshot1.child("hasVehicle").getValue();
-                    String phone1 = (String) dataSnapshot1.child("ClerkPhone1").getValue();
-                    String phone2 = (String) dataSnapshot1.child("ClerkPhone2").getValue();
-                    String age = (String) (dataSnapshot1.child("ClerkAge").getValue());
+                            Clerks clerks = new Clerks();
+                            clerks.setName(name);
+                            clerks.setAddress(address);
+                            clerks.setPhone1(phone1);
+                            clerks.setPhone2(phone2);
+                            clerks.setAge(Integer.parseInt(Objects.requireNonNull(age)));
 
-                    Clerks clerks = new Clerks();
-                    clerks.setName(name);
-                    clerks.setAddress(address);
-                    clerks.setPhone1(phone1);
-                    clerks.setPhone2(phone2);
-                    clerks.setAge(Integer.valueOf(age));
+                            clerks.setAge(Integer.parseInt(Objects.requireNonNull(age)));
+                            clerks.setHasVehicle(hasVehicle);
 
-                    clerks.setAge(Integer.parseInt(Objects.requireNonNull(age)));
-                    clerks.setHasVehicle(hasVehicle);
-
-                    clerksList.add(clerks);
+                            clerksList.add(clerks);
 
 
+                        }
+                        adapter = new ClerkAdapter(clerksList, ModeratorViewClerks.this);
+                        binding.recycler.setAdapter(adapter);
+
+                    }
                 }
 
 
-                adapter = new ClerkAdapter(clerksList, ModeratorViewClerks.this);
-                binding.recycler.setAdapter(adapter);
+
+
 
             }
 

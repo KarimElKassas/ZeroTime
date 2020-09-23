@@ -74,11 +74,11 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap.addMarker(new MarkerOptions().position(29.9721261, 30.9435154));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(*//*some location*//*, 10));*/
         mMap = googleMap;
-        LatLng sydney = new LatLng(29.9721261, 30.9435154);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Hosary"));
+        LatLng sydney = new LatLng(30.1195601, 31.3677548);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("شارع المدينة المنورة"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(29.9721261, 30.9435154), 10));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.1195601, 31.3677548), 10));
         mMap.getMaxZoomLevel();
         binding.aboutUsMap.onResume();
     }

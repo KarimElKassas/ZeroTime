@@ -22,6 +22,7 @@ import com.zerotime.zerotime.Secretary.Secretary_UserData;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,7 +82,6 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
 
 
         holder.userData.setOnClickListener(view -> {
-
             Intent intent = new Intent(context, Secretary_UserData.class);
             intent.putExtra("UserPhone", orderState.getUser_Phone());
             context.startActivity(intent);

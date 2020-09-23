@@ -45,13 +45,11 @@ public class Secretary_UserData extends AppCompatActivity {
                 String userPrimaryPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
                 String userSecondaryPhone = dataSnapshot.child("UserSecondaryPhone").getValue(String.class);
                 String userName = dataSnapshot.child("UserName").getValue(String.class);
-                String userRegion = dataSnapshot.child("UserRegion").getValue(String.class);
 
                 binding.UserName.setText(userName);
                 binding.UserAddress.setText(userAddress);
                 binding.UserPhone1.setText(userPrimaryPhone);
                 binding.UserPhone2.setText(userSecondaryPhone);
-                binding.UserRegion.setText(userRegion);
 
             }
 
