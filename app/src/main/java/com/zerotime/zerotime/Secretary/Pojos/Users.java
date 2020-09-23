@@ -3,13 +3,14 @@ package com.zerotime.zerotime.Secretary.Pojos;
 public class Users {
     private String userName;
     private String userPrimaryPhone;
-
+private int random;
     public Users() {
     }
 
-    public Users(String userName, String userPrimaryPhone) {
+    public Users(String userName, String userPrimaryPhone, int random) {
         this.userName = userName;
         this.userPrimaryPhone = userPrimaryPhone;
+        this.random = random;
     }
 
     public String getUserName() {
@@ -26,5 +27,13 @@ public class Users {
 
     public void setUserPrimaryPhone(String userPrimaryPhone) {
         this.userPrimaryPhone = userPrimaryPhone;
+    }
+
+    public int getRandom() {
+        return random;
+    }
+
+    public void setRandom(int random) {
+        this.random = random;
     }
 }

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#595a5b"
     tools:context=".Moderator.ModeratorAddOffer">
+
     <ScrollView
+        android:id="@+id/scroll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scroll_layout"
-        android:fitsSystemWindows="true"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -20,231 +22,269 @@
                 android:id="@+id/moderator_add_offer_first_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:text="العرض الاول :"
-                android:textColor="#535353"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="@dimen/_24sdp"/>
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moderator_add_offer_first_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_100sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_fixed_offer_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:background="#faed24"
                 android:gravity="top"
+                android:padding="@dimen/_8sdp"
+
                 android:hint="اكتب  العرض الاول هنا ..."
+                android:textColorHint="#535353"
                 android:textSize="16sp"
-                android:textColorHint="#535353"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_fixed_offer_text_view" />
+
             <Button
                 android:id="@+id/moderator_add_offer_first_update_btn"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_fixed_offer_edit_text"
-                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_first_fixed_offer_edit_text"
-                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_first_fixed_offer_edit_text"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="#000"
                 android:text="تحديث"
-                android:textSize="20sp"
                 android:textColor="#FFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_first_fixed_offer_edit_text"
+                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_first_fixed_offer_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_fixed_offer_edit_text" />
+
             <TextView
                 android:id="@+id/moderator_add_offer_second_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_update_btn"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:textStyle="bold"
-                android:textColor="#535353"
+                android:text="العرض الثانى :"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:text="العرض الثانى :"/>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_update_btn" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moderator_add_offer_second_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_100sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_fixed_offer_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:padding="@dimen/_8sdp"
+
+                android:background="#faed24"
                 android:gravity="top"
+
                 android:hint="اكتب  العرض الثانى هنا ..."
+                android:textColorHint="#535353"
                 android:textSize="16sp"
-                android:textColorHint="#535353"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_fixed_offer_text_view" />
+
             <Button
                 android:id="@+id/moderator_add_offer_second_update_btn"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_fixed_offer_edit_text"
-                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_second_fixed_offer_edit_text"
-                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_second_fixed_offer_edit_text"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="#000"
                 android:text="تحديث"
-                android:textSize="20sp"
                 android:textColor="#FFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_second_fixed_offer_edit_text"
+                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_second_fixed_offer_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_fixed_offer_edit_text" />
+
             <TextView
                 android:id="@+id/moderator_add_offer_third_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_update_btn"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:textStyle="bold"
-                android:textColor="#535353"
+                android:text="العرض الثالث :"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:text="العرض الثالث :"/>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_update_btn" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moderator_add_offer_third_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_100sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:padding="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:background="#faed24"
                 android:gravity="top"
                 android:hint="اكتب  العرض الثالث هنا ..."
+                android:textColorHint="#535353"
+
                 android:textSize="16sp"
-                android:textColorHint="#535353"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_text_view" />
+
             <Button
                 android:id="@+id/moderator_add_offer_third_update_btn"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_edit_text"
-                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_third_fixed_offer_edit_text"
-                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_third_fixed_offer_edit_text"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="#000"
                 android:text="تحديث"
-                android:textSize="20sp"
                 android:textColor="#FFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_third_fixed_offer_edit_text"
+                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_third_fixed_offer_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_edit_text" />
+
             <TextView
                 android:id="@+id/moderator_add_offer_fourth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_update_btn"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:textStyle="bold"
-                android:textColor="#535353"
+                android:text="العرض الرابع :"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:text="العرض الرابع :"/>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_update_btn" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moderator_add_offer_fourth_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_100sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_fixed_offer_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:padding="@dimen/_8sdp"
+
+                android:background="#faed24"
                 android:gravity="top"
                 android:hint="اكتب  العرض الرابع هنا ..."
+
+                android:textColorHint="#535353"
                 android:textSize="16sp"
-                android:textColorHint="#535353"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_fixed_offer_text_view" />
+
             <Button
                 android:id="@+id/moderator_add_offer_fourth_update_btn"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text"
-                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text"
-                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="#000"
                 android:text="تحديث"
-                android:textSize="20sp"
                 android:textColor="#FFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text"
+                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text" />
+
             <TextView
                 android:id="@+id/moderator_add_offer_fifth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_update_btn"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:textStyle="bold"
-                android:textColor="#535353"
+                android:text="العرض الخامس :"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:text="العرض الخامس :"/>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_update_btn" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moderator_add_offer_fifth_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_100sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_fixed_offer_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:padding="@dimen/_8sdp"
+
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:background="#faed24"
                 android:gravity="top"
                 android:hint="اكتب  العرض الخامس هنا ..."
+                android:textColorHint="#535353"
                 android:textSize="16sp"
-                android:textColorHint="#535353"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_fixed_offer_text_view" />
+
             <Button
                 android:id="@+id/moderator_add_offer_fifth_update_btn"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text"
-                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text"
-                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="#000"
                 android:text="تحديث"
-                android:textSize="20sp"
                 android:textColor="#FFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text"
+                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text" />
+
             <TextView
                 android:id="@+id/moderator_add_offer_sixth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_update_btn"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:textStyle="bold"
-                android:textColor="#535353"
+                android:text="العرض السادس :"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:text="العرض السادس :"/>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_update_btn" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moderator_add_offer_sixth_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_100sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_text_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:padding="@dimen/_8sdp"
+
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:background="#faed24"
                 android:gravity="top"
                 android:hint="اكتب  العرض السادس هنا ..."
+                android:textColorHint="#535353"
+
                 android:textSize="16sp"
-                android:textColorHint="#535353"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_text_view" />
+
             <Button
                 android:id="@+id/moderator_add_offer_sixth_update_btn"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text"
-                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text"
-                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_6sdp"
-                android:background="#000"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:background="#FFFFFF"
                 android:text="تحديث"
+                android:textColor="#595a5b"
                 android:textSize="20sp"
-                android:textColor="#FFF"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text"
+                app:layout_constraintStart_toStartOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text"
+                app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

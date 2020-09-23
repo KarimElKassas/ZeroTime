@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +26,8 @@ import com.zerotime.zerotime.Secretary.Pojos.Users;
 import com.zerotime.zerotime.Secretary.SecretaryMessage;
 
 import java.util.List;
+
+import static com.zerotime.zerotime.R.drawable.avatar1;
 
 public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapter.ViewHolder> {
     private Context context;
@@ -47,14 +51,54 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Users user = mUsers.get(position);
         holder.userName.setText(user.getUserName());
+
+        int random = user.getRandom();
+        switch (random) {
+            case 0:
+                holder.imageView.setImageResource(R.drawable.avatar1);
+                break;
+            case 1:
+                holder.imageView.setImageResource(R.drawable.avatar3);
+                break;
+            case 2:
+                holder.imageView.setImageResource(R.drawable.avatar4);
+                break;
+            case 3:
+                holder.imageView.setImageResource(R.drawable.avatar5);
+                break;
+            case 4:
+                holder.imageView.setImageResource(R.drawable.avatar6);
+                break;
+            case 5:
+                holder.imageView.setImageResource(R.drawable.avatar7);
+                break;
+            case 6:
+                holder.imageView.setImageResource(R.drawable.avatar8);
+                break;
+            case 7:
+                holder.imageView.setImageResource(R.drawable.avatar9);
+                break;
+            case 8:
+                holder.imageView.setImageResource(R.drawable.avatar10);
+                break;
+
+            case 9:
+                holder.imageView.setImageResource(R.drawable.avatar11);
+                break;
+
+
+        }
+
+
         lastMessage(user.getUserPrimaryPhone(), holder.lastMsg);
+
         holder.chatCard.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, SecretaryMessage.class);
-            intent.putExtra("UserID",user.getUserPrimaryPhone());
-            intent.putExtra("UniqueID","DisplayChatsAdapter");
+            intent.putExtra("UserID", user.getUserPrimaryPhone());
+            intent.putExtra("UniqueID", "DisplayChatsAdapter");
             context.startActivity(intent);
-            ((Activity)context).overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
     }
 
@@ -66,12 +110,14 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView userName, lastMsg;
         CardView chatCard;
+        CircleImageView imageView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.display_users_row_user_name);
             lastMsg = itemView.findViewById(R.id.display_users_row_last_message);
             chatCard = itemView.findViewById(R.id.display_users_row_card);
+            imageView = itemView.findViewById(R.id.img_user);
         }
     }
 
@@ -101,9 +147,9 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
                 if ("default".equals(theLastMessage)) {
                     last_msg.setText("لا توجد رسائل");
                 } else {
-                    if (secretaryChatPojo.getType().equals("Text")){
+                    if (secretaryChatPojo.getType().equals("Text")) {
                         last_msg.setText(theLastMessage);
-                    }else last_msg.setText("Picture");
+                    } else last_msg.setText("Picture");
                 }
 
                 theLastMessage = "default";

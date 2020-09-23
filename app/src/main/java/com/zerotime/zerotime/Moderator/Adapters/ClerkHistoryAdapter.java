@@ -34,13 +34,12 @@ public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapte
     public void onBindViewHolder(@NonNull ClerkViewHolder holder, int position) {
 
         final Clerk_History history = clerk_histories.get(position);
-        holder.name.setText(history.getClerkName());
-        holder.description.setText(history.getDescription());
-        holder.price.setText(history.getPrice());
+        holder.description.setText("وصف الطلب : "+history.getDescription());
+        holder.price.setText("سعر الطلب : "+history.getPrice()+" جنيه مصري ");
         holder.date.setText(history.getDate());
-        holder.size.setText(history.getSize());
-        holder.ReceiverPhone.setText(history.getReceiverPhone());
-        holder.ReceiverAddress.setText(history.getReceiverAddress());
+        holder.size.setText( "حجم الطلب : "+history.getSize());
+        holder.ReceiverPhone.setText("رقم المستلم : "+history.getReceiverPhone());
+        holder.ReceiverAddress.setText("عنوان المستلم : "+history.getReceiverAddress());
 
 
 
@@ -61,7 +60,6 @@ public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapte
 
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.Clerks_history_name);
             description = itemView.findViewById(R.id.Clerks_history_description);
             date = itemView.findViewById(R.id.Clerks_history_date);
             price = itemView.findViewById(R.id.Clerks_history_price);
