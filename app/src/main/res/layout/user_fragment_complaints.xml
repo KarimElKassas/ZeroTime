@@ -31,7 +31,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/complaintsFragment_complaint_edit_text"
                 android:layout_width="@dimen/_250sdp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="@dimen/_150sdp"
                 app:layout_constraintTop_toBottomOf="@id/complaintsFragment_insert_complaint_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +39,7 @@
                 android:background="#FFF"
                 android:textAlignment="textStart"
                 android:padding="@dimen/_8sdp"
+                android:maxLines="7"
                 />
             <Button
                 android:id="@+id/complaintsFragment_send_complaint_btn"
