@@ -31,7 +31,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     private List<OrderState> ordersList;
 
     private Context context;
-    String[] steps = {"لم يتم الاستلام", "تم الأستلام", "جاري التوصيل", "تم التوصيل"};
+    String[] steps = {"   لم يتم \n الإستلام", "     تم \n الإستلام", "   جاري \n التوصيل", "     تم \n التوصيل"};
     Dialog clerksDialog;
 
     public FollowingOrderAdapter(List<OrderState> ordersList, Context context) {
@@ -52,6 +52,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     @Override
     public void onBindViewHolder(@NonNull FollowingOrderViewHolder holder, int position) {
         SharedPreferences prefs = context.getSharedPreferences("UserState", MODE_PRIVATE);
+        final OrderState orderState = ordersList.get(position);
         String userType = prefs.getString("UserType","");
         if (userType != null){
             switch (userType) {
@@ -70,13 +71,13 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
                     break;
             }
         }
-        final OrderState orderState = ordersList.get(position);
-        holder.name.setText(orderState.getName());
-        holder.address.setText(orderState.getAddress());
-        holder.price.setText(orderState.getPrice());
+
+        holder.name.setText("اسم المستلم : "+orderState.getName());
+        holder.address.setText("عنوان المستلم : "+orderState.getAddress());
+        holder.price.setText("سعر الطلب : "+orderState.getPrice());
         holder.date.setText(orderState.getDate());
-        holder.description.setText(orderState.getDescription());
-        holder.phone.setText(orderState.getPhone());
+        holder.description.setText("وصف الطلب : "+orderState.getDescription());
+        holder.phone.setText("رقم هاتف المستلم : "+orderState.getPhone());
 
 
         holder.userData.setOnClickListener(view -> {
@@ -100,6 +101,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
 
 
         holder.stepsView.setLabels(steps)
+
                 .setBarColorIndicator(context.getResources().getColor(R.color.material_blue_grey_800))
                 .setProgressColorIndicator(context.getResources().getColor(R.color.orange))
                 .setLabelColorIndicator(context.getResources().getColor(R.color.orange))
