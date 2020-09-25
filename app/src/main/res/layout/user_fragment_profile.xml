@@ -23,7 +23,7 @@
         android:text="@string/profile_update_data_text"
         android:textSize="@dimen/_22sdp"
         android:textColor="#FFF"
-        android:background="@drawable/btn_back_fb3908"
+        android:background="@drawable/btn_back_red"
         />
 
     <Button
@@ -37,7 +37,7 @@
         android:text="@string/profile_previous_orders_text"
         android:textSize="@dimen/_22sdp"
         android:textColor="#FFF"
-        android:background="@drawable/btn_back_fb3908"/>
+        android:background="@drawable/btn_back_red"/>
 
     <Button
         android:id="@+id/profile_order_progress_btn"
@@ -50,7 +50,7 @@
         android:text="@string/profile_follow_orders_text"
         android:textSize="@dimen/_22sdp"
         android:textColor="#FFF"
-        android:background="@drawable/btn_back_fb3908"/>
+        android:background="@drawable/btn_back_red"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

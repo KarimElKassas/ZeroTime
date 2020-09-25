@@ -1,41 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     tools:context=".Fragments.ContactFragment">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/goToChatBTn"
-        android:text="التحدث مع الدعم "
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:text="تواصل مع الدعم"
+            android:textSize="@dimen/_28sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
+            />
 
-        />
-
-
-
-
-
-
-
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
+            <Button
+
+                android:id="@+id/goToChatBTn"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_btn_back_red"
+                android:drawableStart="@drawable/ic_baseline_message_24"
+                android:drawablePadding="@dimen/_8sdp"
+                android:text="الدردشه"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                />
+
+            <Button
+                android:id="@+id/goToCallBTn"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/rounded_btn_back_red"
+                android:drawableStart="@drawable/ic_baseline_call_white_24"
+                android:drawablePadding="@dimen/_8sdp"
+                android:text="إتصال"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/goToChatBTn"
+
+
+                />
+
+            <Button
+                android:id="@+id/goToMailBTn"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/rounded_btn_back_red"
+                android:drawableStart="@drawable/ic_message_icon"
+                android:text="إرسال بريد "
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/goToCallBTn"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>
