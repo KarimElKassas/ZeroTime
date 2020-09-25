@@ -1,27 +1,47 @@
 package com.zerotime.zerotime.Fragments;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Home;
+import com.zerotime.zerotime.Message;
 import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.UserFragmentHomeBinding;
 
 
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class HomeFragment extends Fragment {
@@ -30,15 +50,12 @@ public class HomeFragment extends Fragment {
     Context context;
     View view;
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = UserFragmentHomeBinding.inflate(inflater,container,false);
         view = binding.getRoot();
         context = container.getContext();
-
 
 
 
@@ -98,13 +115,13 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
     @Override
     public void onResume() {
 
         super.onResume();
         try {
 
+            new Handler().postDelayed(() -> {
 
                 view.setFocusableInTouchMode(true);
                 view.requestFocus();
@@ -112,19 +129,15 @@ public class HomeFragment extends Fragment {
 
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
-                        android.os.Process.killProcess(android.os.Process.myPid());
-
-                        /*FragmentManager fragmentManager = getFragmentManager();
-                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
                         ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        ((Activity)context).finish();*/
+                        ((Activity)context).finish();
                         return true;
                     }
 
                     return false;
                 });
 
+            }, 1000000);
         }catch (Exception e){
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();

@@ -1,16 +1,18 @@
 package com.zerotime.zerotime;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,10 +53,11 @@ public class Message extends AppCompatActivity {
     SharedPreferences prefs;
     MessageAdapter adapter;
     List<ChatPojo> chatPojos;
-    DatabaseReference chatRef,userRef;
+    DatabaseReference chatRef, userRef;
     ValueEventListener seenListener;
-    String userId, intentFrom,userName;
+    String userId, intentFrom, userName;
     boolean notify = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,12 @@ public class Message extends AppCompatActivity {
                 userId = getIntent().getStringExtra("UserID");
                 intentFrom = "ContactFragment";
 
+            } else if (Objects.requireNonNull(getIntent().getStringExtra("UniqueID")).equals("Notification")) {
+                userId = getIntent().getStringExtra("UserID");
+                intentFrom = "Notification";
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancelAll();
+                notificationManager.cancel(0);
             }
         }
 
@@ -86,7 +95,7 @@ public class Message extends AppCompatActivity {
                 String msg = Objects.requireNonNull(binding.secretaryMessageWriteMSGEdt.getText()).toString();
                 if (!msg.equals("")) {
                     if (intentFrom != null) {
-                        if (intentFrom.equals("ContactFragment")) {
+                        if (intentFrom.equals("ContactFragment") || intentFrom.equals("Notification")) {
                             sendMessage(userId
                                     , "Zero Time", msg);
 
@@ -103,32 +112,33 @@ public class Message extends AppCompatActivity {
             Intent galleryIntent = new Intent();
             galleryIntent.setType("image/*");
             galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
+            startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
         });
         ReadMessages();
 
         seenMessage(userId);
 
     }
-    private void sendNotification(final String userName, String message){
+
+    private void sendNotification(final String userName, String message) {
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo("Zero Time");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Token token = dataSnapshot.getValue(Token.class);
 
-                    Data data = new Data(userId,userName + ": " + message,"لديك رسالة جديدة",userId,R.mipmap.ic_launcher_round);
+                    Data data = new Data(userId, userName + ": " + message, "لديك رسالة جديدة", userId, R.mipmap.ic_launcher_round);
 
                     assert token != null;
-                    Sender sender = new Sender(data,token.getToken());
+                    Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
                         @Override
                         public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                            if (response.code() == 200){
+                            if (response.code() == 200) {
                                 assert response.body() != null;
-                                if (response.body().success != 1){
+                                if (response.body().success != 1) {
                                     Toast.makeText(Message.this, "Failed !", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -148,15 +158,16 @@ public class Message extends AppCompatActivity {
             }
         });
     }
-    private void seenMessage(final String userid){
+
+    private void seenMessage(final String userid) {
         chatRef = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ChatPojo chat = snapshot.getValue(ChatPojo.class);
                     assert chat != null;
-                    if (chat.getReceiver().equals(userid) && chat.getSender().equals("Zero Time")){
+                    if (chat.getReceiver().equals(userid) && chat.getSender().equals("Zero Time")) {
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isSeen", true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -170,6 +181,7 @@ public class Message extends AppCompatActivity {
             }
         });
     }
+
     private void sendMessage(String Sender, String Receiver, String Message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -185,11 +197,11 @@ public class Message extends AppCompatActivity {
         userRef.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    if (snapshot.hasChildren()){
+                if (snapshot.exists()) {
+                    if (snapshot.hasChildren()) {
                         userName = snapshot.child("UserName").getValue(String.class);
-                        if (notify){
-                            sendNotification(userName,msg);
+                        if (notify) {
+                            sendNotification(userName, msg);
                         }
                         notify = false;
                     }
@@ -256,7 +268,7 @@ public class Message extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK){
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
 
             final String currentUserRef = "messages/" + userId + "/" + "Zero Time";
@@ -272,7 +284,7 @@ public class Message extends AppCompatActivity {
             filePath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         FirebaseStorage.getInstance().getReference("Messages")
                                 .child("MessageImages").child(pushID + ".jpg")
                                 .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
