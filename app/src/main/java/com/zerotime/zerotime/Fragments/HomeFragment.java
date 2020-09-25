@@ -1,62 +1,36 @@
 package com.zerotime.zerotime.Fragments;
 
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Handler;
-import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Home;
-import com.zerotime.zerotime.Message;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.UserFragmentHomeBinding;
 
-
-import java.util.Objects;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import es.dmoral.toasty.Toasty;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class HomeFragment extends Fragment {
     UserFragmentHomeBinding binding;
-    boolean doubleBackToExitPressedOnce = false;
     Context context;
     View view;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = UserFragmentHomeBinding.inflate(inflater,container,false);
+        binding = UserFragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         context = container.getContext();
-
 
 
         return view;
@@ -67,9 +41,7 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Our Products Button
-        binding.homeFragmentOurProductsBtn.setOnClickListener(view1 -> {
-            Toasty.info(context, "قريباً", Toasty.LENGTH_SHORT,true).show();
-        });
+        binding.homeFragmentOurProductsBtn.setOnClickListener(view1 -> Toasty.info(context, "قريباً", Toasty.LENGTH_SHORT, true).show());
 
         //Month Offers Button
         binding.homeFragmentMonthOffersBtn.setOnClickListener(view1 -> {
@@ -77,9 +49,9 @@ public class HomeFragment extends Fragment {
             DisplayOffersFragment fragment = new DisplayOffersFragment();
             assert fragmentManager != null;
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
-                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
-                    .replace(R.id.Frame_Content,fragment)
+                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content, fragment)
                     .addToBackStack("HomeFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
@@ -92,9 +64,9 @@ public class HomeFragment extends Fragment {
             AddOrderFragment fragment = new AddOrderFragment();
             assert fragmentManager != null;
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
-                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
-                    .replace(R.id.Frame_Content,fragment)
+                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content, fragment)
                     .addToBackStack("HomeFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
@@ -106,9 +78,9 @@ public class HomeFragment extends Fragment {
             AboutUsFragment fragment = new AboutUsFragment();
             assert fragmentManager != null;
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
-                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
-                    .replace(R.id.Frame_Content,fragment)
+                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content, fragment)
                     .addToBackStack("HomeFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
@@ -121,26 +93,23 @@ public class HomeFragment extends Fragment {
         super.onResume();
         try {
 
-            new Handler().postDelayed(() -> {
 
-                view.setFocusableInTouchMode(true);
-                view.requestFocus();
-                view.setOnKeyListener((v, keyCode, event) -> {
+            view.setFocusableInTouchMode(true);
+            view.requestFocus();
+            view.setOnKeyListener((v, keyCode, event) -> {
 
-                    if( keyCode == KeyEvent.KEYCODE_BACK )
-                    {
-                        ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        ((Activity)context).finish();
-                        return true;
-                    }
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    ((Activity) context).finish();
+                    return true;
+                }
 
-                    return false;
-                });
+                return false;
+            });
 
-            }, 1000000);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
 

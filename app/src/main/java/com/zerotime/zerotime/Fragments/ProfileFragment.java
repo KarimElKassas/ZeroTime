@@ -22,11 +22,6 @@ import com.zerotime.zerotime.History;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentProfileBinding;
 
-import java.util.Objects;
-
-import es.dmoral.toasty.Toasty;
-
-
 public class ProfileFragment extends Fragment {
 
     UserFragmentProfileBinding binding;
@@ -94,12 +89,7 @@ public class ProfileFragment extends Fragment {
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
                         getActivity().onBackPressed();
-                        /* FragmentManager fragmentManager = getFragmentManager();
-                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-
-                        ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        ((Activity)context).finish();*/
 
                         return true;
                     }

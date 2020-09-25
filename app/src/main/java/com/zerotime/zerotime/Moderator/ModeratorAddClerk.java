@@ -1,16 +1,11 @@
 package com.zerotime.zerotime.Moderator;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zerotime.zerotime.databinding.ModeratorActivityAddClerckBinding;
@@ -18,6 +13,8 @@ import com.zerotime.zerotime.myBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ModeratorAddClerk extends AppCompatActivity {
     private ModeratorActivityAddClerckBinding binding;
@@ -46,12 +43,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
         clerksMap = new HashMap<>();
 
 
-        binding.ModeratorAddClerkAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addClerk();
-            }
-        });
+        binding.ModeratorAddClerkAddBtn.setOnClickListener(view1 -> addClerk());
 
     }
 
@@ -84,17 +76,15 @@ public class ModeratorAddClerk extends AppCompatActivity {
 
 
         clerksRef.child(phone1)
-                .setValue(clerksMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
+                .setValue(clerksMap).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
 
-                    Toast.makeText(ModeratorAddClerk.this.getApplicationContext(), "تمت الإضافه بنجاح ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ModeratorAddClerk.this.getApplicationContext(), "تمت الإضافه بنجاح ", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ModeratorAddClerk.this, ModeratorHome.class);
+                startActivity(intent);
+            } else {
 
-                } else {
-
-                    Toast.makeText(ModeratorAddClerk.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(ModeratorAddClerk.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

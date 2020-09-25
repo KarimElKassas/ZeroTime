@@ -12,6 +12,7 @@ public class myBroadCast extends BroadcastReceiver {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
         //should check null because in airplane mode it will be null
         if(netInfo != null && netInfo.isConnected()){
             //Toast.makeText(context, "Back Online", Toast.LENGTH_SHORT).show();

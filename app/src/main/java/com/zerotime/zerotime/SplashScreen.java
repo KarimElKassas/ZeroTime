@@ -53,6 +53,9 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void animation() {
+        binding.splashImg.setTranslationY(-100f);
+        binding.splashImg.setAlpha(0f);
+        binding.splashImg.animate().translationY(100f).alpha(1f).setDuration(600).setStartDelay(500).start();
         inAnimation.setDuration(200);
         outAnimation.setDuration(200);
         Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.stb2);

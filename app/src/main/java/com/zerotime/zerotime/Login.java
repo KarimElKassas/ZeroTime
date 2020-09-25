@@ -200,9 +200,9 @@ public class Login extends AppCompatActivity {
         outAnimation.setDuration(200);
 
         // login welcome text animation
-        binding.loginWelcomeTextView.setTranslationX(400f);
-        binding.loginWelcomeTextView.setAlpha(0f);
-        binding.loginWelcomeTextView.animate().translationX(0f).alpha(1f).setDuration(600).setStartDelay(500).start();
+        binding.loginLogoImg.setTranslationX(400f);
+        binding.loginLogoImg.setAlpha(0f);
+        binding.loginLogoImg.animate().translationX(0f).alpha(1f).setDuration(600).setStartDelay(500).start();
         //---------------------------------------------------------------------
         // user phone animation
         binding.loginUserPhoneEditTxt.setTranslationX(600f);

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
 <ImageView
+    android:id="@+id/splashImg"
     android:layout_width="@dimen/_180sdp"
     android:layout_height="@dimen/_180sdp"
     app:layout_constraintBottom_toTopOf="@+id/splash_screen_welcome_text"

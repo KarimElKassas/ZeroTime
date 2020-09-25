@@ -44,6 +44,7 @@ public class FollowMyOrdersFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = UserFragmentFollowMyOrdersBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
+
         context = container.getContext();
 
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);

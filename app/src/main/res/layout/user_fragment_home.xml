@@ -9,6 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@drawable/bghome"
         android:layout_height="match_parent">
         <Button
             android:id="@+id/homeFragment_add_order_btn"
