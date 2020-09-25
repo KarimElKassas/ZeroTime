@@ -1,12 +1,15 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,7 @@ import java.util.Objects;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class UpdateUserDataFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class UpdateUserDataFragment extends Fragment {
 
     UserFragmentUpdateUserDataBinding binding;
     DatabaseReference usersRef;
@@ -41,30 +44,25 @@ public class UpdateUserDataFragment extends Fragment implements AdapterView.OnIt
 
     String userPhone;
     String userToken;
-    private static final String[] regions = {"القاهرة", "الاسكندرية", "الجيزة"};
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
-
-
+    View view;
+    Context context;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = UserFragmentUpdateUserDataBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+        view = binding.getRoot();
+        context = container.getContext();
+
         usersMap = new HashMap<>();
         binding.updateDataFragmentPrimaryPhoneEditTxt.setEnabled(false);
         //animation
         inAnimation = new AlphaAnimation(0f,2f);
         outAnimation = new AlphaAnimation(2f,0f);
-        //Regions Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()),
-                android.R.layout.simple_spinner_item, regions);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.updateDataFragmentRegionsSpinner.setAdapter(adapter);
-        binding.updateDataFragmentRegionsSpinner.setOnItemSelectedListener(this);
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
@@ -81,37 +79,7 @@ public class UpdateUserDataFragment extends Fragment implements AdapterView.OnIt
             }
         });
 
-        usersRef.child(Objects.requireNonNull(userPhone)).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.hasChildren()) {
-                        binding.updateDataFragmentNameEditTxt
-                                .setText(snapshot.child("UserName").getValue(String.class));
-                        binding.updateDataFragmentPasswordEditTxt
-                                .setText(snapshot.child("UserPassword").getValue(String.class));
-                        binding.updateDataFragmentPrimaryPhoneEditTxt
-                                .setText(snapshot.child("UserPrimaryPhone").getValue(String.class));
-                        binding.updateDataFragmentSecondaryPhoneEditTxt
-                                .setText(snapshot.child("UserSecondaryPhone").getValue(String.class));
-                        binding.updateDataFragmentAddressEditTxt
-                                .setText(snapshot.child("UserAddress").getValue(String.class));
-                        binding.updateDataFragmentRegionsSpinner
-                                .setSelection(Objects.requireNonNull(snapshot.child("UserRegionIndex").getValue(Integer.class)));
-                    }
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        binding.updateDataFragmentUpdateBtn.setOnClickListener(view1 -> {
-            checkData();
-        });
 
         return view;
     }
@@ -179,11 +147,7 @@ public class UpdateUserDataFragment extends Fragment implements AdapterView.OnIt
             binding.updateDataFragmentAddressEditTxt.requestFocus();
             return;
         }
-        //User Region Validation
-        if (binding.updateDataFragmentRegionsSpinner.getSelectedItem() == null) {
-            Toast.makeText(getContext(), "من فضلك قم باختيار المنطقه !", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         updateData();
     }
 
@@ -220,65 +184,58 @@ public class UpdateUserDataFragment extends Fragment implements AdapterView.OnIt
                     }
                 });
 
-        /*usersMap.put("UserName", Objects.requireNonNull(binding.updateDataFragmentNameEditTxt.getText()).toString());
-        usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.updateDataFragmentPrimaryPhoneEditTxt.getText()).toString());
-        usersMap.put("UserSecondaryPhone", Objects.requireNonNull(binding.updateDataFragmentSecondaryPhoneEditTxt.getText()).toString());
-        usersMap.put("UserPassword", Objects.requireNonNull(binding.updateDataFragmentPasswordEditTxt.getText()).toString());
-        usersMap.put("UserAddress", Objects.requireNonNull(binding.updateDataFragmentAddressEditTxt.getText()).toString());
-        usersMap.put("UserToken",userToken);
-        usersMap.put("UserId",Objects.requireNonNull(binding.updateDataFragmentPrimaryPhoneEditTxt.getText()).toString());*/
 
-       /* usersRef.child(binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString())
-                .setValue(usersMap).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        //clear progress bar
-                        binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
-                        binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
-                        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                        Toast.makeText(getContext(), "تم تعديل البيانات بنجاح", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        //clear progress bar
-                        binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
-                        binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
-                        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                        Toast.makeText(getContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();         }
-                });*/
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        switch (position) {
-            case 0:
-                usersRef.child(userPhone).child("UserRegion").setValue("القاهرة");
-                usersRef.child(userPhone).child("UserRegionIndex").setValue(0);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        usersRef.child(Objects.requireNonNull(userPhone)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.hasChildren()) {
+                        binding.updateDataFragmentNameEditTxt
+                                .setText(snapshot.child("UserName").getValue(String.class));
+                        binding.updateDataFragmentPasswordEditTxt
+                                .setText(snapshot.child("UserPassword").getValue(String.class));
+                        binding.updateDataFragmentPrimaryPhoneEditTxt
+                                .setText(snapshot.child("UserPrimaryPhone").getValue(String.class));
+                        binding.updateDataFragmentSecondaryPhoneEditTxt
+                                .setText(snapshot.child("UserSecondaryPhone").getValue(String.class));
+                        binding.updateDataFragmentAddressEditTxt
+                                .setText(snapshot.child("UserAddress").getValue(String.class));
 
-                /*usersMap.put("UserRegion","القاهرة");
-                usersMap.put("UserRegionIndex",0);*/
-                // Whatever you want to happen when the first item gets selected
-                break;
-            case 1:
-                usersRef.child(userPhone).child("UserRegion").setValue("الاسكندرية");
-                usersRef.child(userPhone).child("UserRegionIndex").setValue(1);
-                //usersMap.put("UserRegion","الاسكندرية");
-                //usersMap.put("UserRegionIndex",1);
-                // Whatever you want to happen when the second item gets selected
-                break;
-            case 2:
-                usersRef.child(userPhone).child("UserRegion").setValue("الجيزة");
-                usersRef.child(userPhone).child("UserRegionIndex").setValue(2);
-                //usersMap.put("UserRegion","الجيزة");
-                //usersMap.put("UserRegionIndex",2);
-                // Whatever you want to happen when the thrid item gets selected
-                break;
+                    }
 
-        }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        binding.updateDataFragmentUpdateBtn.setOnClickListener(view1 -> {
+            checkData();
+        });
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    public void onResume() {
+        super.onResume();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
 
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
+                return true;
+            }
+
+            return false;
+        });
     }
 }

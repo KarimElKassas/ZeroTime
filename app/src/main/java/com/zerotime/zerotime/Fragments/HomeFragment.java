@@ -109,7 +109,6 @@ public class HomeFragment extends Fragment {
 
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
-                        Toast.makeText(context, "Back Pressed", Toast.LENGTH_SHORT).show();
                         ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         ((Activity)context).finish();
                         return true;

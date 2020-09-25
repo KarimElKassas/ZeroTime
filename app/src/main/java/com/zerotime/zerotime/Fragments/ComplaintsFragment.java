@@ -1,17 +1,21 @@
 package com.zerotime.zerotime.Fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +34,6 @@ import com.zerotime.zerotime.databinding.UserFragmentComplaintsBinding;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -41,8 +44,8 @@ public class ComplaintsFragment extends Fragment {
 
     private UserFragmentComplaintsBinding binding;
     private DatabaseReference complaintsRef;
-    private HashMap<String, String> complaintsMap = new HashMap<>();
-
+    Context context;
+    View view;
     // Room DB
     UserDao userDao;
 
@@ -52,22 +55,30 @@ public class ComplaintsFragment extends Fragment {
     String userPhone, userComplaint;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = UserFragmentComplaintsBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
+        view = binding.getRoot();
+        context = container.getContext();
 
         //Room DB
-        userDao = Room.databaseBuilder(getContext(), UserDataBase.class, "Complaint").allowMainThreadQueries().addMigrations(MIGRATION_1_2)
+        userDao = Room.databaseBuilder(context, UserDataBase.class, "Complaint").allowMainThreadQueries().addMigrations(MIGRATION_1_2)
                 .build().getUserDao();
 
 
-        preferences = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
+        preferences = context.getSharedPreferences("UserState", MODE_PRIVATE);
         complaintsRef = FirebaseDatabase.getInstance().getReference("Users");
         userPhone = preferences.getString("isLogged", "");
 
-        binding.complaintsFragmentSendComplaintBtn.setOnClickListener(view1 -> {
 
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        binding.complaintsFragmentSendComplaintBtn.setOnClickListener(view1 -> {
 
             if (TextUtils.isEmpty(binding.complaintsFragmentComplaintEditText.getText())) {
                 binding.complaintsFragmentComplaintEditText.setError("من فضلك قم بادخال شكوتك");
@@ -109,7 +120,6 @@ public class ComplaintsFragment extends Fragment {
                         binding.complaintsFragmentComplaintEditText.setText("");
 
 
-
                     }
 
                     @Override
@@ -121,7 +131,22 @@ public class ComplaintsFragment extends Fragment {
 
             }
         });
+    }
 
-        return view;
+    @Override
+    public void onResume() {
+        super.onResume();
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
+                return true;
+            }
+
+            return false;
+        });
     }
 }

@@ -22,6 +22,10 @@ import com.zerotime.zerotime.History;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentProfileBinding;
 
+import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -42,13 +46,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.profileOrdersHistoryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), History.class);
-                startActivity(intent);
-                ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            }
+        binding.profileOrdersHistoryBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), History.class);
+            startActivity(intent);
+            ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
 
 
@@ -92,7 +93,7 @@ public class ProfileFragment extends Fragment {
 
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
-                        Toast.makeText(context, "Back Pressed", Toast.LENGTH_SHORT).show();
+
                         ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         ((Activity)context).finish();
                         return true;
@@ -107,4 +108,6 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
+
+
 }

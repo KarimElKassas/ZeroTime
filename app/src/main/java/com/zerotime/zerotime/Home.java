@@ -42,6 +42,7 @@ public class Home extends AppCompatActivity {
             return;
         }
         if (binding.bottomNav.getCurrentActiveItemPosition() == 1) {
+
             binding.bottomNav.setCurrentActiveItem(0);
             return;
         }
