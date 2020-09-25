@@ -71,6 +71,9 @@ public class FollowMyOrdersFragment extends Fragment {
                     if (snapshot.hasChildren()){
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
+                            binding.myOrdersFragmentProgress.setVisibility(View.GONE);
+                            binding.followingMyOrdersFragmentRecycler.setVisibility(View.VISIBLE);
+
                             String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
                             String orderDate = dataSnapshot.child("OrderDate").getValue(String.class);
                             String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);

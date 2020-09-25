@@ -195,6 +195,9 @@ public class UpdateUserDataFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     if (snapshot.hasChildren()) {
+                        binding.updateDataFragmentProgress.setVisibility(View.GONE);
+                        binding.scrollLayout.setVisibility(View.VISIBLE);
+
                         binding.updateDataFragmentNameEditTxt
                                 .setText(snapshot.child("UserName").getValue(String.class));
                         binding.updateDataFragmentPasswordEditTxt

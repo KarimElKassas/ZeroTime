@@ -15,7 +15,8 @@
             android:layout_height="match_parent"
             android:id="@+id/scroll_layout"
             android:fitsSystemWindows="true"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:visibility="invisible">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -202,6 +203,17 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+        <ProgressBar
+            android:id="@+id/update_data_fragment_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:indeterminate="true"
+            android:visibility="visible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

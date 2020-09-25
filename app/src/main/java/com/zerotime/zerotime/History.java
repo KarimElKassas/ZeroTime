@@ -48,6 +48,9 @@ public class History extends AppCompatActivity {
                     if (snapshot.hasChildren()) {
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 
+                            binding.myHistoryProgress.setVisibility(View.GONE);
+                            binding.historyRecycler.setVisibility(View.VISIBLE);
+
                             String description = dataSnapshot1.child("OrderDescription").getValue(String.class);
                             String date = dataSnapshot1.child("OrderDate").getValue(String.class);
                             String price = dataSnapshot1.child("OrderPrice").getValue(String.class);
@@ -88,6 +91,7 @@ public class History extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public void onBackPressed() {
