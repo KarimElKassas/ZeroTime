@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F3F3F3"
+    android:layoutDirection="ltr"
     tools:context=".Home">
 
     <FrameLayout
@@ -15,7 +16,8 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layoutDirection="ltr">
 
     </FrameLayout>
 
@@ -23,7 +25,7 @@
     <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_55sdp"
+        android:layout_height="wrap_content"
         android:background="#FFF"
         android:elevation="4dp"
         android:padding="12dp"
@@ -32,73 +34,71 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/home_bottom_nav_setting_item"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_36sdp"
+            app:bt_colorActive="#AC4B01"
+            app:bt_colorInactive="#ED6700"
+            app:bt_icon="@drawable/ic_baseline_settings_24"
+            app:bt_padding="@dimen/default_nav_item_padding"
+            app:bt_shape="@drawable/transition_background_drawable"
+            app:bt_title="الاعدادت"
+            app:bt_titlePadding="@dimen/default_nav_item_text_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_contact_item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/home_bottom_nav_contact_item"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_36sdp"
+            app:bt_colorActive="#277C27"
+            app:bt_colorInactive="#5cb85c"
+            app:bt_icon="@drawable/ic_baseline_call_24"
+            app:bt_padding="@dimen/default_nav_item_padding"
+            app:bt_shape="@drawable/transition_background_drawable"
+            app:bt_title="تواصل"
+            app:bt_titlePadding="@dimen/default_nav_item_text_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_personal_item"
+            app:layout_constraintStart_toEndOf="@id/home_bottom_nav_setting_item"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/home_bottom_nav_personal_item"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_36sdp"
+            app:bt_colorActive="#6200EE"
+            app:bt_colorInactive="#03DAC5"
+            app:bt_icon="@drawable/ic_baseline_person_pin_24"
+            app:bt_padding="@dimen/default_nav_item_padding"
+            app:bt_shape="@drawable/transition_background_drawable"
+            app:bt_title="الشخصيه"
+            app:bt_titlePadding="@dimen/default_nav_item_text_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_home_item"
+            app:layout_constraintStart_toEndOf="@id/home_bottom_nav_contact_item"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/home_bottom_nav_home_item"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/_36sdp"
             app:bt_active="true"
             app:bt_colorActive="#E8211B"
             app:bt_colorInactive="#d9534f"
             app:bt_icon="@drawable/ic_baseline_home_24"
             app:bt_padding="@dimen/default_nav_item_padding"
             app:bt_shape="@drawable/transition_background_drawable"
-            app:bt_title="Home"
-            app:bt_titlePadding="@dimen/default_nav_item_text_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_personal_item"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/home_bottom_nav_personal_item"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:bt_active="true"
-            app:bt_colorActive="#6200EE"
-            app:bt_colorInactive="#03DAC5"
-            app:bt_icon="@drawable/ic_baseline_person_pin_24"
-            app:bt_padding="@dimen/default_nav_item_padding"
-            app:bt_shape="@drawable/transition_background_drawable"
-            app:bt_title="Personal"
-            app:bt_titlePadding="@dimen/default_nav_item_text_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_contact_item"
-            app:layout_constraintStart_toEndOf="@id/home_bottom_nav_home_item"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/home_bottom_nav_contact_item"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:bt_active="true"
-            app:bt_colorActive="#277C27"
-            app:bt_colorInactive="#5cb85c"
-            app:bt_icon="@drawable/ic_baseline_call_24"
-            app:bt_padding="@dimen/default_nav_item_padding"
-            app:bt_shape="@drawable/transition_background_drawable"
-            app:bt_title="Contact"
-            app:bt_titlePadding="@dimen/default_nav_item_text_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_setting_item"
-            app:layout_constraintStart_toEndOf="@id/home_bottom_nav_personal_item"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/home_bottom_nav_setting_item"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:bt_active="true"
-            app:bt_colorActive="#AC4B01"
-            app:bt_colorInactive="#ED6700"
-            app:bt_icon="@drawable/ic_baseline_settings_24"
-            app:bt_padding="@dimen/default_nav_item_padding"
-            app:bt_shape="@drawable/transition_background_drawable"
-            app:bt_title="Setting"
+            app:bt_title="الرئيسية"
             app:bt_titlePadding="@dimen/default_nav_item_text_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/home_bottom_nav_contact_item"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/home_bottom_nav_personal_item"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 </androidx.constraintlayout.widget.ConstraintLayout>

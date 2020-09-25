@@ -1,19 +1,22 @@
 package com.zerotime.zerotime;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,31 +30,33 @@ import com.zerotime.zerotime.Fragments.SettingsFragment;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
 
+import java.util.Random;
+
 public class Home extends AppCompatActivity {
     private UserActivityHomeBinding binding;
     private DatabaseReference chatRef;
-    public int notificationID;
-    NotificationManager notificationManager;
     String userId;
+
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 0){
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
             this.finish();
             return;
         }
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 1) {
-
-            binding.bottomNav.setCurrentActiveItem(0);
-            return;
-        }
         if (binding.bottomNav.getCurrentActiveItemPosition() == 2) {
-            binding.bottomNav.setCurrentActiveItem(0);
+
+            binding.bottomNav.setCurrentActiveItem(3);
             return;
         }
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
-            binding.bottomNav.setCurrentActiveItem(0);
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 1) {
+            binding.bottomNav.setCurrentActiveItem(3);
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 0) {
+            binding.bottomNav.setCurrentActiveItem(3);
         }
 
     }
@@ -64,70 +69,19 @@ public class Home extends AppCompatActivity {
         setContentView(view);
 
 
-
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         userId = prefs.getString("isLogged", "");
 
-        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
-        chatRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int unread = 0;
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    SecretaryChatPojo chat = ds.getValue(SecretaryChatPojo.class);
-                    if (chat.getReceiver().equals(userId) && !chat.isSeen()) {
-                        unread++;
-                    }
-
-                }
-                if (unread != 0) {
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
-                        String CHANNEL_ID = "my_channel_01";
-                        CharSequence name = "my_channel";
-                        String Description = "This is my channel";
-                        int importance = NotificationManager.IMPORTANCE_HIGH;
-                        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-                        mChannel.setDescription(Description);
-                        mChannel.enableLights(true);
-                        mChannel.setLightColor(Color.RED);
-                        mChannel.enableVibration(true);
-                        mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                        mChannel.setShowBadge(false);
-                        notificationManager.createNotificationChannel(mChannel);
-                    }
-                    notificationID = (int) System.currentTimeMillis();
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(Home.this, "my_channel_01")
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setVibrate(new long[]{1000, 1000})
-                            .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setContentTitle("رسالة جديدة")
-                            .setContentText("لديك رساله جديدة من الإدارة");
-
-
-                    notificationManager.notify(notificationID, builder.build());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         // Default Fragment To Open
         getSupportFragmentManager().beginTransaction().replace(R.id.Frame_Content, new HomeFragment()).commit();
 
         //Attach Listener To Bottom Nav
-
+        binding.bottomNav.setCurrentActiveItem(3);
         binding.bottomNav.setNavigationChangeListener((view1, position) -> {
             //navigation changed, do something
             switch (position) {
-                case 0:
+                case 3:
                     Fragment newFragment = new HomeFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.Frame_Content, newFragment);
@@ -135,21 +89,21 @@ public class Home extends AppCompatActivity {
                     transaction.commit();
 
                     break;
-                case 1:
+                case 2:
                     ProfileFragment fragment2 = new ProfileFragment();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.Frame_Content, fragment2);
                     fragmentTransaction2.addToBackStack(null);
                     fragmentTransaction2.commit();
                     break;
-                case 2:
+                case 1:
                     ContactFragment fragment3 = new ContactFragment();
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction3.replace(R.id.Frame_Content, fragment3);
                     fragmentTransaction3.addToBackStack(null);
                     fragmentTransaction3.commit();
                     break;
-                case 3:
+                case 0:
                     SettingsFragment fragment4 = new SettingsFragment();
                     FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction4.replace(R.id.Frame_Content, fragment4);
