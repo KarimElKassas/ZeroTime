@@ -47,12 +47,6 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
         expandableTextView.setText(longText);
         binding.aboutUsMap.onCreate(savedInstanceState);
         binding.aboutUsMap.getMapAsync(this);
-        /*assert getFragmentManager() != null;
-        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
-                .findFragmentById(R.id.Frame_Content);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
-*/
 
         return view;
     }

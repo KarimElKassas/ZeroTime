@@ -300,4 +300,10 @@ public class Message extends AppCompatActivity {
         super.onPause();
         chatRef.removeEventListener(seenListener);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 }
