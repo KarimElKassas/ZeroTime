@@ -1,9 +1,11 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -63,6 +65,8 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 return true;
             }
 
@@ -76,6 +80,7 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         mGoogleMap.addMarker(new MarkerOptions().position(29.9721261, 30.9435154));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(*//*some location*//*, 10));*/
+
         mMap = googleMap;
         LatLng sydney = new LatLng(30.1195601, 31.3677548);
         mMap.addMarker(new MarkerOptions().position(sydney).title("شارع المدينة المنورة"));

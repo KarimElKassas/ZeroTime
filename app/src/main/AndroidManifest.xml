@@ -25,11 +25,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/logo"
+        android:icon="@mipmap/newlogo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/logo"
+        android:roundIcon="@mipmap/newlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ForgotPassword.ForgotPassword"></activity>
         <activity android:name=".No_Internet_Connection" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -41,9 +42,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <!-- Moderator -->
+            android:value="@string/google_maps_key" /> <!-- Moderator -->
         <activity android:name=".Moderator.ModeratorAddOffer" />
         <activity android:name=".Moderator.ModeratorNumberOfOrders" />
         <activity android:name=".Moderator.ModeratorAddClerk" />
@@ -93,12 +92,11 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="myBroadCast">
+        <receiver android:name=".myBroadCast">
             <intent-filter>
                 <action
                     android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
-
             </intent-filter>
         </receiver>
 
@@ -106,6 +104,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 
 </manifest>

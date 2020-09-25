@@ -47,7 +47,6 @@ public class SecretaryHome extends AppCompatActivity {
                     if (chat.getReceiver().equals("Zero Time") && !chat.isSeen()) {
                         unread++;
                     }
-
                 }
                 if (unread != 0) {
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

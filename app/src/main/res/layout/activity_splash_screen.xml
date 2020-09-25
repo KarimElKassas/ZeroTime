@@ -6,14 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
+<ImageView
+    android:layout_width="@dimen/_180sdp"
+    android:layout_height="@dimen/_180sdp"
+    app:layout_constraintBottom_toTopOf="@+id/splash_screen_welcome_text"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:src="@drawable/pnglogo"
 
+    />
     <TextView
         android:id="@+id/splash_screen_welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/stencil"
         android:text="@string/splash_screen_zero_time"
-        android:textColor="#d9534f"
+        android:textColor="#ff406b"
         android:textSize="36sp"
         android:textStyle="bold"
         android:letterSpacing="0.1"

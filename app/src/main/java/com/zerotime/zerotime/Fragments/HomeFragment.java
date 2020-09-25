@@ -29,6 +29,9 @@ public class HomeFragment extends Fragment {
     boolean doubleBackToExitPressedOnce = false;
     Context context;
     View view;
+
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,13 +98,13 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
     @Override
     public void onResume() {
 
         super.onResume();
         try {
 
-            new Handler().postDelayed(() -> {
 
                 view.setFocusableInTouchMode(true);
                 view.requestFocus();
@@ -109,15 +112,19 @@ public class HomeFragment extends Fragment {
 
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
+                        android.os.Process.killProcess(android.os.Process.myPid());
+
+                        /*FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
                         ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        ((Activity)context).finish();
+                        ((Activity)context).finish();*/
                         return true;
                     }
 
                     return false;
                 });
 
-            }, 1000000);
         }catch (Exception e){
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();

@@ -38,6 +38,7 @@ public class Home extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (binding.bottomNav.getCurrentActiveItemPosition() == 0){
+
             this.finish();
             return;
         }
@@ -52,6 +53,7 @@ public class Home extends AppCompatActivity {
         }
         if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
             binding.bottomNav.setCurrentActiveItem(0);
+            return;
         }
 
     }
@@ -132,6 +134,7 @@ public class Home extends AppCompatActivity {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.Frame_Content, newFragment);
                     transaction.addToBackStack(null);
+
                     transaction.commit();
 
                     break;

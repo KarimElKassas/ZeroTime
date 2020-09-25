@@ -93,9 +93,14 @@ public class ProfileFragment extends Fragment {
 
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
+                        getActivity().onBackPressed();
+                        /* FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
 
                         ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        ((Activity)context).finish();
+                        ((Activity)context).finish();*/
+
                         return true;
                     }
 

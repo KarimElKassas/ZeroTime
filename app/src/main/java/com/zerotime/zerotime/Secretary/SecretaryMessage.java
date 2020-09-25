@@ -37,7 +37,6 @@ public class SecretaryMessage extends AppCompatActivity {
     private static final int GALLERY_PICK = 0;
 
     ApiService apiService;
-
     SharedPreferences prefs;
     SecretaryMessageAdapter adapter;
     List<SecretaryChatPojo> secretaryChatPojoList;
