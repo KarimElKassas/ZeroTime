@@ -94,17 +94,29 @@ public class ClerkAdapter extends RecyclerView.Adapter<ClerkAdapter.ClerkViewHol
         return clerkList.size();
     }
 
+    public void removeClerk(int position){
+        clerkList.remove(position);
+        notifyItemRemoved(position);
+    }
 
-    public class ClerkViewHolder extends RecyclerView.ViewHolder {
+    public void restoreClerk(Clerks clerk, int position){
+        clerkList.add(position,clerk);
+        notifyItemInserted(position);
+    }
+
+    public static class ClerkViewHolder extends RecyclerView.ViewHolder {
         private TextView ClerkName, ClerkPhone1, ClerkPhone2, ClerkAge, ClerkAddress, ClerkVehiclel;
         private Button viewOrders, arrowBtn;
         private ImageView callClerk;
-        ConstraintLayout expandableView;
+        public ConstraintLayout view_foreground, view_background,expandableView;
         CardView cardView;
 
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);
+            view_foreground = itemView.findViewById(R.id.clerks_view_foreground);
+            view_background = itemView.findViewById(R.id.clerks_view_background);
             expandableView = itemView.findViewById(R.id.expandableView);
+
             cardView = itemView.findViewById(R.id.cardView);
             arrowBtn = itemView.findViewById(R.id.arrowBtn);
 
