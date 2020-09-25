@@ -79,7 +79,7 @@ public class Message extends AppCompatActivity {
 
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
 
-        binding.secretaryMessageSendBtn.setOnClickListener(new View.OnClickListener() {
+        binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 notify = true;
@@ -99,7 +99,7 @@ public class Message extends AppCompatActivity {
 
             }
         });
-        binding.secretaryMessageSendImage.setOnClickListener(view1 -> {
+        binding.messageSendImage.setOnClickListener(view1 -> {
             Intent galleryIntent = new Intent();
             galleryIntent.setType("image/*");
             galleryIntent.setAction(Intent.ACTION_GET_CONTENT);

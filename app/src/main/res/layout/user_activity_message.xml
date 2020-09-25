@@ -43,43 +43,31 @@
             android:inputType="textLongMessage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/more"
-            app:layout_constraintStart_toEndOf="@id/image_ripple"
+            app:layout_constraintEnd_toStartOf="@id/message_send_btn"
+            app:layout_constraintStart_toEndOf="@id/message_sendImage"
             />
 
-        <com.andexert.library.RippleView
-            android:id="@+id/more"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/message_send_btn"
             android:layout_width="@dimen/_36sdp"
             android:layout_height="@dimen/_36sdp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_send"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="@id/constraint2"
+            app:layout_constraintBottom_toBottomOf="@id/constraint2"
+            app:layout_constraintEnd_toEndOf="@id/constraint2"
+            android:layout_marginEnd="@dimen/_6sdp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/message_sendImage"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:src="@drawable/ic_image_icon"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/_6sdp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/secretary_message_send_btn"
-                android:layout_width="@dimen/_48sdp"
-                android:layout_height="@dimen/_48sdp"
-                android:src="@drawable/ic_send"
-                android:scaleType="centerCrop"/>
-        </com.andexert.library.RippleView>
-        <com.andexert.library.RippleView
-            android:id="@+id/image_ripple"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@id/secretary_message_writeMSG_edt"
-            app:layout_constraintTop_toTopOf="@id/secretary_message_writeMSG_edt"
-            app:layout_constraintEnd_toStartOf="@+id/secretary_message_writeMSG_edt"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/_6sdp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/secretary_message_sendImage"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:src="@drawable/ic_image_icon"
-                android:scaleType="centerCrop"/>
-        </com.andexert.library.RippleView>
+            android:layout_marginStart="@dimen/_6sdp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
