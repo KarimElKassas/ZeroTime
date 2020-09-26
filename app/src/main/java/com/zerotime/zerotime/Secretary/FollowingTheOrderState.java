@@ -39,6 +39,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
     private FollowingOrderAdapter adapter;
 
     private ArrayList<OrderState> ordersList;
+    //-------------------------------------
 
 
     @Override
@@ -74,6 +75,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
 
     }
 
+
     private void layoutAnimation(RecyclerView recyclerView) {
 
         Context context = recyclerView.getContext();
@@ -94,15 +96,18 @@ public class FollowingTheOrderState extends AppCompatActivity {
         setContentView(view);
         checkInternetConnection();
 
+
         Drawable progressDrawable = binding.secretaryFollowingOrdersProgress.getIndeterminateDrawable().mutate();
         progressDrawable.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
         binding.secretaryFollowingOrdersProgress.setProgressDrawable(progressDrawable);
 
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+        LinearLayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.OrderStateRecycler.setLayoutManager(mLayoutManager);
         binding.OrderStateRecycler.setItemAnimator(new DefaultItemAnimator());
         ordersList = new ArrayList<>();
+
+
 
         DatabaseReference orderStateRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
 
@@ -112,6 +117,9 @@ public class FollowingTheOrderState extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     if(snapshot.hasChildren()){
+
+                        ordersList.clear();
+
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                             binding.OrderStateRecycler.setVisibility(View.VISIBLE);

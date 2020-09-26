@@ -1,17 +1,15 @@
 package com.zerotime.zerotime;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,11 +21,9 @@ import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class SignUp extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
-    private static final String[] regions = {"القاهرة", "الاسكندرية", "الجيزة"};
-
 
     private DatabaseReference usersRef;
 
@@ -47,16 +43,11 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         usersMap = new HashMap<>();
+
         //animation
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
         animation();
-        //Regions Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SignUp.this,
-                R.layout.item_spinner, regions);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.signUpRegionsSpinner.setAdapter(adapter);
-        binding.signUpRegionsSpinner.setOnItemSelectedListener(this);
 
         //get user token id
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
@@ -135,11 +126,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
             binding.signUpUserAddressEditTxt.requestFocus();
             return;
         }
-        //User Region Validation
-        if (binding.signUpRegionsSpinner.getSelectedItem() == null) {
-            Toast.makeText(this, "من فضلك قم باختيار المنطقه !", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         createNewUser();
     }
 
@@ -158,8 +145,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         usersMap.put("UserPassword", Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).toString());
         usersMap.put("UserAddress", Objects.requireNonNull(binding.signUpUserAddressEditTxt.getText()).toString());
         usersMap.put("UserToken", userToken);
-        usersMap.put("UserRegion", binding.signUpRegionsSpinner.getSelectedItem().toString());
-        usersMap.put("UserRegionIndex", binding.signUpRegionsSpinner.getSelectedItemPosition());
         usersMap.put("UserId", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
         usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
@@ -186,27 +171,6 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
 
     }
 
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        switch (position) {
-            case 0:
-                // Whatever you want to happen when the first item gets selected
-                break;
-            case 1:
-                // Whatever you want to happen when the second item gets selected
-                break;
-            case 2:
-                // Whatever you want to happen when the thrid item gets selected
-                break;
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 
     private void goToLogin() {
         Intent intent = new Intent(SignUp.this, Login.class);
@@ -249,20 +213,15 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
         binding.signUpUserAddressEditTxt.setAlpha(0f);
         binding.signUpUserAddressEditTxt.animate().translationX(0f).alpha(1f).setDuration(1600).setStartDelay(500).start();
         //---------------------------------------------------------------------
-        // user region spinner animation
-        binding.signUpRegionsSpinner.setTranslationX(1600f);
-        binding.signUpRegionsSpinner.setAlpha(0f);
-        binding.signUpRegionsSpinner.animate().translationX(0f).alpha(1f).setDuration(1800).setStartDelay(500).start();
-        //---------------------------------------------------------------------
         // user sign up button animation
-        binding.signUpSignUpBtn.setTranslationX(1800f);
+        binding.signUpSignUpBtn.setTranslationX(1600f);
         binding.signUpSignUpBtn.setAlpha(0f);
-        binding.signUpSignUpBtn.animate().translationX(0f).alpha(1f).setDuration(2000).setStartDelay(500).start();
+        binding.signUpSignUpBtn.animate().translationX(0f).alpha(1f).setDuration(1800).setStartDelay(500).start();
         //---------------------------------------------------------------------
         // user login text animation
-        binding.signUpLoginTextView.setTranslationX(2000);
+        binding.signUpLoginTextView.setTranslationX(1800);
         binding.signUpLoginTextView.setAlpha(0f);
-        binding.signUpLoginTextView.animate().translationX(0f).alpha(1f).setDuration(2200).setStartDelay(500).start();
+        binding.signUpLoginTextView.animate().translationX(0f).alpha(1f).setDuration(2000).setStartDelay(500).start();
         //---------------------------------------------------------------------
 
     }

@@ -6,20 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.zerotime.zerotime.Moderator.Pojos.Clerks;
+import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Model.Complaint;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ClerkViewHolder> {
-    private List<Complaint> complaints=new ArrayList<>();
+    private List<Complaint_Pojo> complaints = new ArrayList<>();
     private Context context;
 
-
+    public ComplaintAdapter(ArrayList<Complaint_Pojo> complaintList, Context context) {
+        this.complaints = complaintList;
+        this.context = context;
+    }
     @NonNull
     @Override
     public ClerkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,11 +34,11 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
     @Override
     public void onBindViewHolder(@NonNull ClerkViewHolder holder, int position) {
 
-        final Complaint complaint = complaints.get(position);
-        holder.name.setText(complaint.getName());
+        final Complaint_Pojo complaint = complaints.get(position);
+        holder.name.setText(complaint.getUserName());
         holder.phone.setText(complaint.getUserPhone());
-        holder.complaint.setText(complaint.getUserComplaint());
-        holder.date.setText(complaint.getDate());
+        holder.complaint.setText(complaint.getComplaint());
+        holder.date.setText(complaint.getComplaintDate());
 
 
     }
@@ -43,12 +48,12 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
         return complaints.size();
     }
 
-    public void setList(List<Complaint> complaintsList) {
-        this.complaints =  complaintsList;
+    public void setList(List<Complaint_Pojo> complaintsList) {
+        this.complaints = complaintsList;
         notifyDataSetChanged();
     }
 
-    public class ClerkViewHolder extends RecyclerView.ViewHolder {
+    public static class ClerkViewHolder extends RecyclerView.ViewHolder {
         private TextView name, phone, complaint, date;
 
         public ClerkViewHolder(@NonNull View itemView) {

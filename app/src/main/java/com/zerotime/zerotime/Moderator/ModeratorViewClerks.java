@@ -135,16 +135,21 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
             SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
             pDialog.
                     setTitleText("هل انت متأكد ؟")
-                    .setContentText("لن تستطيع اعداة هذه البيانات مجدداً !")
+                    .setContentText("لن تستطيع اعادة هذه البيانات مجدداً !")
                     .setConfirmText("نعم ، متأكد")
 
                     .setConfirmClickListener(sweetAlertDialog -> {
                         clerksRef.child(clerkID).removeValue().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toasty.success(getApplicationContext(), "تم الحذف بنجاح", Toasty.LENGTH_SHORT, true).show();
+                                sweetAlertDialog.cancel();
+
+                            }else {
+                                Toasty.error(getApplicationContext(),"لقد حدث خطأ ما برجاء المحاولة لاحقاً",Toasty.LENGTH_SHORT,true).show();
+                                sweetAlertDialog.cancel();
+
                             }
                         });
-                        sweetAlertDialog.cancel();
                     })
 
                     .setCancelText("التراجع")

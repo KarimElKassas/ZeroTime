@@ -1,11 +1,15 @@
 package com.zerotime.zerotime.Moderator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -14,12 +18,21 @@ import io.reactivex.schedulers.Schedulers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.Adapters.ComplaintAdapter;
+import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Data.UserDao;
 import com.zerotime.zerotime.Room.Model.Complaint;
@@ -27,11 +40,13 @@ import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.databinding.ModeratorActivityComplaintsBinding;
 import com.zerotime.zerotime.myBroadCast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModeratorComplaints extends AppCompatActivity {
     private ModeratorActivityComplaintsBinding binding;
-
+    private ArrayList<Complaint_Pojo> complaintList;
+    private DatabaseReference complaintsRef;
     // Room DB
     UserDao db;
     int ctr = 0;
@@ -56,7 +71,11 @@ public class ModeratorComplaints extends AppCompatActivity {
         binding = ModeratorActivityComplaintsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        adapter = new ComplaintAdapter();
+
+        complaintList = new ArrayList<>();
+
+        complaintsRef = FirebaseDatabase.getInstance().getReference("Complaints");
+
         binding.recyclerComplaints.setAdapter(adapter);
         binding.recyclerComplaints.setItemAnimator(new DefaultItemAnimator());
 
@@ -70,7 +89,55 @@ public class ModeratorComplaints extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.recyclerComplaints.setLayoutManager(mLayoutManager);
 
-        db.getComplaints().subscribeOn(Schedulers.computation())
+        complaintsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()){
+                    binding.constraint.setBackgroundColor(Color.WHITE);
+                    binding.deleteAllComplaints.setVisibility(View.GONE);
+                    binding.recyclerComplaints.setVisibility(View.GONE);
+                    binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
+                }
+            if (snapshot.exists()){
+                if (!snapshot.hasChildren()){
+                    binding.deleteAllComplaints.setVisibility(View.GONE);
+                    binding.recyclerComplaints.setVisibility(View.GONE);
+                    binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
+                }else {
+                    binding.constraint.setBackgroundColor(Color.parseColor("#E3E3E3"));
+                    binding.deleteAllComplaints.setVisibility(View.VISIBLE);
+                    binding.recyclerComplaints.setVisibility(View.VISIBLE);
+                    binding.moderatorComplaintNoResult.setVisibility(View.GONE);
+                    complaintList.clear();
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                        String complaint = dataSnapshot.child("Complaint").getValue(String.class);
+                        String complaintDate = dataSnapshot.child("ComplaintDate").getValue(String.class);
+                        String userName = dataSnapshot.child("UserName").getValue(String.class);
+                        String userPhone = dataSnapshot.child("UserPhone").getValue(String.class);
+
+                        Complaint_Pojo complaintPojo = new Complaint_Pojo();
+                        complaintPojo.setComplaint(complaint);
+                        complaintPojo.setComplaintDate(complaintDate);
+                        complaintPojo.setUserName(userName);
+                        complaintPojo.setUserPhone(userPhone);
+
+                        complaintList.add(complaintPojo);
+
+                    }
+                    adapter = new ComplaintAdapter(complaintList,ModeratorComplaints.this);
+                    binding.recyclerComplaints.setAdapter(adapter);
+                }
+            }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        /*db.getComplaints().subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<List<Complaint>>() {
                     @Override
@@ -88,16 +155,45 @@ public class ModeratorComplaints extends AppCompatActivity {
                     public void onError(Throwable e) {
 
                     }
-                });
+                });*/
 
+        binding.deleteAllComplaints.setOnClickListener(view1 -> {
+            SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+            pDialog.
+                    setTitleText("هل انت متأكد ؟")
+                    .setContentText("لن تستطيع اعادة هذه البيانات مجدداً !")
+                    .setConfirmText("نعم ، متأكد")
 
-        binding.deleteAllComplaints.setOnClickListener(new View.OnClickListener() {
+                    .setConfirmClickListener(sweetAlertDialog -> {
+
+                        complaintsRef.removeValue().addOnSuccessListener(aVoid -> {
+                            complaintList.clear();
+                            adapter.notifyDataSetChanged();
+                            Toasty.success(getApplicationContext(),"تم الحذف بنجاح",Toasty.LENGTH_SHORT,true).show();
+                            sweetAlertDialog.cancel();
+
+                        }).addOnFailureListener(e -> {
+
+                            Toasty.error(getApplicationContext(),"لقد حدث خطأ ما برجاء المحاولة لاحقاً",Toasty.LENGTH_SHORT,true).show();
+                            sweetAlertDialog.cancel();
+                        });
+                    })
+
+                    .setCancelText("التراجع")
+
+                    .setCancelClickListener(SweetAlertDialog::cancel);
+
+            pDialog.setCancelable(false);
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.show();
+        });
+       /* binding.deleteAllComplaints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 db.nukeTable();
                 notifyAll();
             }
-        });
+        });*/
 
     }
 

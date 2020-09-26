@@ -1,46 +1,47 @@
 package com.zerotime.zerotime.Moderator.Pojos;
  public class Complaint_Pojo {
-    String name,phone,complaint,date;
+    String UserName,UserPhone,Complaint,ComplaintDate;
 
-    public Complaint_Pojo(String name, String phone, String complaint, String date) {
-        this.name = name;
-        this.phone = phone;
-        this.complaint = complaint;
-        this.date = date;
-    }
 
-    public Complaint_Pojo() {
-    }
+     public Complaint_Pojo(String userName, String userPhone, String complaint, String complaintDate) {
+         UserName = userName;
+         UserPhone = userPhone;
+         Complaint = complaint;
+         ComplaintDate = complaintDate;
+     }
 
-    public String getName() {
-        return name;
-    }
+     public Complaint_Pojo() {
+     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+     public String getUserName() {
+         return UserName;
+     }
 
-    public String getPhone() {
-        return phone;
-    }
+     public void setUserName(String userName) {
+         UserName = userName;
+     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+     public String getUserPhone() {
+         return UserPhone;
+     }
 
-    public String getComplaint() {
-        return complaint;
-    }
+     public void setUserPhone(String userPhone) {
+         UserPhone = userPhone;
+     }
 
-    public void setComplaint(String complaint) {
-        this.complaint = complaint;
-    }
+     public String getComplaint() {
+         return Complaint;
+     }
 
-    public String getDate() {
-        return date;
-    }
+     public void setComplaint(String complaint) {
+         Complaint = complaint;
+     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-}
+     public String getComplaintDate() {
+         return ComplaintDate;
+     }
+
+     public void setComplaintDate(String complaintDate) {
+         ComplaintDate = complaintDate;
+     }
+ }
