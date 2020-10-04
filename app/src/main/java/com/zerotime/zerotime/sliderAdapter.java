@@ -20,9 +20,9 @@ public class sliderAdapter extends PagerAdapter {
     }
 
     public int[] slideImages = {
-            R.drawable.proficciency,
-            R.drawable.s_deliver_everywhere,
-            R.drawable.s_comfot
+            R.drawable.me,
+            R.drawable.me,
+            R.drawable.me
 
     };
 

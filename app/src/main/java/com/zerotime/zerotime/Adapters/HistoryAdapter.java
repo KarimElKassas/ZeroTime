@@ -34,13 +34,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         HistoryPojo history = historyList.get(position);
-        holder.description.setText(" وصف الطلب : "+history.getDescription());
+        holder.description.setText(history.getDescription());
         holder.date.setText(history.getDate());
-        holder.price.setText(" سعر الطلب : "+history.getPrice()+" جنيه مصري ");
-        holder.size.setText(" حجم الطلب : "+history.getSize());
-        holder.Raddress.setText(" عنوان المستلم : "+history.getRaddress());
-        holder.Rname.setText(" اسم المستلم : "+history.getRname());
-        holder.Rphone1.setText(history.getRphone1()+"    /    ");
+        holder.price.setText(history.getPrice());
+        holder.Raddress.setText(history.getRaddress());
+        holder.Rname.setText(history.getRname());
+        holder.Rphone1.setText(history.getRphone1());
         holder.Rphone2.setText(history.getRphone2());
 
     }
@@ -56,18 +55,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
-        TextView description, date, price, size, Raddress, Rname, Rphone1, Rphone2;
+        TextView description, date, price, Raddress, Rname, Rphone1, Rphone2;
 
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            description = itemView.findViewById(R.id.history_description);
-            date = itemView.findViewById(R.id.history_date);
-            price = itemView.findViewById(R.id.history_price);
-            size = itemView.findViewById(R.id.history_size);
-            Raddress = itemView.findViewById(R.id.history_RAddress);
-            Rname = itemView.findViewById(R.id.history_RName);
-            Rphone1 = itemView.findViewById(R.id.history_RPhone1);
-            Rphone2 = itemView.findViewById(R.id.history_RPhone2);
+            description = itemView.findViewById(R.id.History_description_value);
+            date = itemView.findViewById(R.id.History_order_date);
+            price = itemView.findViewById(R.id.History_price_value);
+            Raddress = itemView.findViewById(R.id.History_address_value);
+            Rname = itemView.findViewById(R.id.History_name_value);
+            Rphone1 = itemView.findViewById(R.id.History_primary_phone_value);
+            Rphone2 = itemView.findViewById(R.id.History_secondary_phone_value);
         }
     }
 }

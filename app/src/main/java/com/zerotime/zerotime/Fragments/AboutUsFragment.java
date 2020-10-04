@@ -29,9 +29,6 @@ import java.util.Objects;
 public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
     private UserFragmentAboutUsBinding binding;
     private GoogleMap mMap;
-    private GoogleMap googleMap;
-    private GoogleApiClient mGoogleApiClient;
-    protected Location mLastLocation;
     ExpandableTextView expandableTextView;
     String longText = "شركه زيرو تايم للنقل والشحن السريع , تأسست عام 2016 , لو عندك بيزنس اونلاين بتحتاج شركه شحن تحافظ على مستوى البراند وتوصل شحناتك بأمان وسرعه وثقه من غير اي حيره زيرو تايم هي راحتك وراحه عميله , زيرو تايم شركه مرخصه بريدياً ولديها سجل تجاري وبطاقه ضريبيه , زيرو تايم بتوصل لأغلب محافظات مصر  ولسه هنكمل لمحافظات مصر كلها ," +
             "زيرو تايم بتستلم وتسلم الشحنات من الباب للباب وده بيكون من خلال مندوبنا المتدربين , زيرو تايم بتوصلك تحصيلك باكثر من طريقه وفي الميعاد الى بتحدده وانت اختار الى يناسبك , زيرو تايم بتساعدك  تريح عميلك من خلال خدمات اختياريه زي خدمه طرد مقابل طرد او خدمه فتح الشحنات وده بيكون بناءا على اختيارك انت , زيرو تايم بتسلم مرتجعاتك وده بيكون على مدار ثلاثه ايام في الأسبوع. \n" +
@@ -52,6 +49,7 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
 
         return view;
     }
+
 
     @Override
     public void onResume() {
