@@ -48,8 +48,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
         checkInternetConnection();
         binding.secretaryDisplayChatsRecycler.setHasFixedSize(true);
         binding.secretaryDisplayChatsRecycler.setLayoutManager(new LinearLayoutManager(this));
-        binding.secretaryDisplayChatsRecycler.addItemDecoration(new DividerItemDecoration(SecretaryDisplayChats.this,
-                DividerItemDecoration.VERTICAL));
+
         random = new Random();
 
 

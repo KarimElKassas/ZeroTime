@@ -214,15 +214,20 @@ public class Login extends AppCompatActivity {
         binding.loginUserPasswordEditTxt.setAlpha(0f);
         binding.loginUserPasswordEditTxt.animate().translationX(0f).alpha(1f).setDuration(1000).setStartDelay(500).start();
         //---------------------------------------------------------------------
+        // forgot password animation
+        binding.ForgotPassword.setTranslationX(1000f);
+        binding.ForgotPassword.setAlpha(0f);
+        binding.ForgotPassword.animate().translationX(0f).alpha(1f).setDuration(1200).setStartDelay(500).start();
+        //---------------------------------------------------------------------
         // user login button animation
-        binding.loginLoginBtn.setTranslationX(1000f);
+        binding.loginLoginBtn.setTranslationX(1200f);
         binding.loginLoginBtn.setAlpha(0f);
-        binding.loginLoginBtn.animate().translationX(0f).alpha(1f).setDuration(1200).setStartDelay(500).start();
+        binding.loginLoginBtn.animate().translationX(0f).alpha(1f).setDuration(1400).setStartDelay(500).start();
         //---------------------------------------------------------------------
         // create new account animation
-        binding.loginSignUpTextView.setTranslationX(1200f);
+        binding.loginSignUpTextView.setTranslationX(1400f);
         binding.loginSignUpTextView.setAlpha(0f);
-        binding.loginSignUpTextView.animate().translationX(0f).alpha(1f).setDuration(1400).setStartDelay(500).start();
+        binding.loginSignUpTextView.animate().translationX(0f).alpha(1f).setDuration(1600).setStartDelay(500).start();
         //---------------------------------------------------------------------
     }
 
