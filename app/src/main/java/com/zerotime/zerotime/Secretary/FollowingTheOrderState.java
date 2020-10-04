@@ -54,18 +54,21 @@ public class FollowingTheOrderState extends AppCompatActivity {
                 case "Secretary":
                     Intent i = new Intent(FollowingTheOrderState.this, SecretaryHome.class);
                     startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                     break;
 
                 case "Moderator":
                     Intent ii = new Intent(FollowingTheOrderState.this, ModeratorHome.class);
                     startActivity(ii);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                     break;
 
                 case "User":
                     Intent intent = new Intent(FollowingTheOrderState.this, ProfileFragment.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();
                     break;
 

@@ -1,12 +1,9 @@
 package com.zerotime.zerotime.Moderator;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +22,6 @@ import com.zerotime.zerotime.Helper.ClerksRecyclerItemTouchHelper;
 import com.zerotime.zerotime.Helper.RecyclerItemTouchHelperListener;
 import com.zerotime.zerotime.Moderator.Adapters.ClerkAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
-import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ModeratorActivityViewClerksBinding;
 import com.zerotime.zerotime.myBroadCast;
 
@@ -36,43 +32,52 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 public class ModeratorViewClerks extends AppCompatActivity implements RecyclerItemTouchHelperListener {
+    ArrayList<Clerks> clerksList;
+    String clerkPrimaryPhone;
     private ModeratorActivityViewClerksBinding binding;
     private DatabaseReference clerksRef;
-    ArrayList<Clerks> clerksList;
     private ClerkAdapter adapter;
-    String clerkPrimaryPhone;
-    SweetAlertDialog dialog;
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(ModeratorViewClerks.this, ModeratorHome.class);
-        startActivity(i);
-        finish();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //view binding
         binding = ModeratorActivityViewClerksBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
-
+        //Check Internet Connection State
         checkInternetConnection();
 
+        //recycler view initialization
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.recycler.setLayoutManager(mLayoutManager);
         binding.recycler.setItemAnimator(new DefaultItemAnimator());
 
-        clerksRef = FirebaseDatabase.getInstance().getReference().child("Clerks");
         clerksList = new ArrayList<>();
+
+        //Firebase Database Reference Initialization
+        clerksRef = FirebaseDatabase.getInstance().getReference().child("Clerks");
         clerksRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    binding.recycler.setVisibility(View.GONE);
+                    binding.moderatorViewClerkProgress.setVisibility(View.GONE);
+                    binding.viewClerksNoResult.setVisibility(View.VISIBLE);
+                }
                 if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()) {
+                        binding.recycler.setVisibility(View.GONE);
+                        binding.moderatorViewClerkProgress.setVisibility(View.GONE);
+                        binding.viewClerksNoResult.setVisibility(View.VISIBLE);
+                    }
                     if (snapshot.hasChildren()) {
+                        binding.recycler.setVisibility(View.VISIBLE);
+                        binding.viewClerksNoResult.setVisibility(View.GONE);
+
                         clerksList.clear();
 
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
@@ -138,19 +143,27 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
                     .setContentText("لن تستطيع اعادة هذه البيانات مجدداً !")
                     .setConfirmText("نعم ، متأكد")
 
-                    .setConfirmClickListener(sweetAlertDialog -> {
-                        clerksRef.child(clerkID).removeValue().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toasty.success(getApplicationContext(), "تم الحذف بنجاح", Toasty.LENGTH_SHORT, true).show();
-                                sweetAlertDialog.cancel();
+                    .setConfirmClickListener(sweetAlertDialog -> clerksRef.child(clerkID)
+                            .removeValue()
+                            .addOnCompleteListener(task -> {
 
-                            }else {
-                                Toasty.error(getApplicationContext(),"لقد حدث خطأ ما برجاء المحاولة لاحقاً",Toasty.LENGTH_SHORT,true).show();
-                                sweetAlertDialog.cancel();
+                                if (task.isSuccessful()) {
+                                    Toasty.success(getApplicationContext(),
+                                            "تم حذف المندوب " + clerkName + " بنجاح",
+                                            Toasty.LENGTH_SHORT,
+                                            true)
+                                            .show();
 
-                            }
-                        });
-                    })
+                                } else {
+                                    Toasty.error(getApplicationContext(),
+                                            "لقد حدث خطأ ما برجاء المحاولة لاحقاً",
+                                            Toasty.LENGTH_SHORT,
+                                            true)
+                                            .show();
+
+                                }
+                                sweetAlertDialog.cancel();
+                            }))
 
                     .setCancelText("التراجع")
 
@@ -166,18 +179,6 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
         }
     }
 
-    private void layoutAnimation(RecyclerView recyclerView) {
-
-        Context context = recyclerView.getContext();
-        LayoutAnimationController animationController =
-                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down);
-        recyclerView.setLayoutAnimation(animationController);
-        recyclerView.getAdapter().notifyDataSetChanged();
-        recyclerView.scheduleLayoutAnimation();
-
-
-    }
-
     private void checkInternetConnection() {
         myBroadCast broadCast = new myBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -186,5 +187,11 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ModeratorViewClerks.this, ModeratorHome.class);
+        startActivity(i);
+        finish();
+    }
 }

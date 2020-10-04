@@ -15,11 +15,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ModeratorActivityAddOfferBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 public class ModeratorAddOffer extends AppCompatActivity {
     private ModeratorActivityAddOfferBinding binding;
@@ -68,8 +71,9 @@ public class ModeratorAddOffer extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i=new Intent(ModeratorAddOffer.this,ModeratorHome.class);
+        Intent i = new Intent(ModeratorAddOffer.this, ModeratorHome.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
     private void addOffer(){
@@ -116,7 +120,7 @@ public class ModeratorAddOffer extends AppCompatActivity {
                     offersRef.child("Offers").setValue(offersMap).addOnCompleteListener(task -> {
                         if (task.isSuccessful()){
                             //clearTools();
-                            Toast.makeText(getApplicationContext(),"تم بنجاح",Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(),"تم بنجاح",Toasty.LENGTH_SHORT,true).show();
                         }
                     });
                 }else {

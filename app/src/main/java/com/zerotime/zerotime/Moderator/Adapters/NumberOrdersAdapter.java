@@ -38,7 +38,7 @@ public class NumberOrdersAdapter extends RecyclerView.Adapter<NumberOrdersAdapte
         holder.name.setText(ordersNumber.getName());
         holder.phone.setText(ordersNumber.getPhone());
         holder.ordersNumber.setText(String.valueOf(ordersNumber.getOrdersNumber()));
-        holder.ordersNumber.setSolidColor("#d9534f");
+        holder.ordersNumber.setSolidColor("#428bca");
         holder.ordersNumber.setStrokeColor("#FFFFFF");
         holder.ordersNumber.setStrokeWidth(1);
 

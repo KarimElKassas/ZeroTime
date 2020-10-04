@@ -103,6 +103,7 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
         super.onBackPressed();
         Intent i=new Intent(ModeratorNumberOfOrders.this,ModeratorHome.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
 

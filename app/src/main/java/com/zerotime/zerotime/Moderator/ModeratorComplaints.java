@@ -93,21 +93,23 @@ public class ModeratorComplaints extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()){
-                    binding.constraint.setBackgroundColor(Color.WHITE);
                     binding.deleteAllComplaints.setVisibility(View.GONE);
                     binding.recyclerComplaints.setVisibility(View.GONE);
                     binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
                 }
             if (snapshot.exists()){
                 if (!snapshot.hasChildren()){
+
                     binding.deleteAllComplaints.setVisibility(View.GONE);
                     binding.recyclerComplaints.setVisibility(View.GONE);
                     binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
+
                 }else {
-                    binding.constraint.setBackgroundColor(Color.parseColor("#E3E3E3"));
+
                     binding.deleteAllComplaints.setVisibility(View.VISIBLE);
                     binding.recyclerComplaints.setVisibility(View.VISIBLE);
                     binding.moderatorComplaintNoResult.setVisibility(View.GONE);
+
                     complaintList.clear();
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -137,25 +139,7 @@ public class ModeratorComplaints extends AppCompatActivity {
 
             }
         });
-        /*db.getComplaints().subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<List<Complaint>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void onSuccess(List<Complaint> complaints) {
-                        adapter.setList(complaints);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });*/
 
         binding.deleteAllComplaints.setOnClickListener(view1 -> {
             SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
@@ -210,6 +194,7 @@ public class ModeratorComplaints extends AppCompatActivity {
         super.onBackPressed();
         Intent i = new Intent(ModeratorComplaints.this, ModeratorHome.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
 

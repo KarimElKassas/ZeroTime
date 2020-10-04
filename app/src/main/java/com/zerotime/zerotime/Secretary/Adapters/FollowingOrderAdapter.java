@@ -9,22 +9,22 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anton46.stepsview.StepsView;
-import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.FollowingOrderSettings;
+import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.Secretary.Secretary_UserData;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -38,6 +38,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     public FollowingOrderAdapter(List<OrderState> ordersList, Context context) {
         this.ordersList = ordersList;
         this.context = context;
+        setHasStableIds(true);
     }
 
     @NonNull
@@ -49,13 +50,23 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         return new FollowingOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_following_order, parent, false));
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
     @SuppressLint("PrivateResource")
     @Override
     public void onBindViewHolder(@NonNull FollowingOrderViewHolder holder, int position) {
         SharedPreferences prefs = context.getSharedPreferences("UserState", MODE_PRIVATE);
         final OrderState orderState = ordersList.get(position);
-        String userType = prefs.getString("UserType","");
-        if (userType != null){
+        String userType = prefs.getString("UserType", "");
+        if (userType != null) {
             switch (userType) {
                 case "Secretary":
                     holder.settings.setVisibility(View.VISIBLE);
@@ -73,13 +84,13 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
             }
         }
 
-        holder.name.setText("اسم المستلم : "+orderState.getName());
-        holder.address.setText("عنوان المستلم : "+orderState.getAddress());
-        holder.price.setText("سعر الطلب : "+orderState.getPrice());
-        holder.date.setText(orderState.getDate());
-        holder.description.setText("وصف الطلب : "+orderState.getDescription());
-        holder.phone.setText("رقم هاتف المستلم : "+orderState.getPhone());
 
+        holder.name.setText(orderState.getName());
+        holder.address.setText(orderState.getAddress());
+        holder.price.setText(orderState.getPrice());
+        holder.date.setText(orderState.getDate());
+        holder.description.setText(orderState.getDescription());
+        holder.phone.setText(orderState.getPhone());
 
         holder.userData.setOnClickListener(view -> {
             Intent intent = new Intent(context, Secretary_UserData.class);
@@ -88,14 +99,22 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
 
         });
 
-
-
         holder.settings.setOnClickListener(view -> {
 
             Intent intent = new Intent(context, FollowingOrderSettings.class);
-            intent.putExtra("OrderDate",orderState.getDate());
+            intent.putExtra("OrderDate", orderState.getDate());
             context.startActivity(intent);
-            ((Activity)context).finish();
+            ((Activity) context).finish();
+
+        });
+        holder.arrow.setOnClickListener(view -> {
+            if (holder.expandableConstraint.getVisibility() == View.GONE) {
+                holder.expandableConstraint.setVisibility(View.VISIBLE);
+                holder.arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+            } else {
+                holder.expandableConstraint.setVisibility(View.GONE);
+                holder.arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+            }
 
         });
 
@@ -103,8 +122,8 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         holder.stepsView.setLabels(steps)
 
                 .setBarColorIndicator(context.getResources().getColor(R.color.material_blue_grey_800))
-                .setProgressColorIndicator(context.getResources().getColor(R.color.orange))
-                .setLabelColorIndicator(context.getResources().getColor(R.color.orange))
+                .setProgressColorIndicator(context.getResources().getColor(R.color.colorPrimaryDark))
+                .setLabelColorIndicator(context.getResources().getColor(R.color.colorPrimaryDark))
                 .setCompletedPosition(orderState.getCurrentState())
                 .drawView();
 
@@ -121,19 +140,25 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         StepsView stepsView;
         ImageView userData, settings;
         CardView cardView;
+        Button arrow;
+        ConstraintLayout cardsConstraint, expandableConstraint;
 
         public FollowingOrderViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.followingOrder_name);
-            phone = itemView.findViewById(R.id.followingOrder_phoneNumber);
-            address = itemView.findViewById(R.id.followingOrder_address);
-            description = itemView.findViewById(R.id.followingOrder_orderDescription);
-            price = itemView.findViewById(R.id.followingOrder_price);
+            name = itemView.findViewById(R.id.followingOrder_name_value);
+            phone = itemView.findViewById(R.id.followingOrder_phone_value);
+            address = itemView.findViewById(R.id.followingOrder_address_value);
+            description = itemView.findViewById(R.id.followingOrder_description_value);
+            price = itemView.findViewById(R.id.followingOrder_price_value);
             date = itemView.findViewById(R.id.followingOrder_date);
-            stepsView = itemView.findViewById(R.id.stepsView);
+            stepsView = itemView.findViewById(R.id.followingOrder_stepsView);
             userData = itemView.findViewById(R.id.FollowingOrder_UserData);
-            cardView = itemView.findViewById(R.id.FollowingCard);
+            cardView = itemView.findViewById(R.id.FollowingOrderCard);
             settings = itemView.findViewById(R.id.FollowingOrder_Settings);
+            arrow = itemView.findViewById(R.id.followingOrder_arrowBtn);
+            cardsConstraint = itemView.findViewById(R.id.followingOrder_cards_constraint);
+            expandableConstraint = itemView.findViewById(R.id.followingOrder_expandableView);
+
         }
     }
 }

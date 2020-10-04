@@ -6,7 +6,7 @@
     android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E3E3E3"
+    android:background="#FFF"
     tools:context=".Moderator.ModeratorComplaints">
     <ImageView
         android:id="@+id/moderator_complaint_no_result"
@@ -22,13 +22,14 @@
         app:layout_constraintBottom_toTopOf="@id/deleteAllComplaints"
         tools:listitem="@layout/item_complaint"
         android:visibility="invisible"
+        android:background="#FFF"
         />
 
     <Button
         android:id="@+id/deleteAllComplaints"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Red"
+        android:background="@drawable/btn_back_gradient"
         android:text="مسح جميع الشكاوي"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_18sdp"
@@ -36,5 +37,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

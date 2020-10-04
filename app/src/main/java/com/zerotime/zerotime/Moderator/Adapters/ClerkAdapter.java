@@ -26,6 +26,15 @@ public class ClerkAdapter extends RecyclerView.Adapter<ClerkAdapter.ClerkViewHol
     private ArrayList<Clerks> clerkList;
     private Context context;
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     public ClerkAdapter(ArrayList<Clerks> clerksList, Context context) {
         this.clerkList = clerksList;
@@ -115,19 +124,19 @@ public class ClerkAdapter extends RecyclerView.Adapter<ClerkAdapter.ClerkViewHol
             super(itemView);
             view_foreground = itemView.findViewById(R.id.clerks_view_foreground);
             view_background = itemView.findViewById(R.id.clerks_view_background);
-            expandableView = itemView.findViewById(R.id.expandableView);
+            expandableView = itemView.findViewById(R.id.clerks_expandableView);
 
             cardView = itemView.findViewById(R.id.cardView);
-            arrowBtn = itemView.findViewById(R.id.arrowBtn);
+            arrowBtn = itemView.findViewById(R.id.clerks_arrowBtn);
 
-            ClerkName = itemView.findViewById(R.id.ViewClerk_clerkName_txt);
-            ClerkPhone1 = itemView.findViewById(R.id.ViewClerk_phone1_txt);
-            ClerkPhone2 = itemView.findViewById(R.id.ViewClerk_phone2_txt);
-            ClerkAge = itemView.findViewById(R.id.ViewClerk_age_txt);
-            ClerkAddress = itemView.findViewById(R.id.ViewClerk_address_txt);
-            ClerkVehiclel = itemView.findViewById(R.id.ViewClerk_hasVehicle_txt);
-            viewOrders = itemView.findViewById(R.id.ViewClerk_ViewOrders_btn);
-            callClerk = itemView.findViewById(R.id.ViewClerk_callClerk_img);
+            ClerkName = itemView.findViewById(R.id.clerks_name_value);
+            ClerkPhone1 = itemView.findViewById(R.id.clerks_primary_phone_value);
+            ClerkPhone2 = itemView.findViewById(R.id.clerks_secondary_phone_value);
+            ClerkAge = itemView.findViewById(R.id.clerks_age_value);
+            ClerkAddress = itemView.findViewById(R.id.clerks_address_value);
+            ClerkVehiclel = itemView.findViewById(R.id.clerks_vehicle_value);
+            viewOrders = itemView.findViewById(R.id.clerks_ViewOrders_btn);
+            callClerk = itemView.findViewById(R.id.clerks_callClerk_img);
 
         }
     }

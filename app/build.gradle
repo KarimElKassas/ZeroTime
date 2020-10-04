@@ -49,6 +49,7 @@ dependencies {
     implementation 'cn.pedant.sweetalert:library:1.3'
     // stepView
     implementation 'com.anton46:stepsview:0.0.2'
+    implementation 'com.shuhart.stepview:stepview:1.5.1'
     //- firebase
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
     implementation 'com.google.firebase:firebase-auth:19.4.0'
@@ -68,14 +69,16 @@ dependencies {
     implementation 'com.github.florent37:materialtextfield:1.0.7'
     implementation "ss.anoop:awesome-edittext:1.0.0"
     //------------------------------------
-
+    //-Touch Helper
+    implementation 'com.github.mreram:showcaseview:1.1'
+    //--------------------------------------------------
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 
 // auto fit
-    implementation 'me.grantland:autofittextview:0.2.+'
+    implementation 'me.grantland:autofittextview:0.2.1'
 
 
 

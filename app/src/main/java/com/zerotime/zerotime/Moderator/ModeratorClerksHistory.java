@@ -1,18 +1,19 @@
 package com.zerotime.zerotime.Moderator;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.IntentFilter;
-import android.os.Bundle;
-import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,34 +56,48 @@ public class ModeratorClerksHistory extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                if (!snapshot.exists()) {
+                    binding.recyclerClerksHistory.setVisibility(View.GONE);
+                    binding.clerkHistoryNoResult.setVisibility(View.VISIBLE);
+                }
+                if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()) {
+                        binding.recyclerClerksHistory.setVisibility(View.GONE);
+                        binding.clerkHistoryNoResult.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.recyclerClerksHistory.setVisibility(View.VISIBLE);
+                        binding.clerkHistoryNoResult.setVisibility(View.GONE);
 
-                    String name = (String) dataSnapshot1.child("ClerkName").getValue();
-                    String description = (String) dataSnapshot1.child("OrderDescription").getValue();
-                    String date = (String) dataSnapshot1.child("OrderDate").getValue();
-                    String phone1 = (String) dataSnapshot1.child("ClerkPhone1").getValue();
-                    String address = (String) dataSnapshot1.child("ReceiverAddress").getValue();
-                    String price = (String) (dataSnapshot1.child("OrderPrice").getValue());
-                    String size = (String) (dataSnapshot1.child("OrderSize").getValue());
+                        clerksList.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 
-                    Clerk_History clerks = new Clerk_History();
-                    clerks.setClerkName(name);
-                    clerks.setDescription(description);
-                    clerks.setDate(date);
-                    clerks.setReceiverPhone(phone1);
-                    clerks.setSize(size);
-                    clerks.setPrice(price);
-                    clerks.setReceiverAddress(address);
+                            String name = (String) dataSnapshot1.child("ClerkName").getValue();
+                            String description = (String) dataSnapshot1.child("OrderDescription").getValue();
+                            String date = (String) dataSnapshot1.child("OrderDate").getValue();
+                            String phone1 = (String) dataSnapshot1.child("ClerkPhone1").getValue();
+                            String address = (String) dataSnapshot1.child("ReceiverAddress").getValue();
+                            String price = (String) (dataSnapshot1.child("OrderPrice").getValue());
+                            String size = (String) (dataSnapshot1.child("OrderSize").getValue());
+
+                            Clerk_History clerks = new Clerk_History();
+                            clerks.setClerkName(name);
+                            clerks.setDescription(description);
+                            clerks.setDate(date);
+                            clerks.setReceiverPhone(phone1);
+                            clerks.setSize(size);
+                            clerks.setPrice(price);
+                            clerks.setReceiverAddress(address);
 
 
-                    clerksList.add(clerks);
+                            clerksList.add(clerks);
 
 
+                        }
+                        adapter = new ClerkHistoryAdapter(clerksList, ModeratorClerksHistory.this);
+                        binding.recyclerClerksHistory.setAdapter(adapter);
+                    }
                 }
 
-
-                adapter = new ClerkHistoryAdapter(clerksList, ModeratorClerksHistory.this);
-                binding.recyclerClerksHistory.setAdapter(adapter);
 
             }
 
@@ -94,6 +109,7 @@ public class ModeratorClerksHistory extends AppCompatActivity {
 
 
     }
+
     private void layoutAnimation(RecyclerView recyclerView) {
 
         Context context = recyclerView.getContext();
@@ -105,11 +121,21 @@ public class ModeratorClerksHistory extends AppCompatActivity {
 
 
     }
-    private void checkInternetConnection(){
-        myBroadCast broadCast=new myBroadCast();
-        IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast,intentFilter);
 
+    private void checkInternetConnection() {
+        myBroadCast broadCast = new myBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast, intentFilter);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ModeratorClerksHistory.this, ModeratorHome.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 }
