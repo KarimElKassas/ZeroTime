@@ -1,8 +1,12 @@
 package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -25,6 +29,9 @@ public class Secretary_UserData extends AppCompatActivity {
     private ArrayList<Clerks> UsersList;
     private DatabaseReference UserRef;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +39,9 @@ public class Secretary_UserData extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         checkInternetConnection();
+
         Intent intent = getIntent();
+
         phone = intent.getStringExtra("UserPhone");
 
         UserRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -64,8 +73,6 @@ public class Secretary_UserData extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Secretary_UserData.this, FollowingTheOrderState.class);
-        startActivity(intent);
         finish();
     }
 

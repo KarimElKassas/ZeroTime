@@ -1,165 +1,419 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:layoutDirection="ltr">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/FollowingCard"
+        android:id="@+id/FollowingOrderCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
         android:elevation="@dimen/_22sdp"
-        app:cardCornerRadius="@dimen/_20sdp"
+        app:cardBackgroundColor="#EFEEEE"
+        app:cardCornerRadius="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/followingOrder_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="مصر الجديده - النزهه"
-                android:textColor="#000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/followingOrder_name" />
-
-            <TextView
-                android:id="@+id/followingOrder_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="750 جنيه"
-                android:textColor="#000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/followingOrder_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="احمد طه"
-                android:textColor="#000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/followingOrder_orderDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="2 تابلوه + شنطه يد "
-                android:textColor="#000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/followingOrder_address" />
-
-            <TextView
-                android:id="@+id/followingOrder_phoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:padding="@dimen/_4sdp"
-                android:text="01122388139"
-                android:textColor="#000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/followingOrder_orderDescription" />
-
-
-            <com.anton46.stepsview.StepsView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/stepsView"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_4sdp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/followingOrder_cards_constraint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@+id/followingOrder_address" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                app:cardBackgroundColor="#47BF4C"
-                app:cardCornerRadius="@dimen/_40sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stepsView">
-
-
-                <TextView
-                    android:id="@+id/followingOrder_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_4sdp"
-                    android:text="6-9-2020 , 05:00"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/followingOrder_name_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    app:cardBackgroundColor="#FFF"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/followingOrder_name_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_username_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/followingOrder_name_line"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:background="#005b96"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_name_icon" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_name_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:text="اسم المستلم : "
+                            android:textColor="#005b96"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_name_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_name_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="كريم القصاص"
+                            android:textColor="#428bca"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_name_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/followingOrder_address_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    app:cardBackgroundColor="#FFF"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followingOrder_name_card">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/followingOrder_address_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_address"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/followingOrder_address_line"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:background="#005b96"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_address_icon" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_address_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:text="عنوان المستلم : "
+                            android:textColor="#005b96"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_address_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_address_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="كريم القصاص"
+                            android:textColor="#428bca"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_address_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/followingOrder_phone_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    app:cardBackgroundColor="#FFF"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followingOrder_address_card">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/followingOrder_phone_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_baseline_call_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/followingOrder_phone_line"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:background="#005b96"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_phone_icon" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_phone_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:text="هاتف المستلم : "
+                            android:textColor="#005b96"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_phone_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_phone_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="كريم القصاص"
+                            android:textColor="#428bca"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_phone_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/followingOrder_description_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    app:cardBackgroundColor="#FFF"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followingOrder_phone_card">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/followingOrder_description_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_address"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/followingOrder_description_line"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:background="#005b96"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_description_icon" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_description_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:text="وصف الطلب : "
+                            android:textColor="#005b96"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_description_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_description_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="كريم القصاص"
+                            android:textColor="#428bca"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_description_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/followingOrder_price_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:theme="@style/Theme.MaterialComponents.Light"
+                    app:cardBackgroundColor="#FFF"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followingOrder_description_card">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/followingOrder_price_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_address"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/followingOrder_price_line"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:background="#005b96"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_price_icon" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_price_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:text="سعر الطلب : "
+                            android:textColor="#005b96"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_price_line"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/followingOrder_price_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="كريم القصاص"
+                            android:textColor="#428bca"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/followingOrder_price_text"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+                <Button
+                    android:id="@+id/followingOrder_arrowBtn"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/followingOrder_price_card"
                     />
 
-
-            </androidx.cardview.widget.CardView>
-
-            <ImageView
-                android:id="@+id/FollowingOrder_UserData"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:src="@drawable/ic_baseline_person_pin_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/FollowingOrder_Settings"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginLeft="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:src="@drawable/ic_baseline_settings_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/FollowingOrder_UserData" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <!-- <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 app:layout_constraintStart_toStartOf="parent"
-                 android:layout_marginLeft="@dimen/_8sdp"
-                 android:text="تحديد الحاله"
-                 android:layout_marginTop="@dimen/_8sdp"
-                 android:textSize="@dimen/_8sdp"
-                 app:layout_constraintTop_toBottomOf="@+id/stepsView"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/followingOrder_expandableView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/followingOrder_cards_constraint">
 
-                 />
-             <androidx.appcompat.widget.AppCompatSpinner
-                 android:id="@+id/Following_OrderState_spinner"
-                 android:layout_width="wrap_content"
-                 android:layout_marginLeft="@dimen/_8sdp"
-                 android:layout_height="wrap_content"
-                 app:layout_constraintBottom_toBottomOf="parent"
-                 app:layout_constraintStart_toStartOf="@+id/stepsView"
-                 app:layout_constraintTop_toBottomOf="@+id/stepsView" />
+                <com.anton46.stepsview.StepsView
+                    android:id="@+id/followingOrder_stepsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/_2sdp"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/followingOrder_stepsView"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp">
+                    <TextView
+                        android:id="@+id/followingOrder_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sat, 19 Sep 2020, 12:15:00"
+                        android:textSize="12sp"
+                        android:padding="@dimen/_4sdp"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
- -->
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/FollowingOrder_UserData"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:src="@drawable/ic_baseline_person_pin_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/followingOrder_stepsView" />
 
+                <ImageView
+                    android:id="@+id/FollowingOrder_Settings"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:src="@drawable/ic_baseline_settings_24"
+                    app:layout_constraintTop_toBottomOf="@id/followingOrder_stepsView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/FollowingOrder_UserData" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

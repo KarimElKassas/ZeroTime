@@ -6,18 +6,27 @@
     android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E4E3E3"
+    android:background="#FFF"
     tools:context=".Moderator.ModeratorViewClerks">
+    <ImageView
+        android:id="@+id/view_clerks_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/noresult"
+        android:visibility="invisible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layoutAnimation="@anim/layout_slide_right"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-16dp"
         tools:listitem="@layout/item_clerk"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
     <ProgressBar
         android:id="@+id/moderator_view_clerk_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -28,5 +37,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:indeterminate="true"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

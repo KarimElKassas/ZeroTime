@@ -16,9 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapter.ClerkViewHolder> {
-    private List<Clerk_History> clerk_histories=new ArrayList<>();
-    private Context context;
-
+    private List<Clerk_History> clerk_histories;
+    Context context;
     public ClerkHistoryAdapter(List<Clerk_History> clerk_histories, Context context) {
         this.clerk_histories = clerk_histories;
         this.context = context;
@@ -34,14 +33,12 @@ public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapte
     public void onBindViewHolder(@NonNull ClerkViewHolder holder, int position) {
 
         final Clerk_History history = clerk_histories.get(position);
-        holder.description.setText("وصف الطلب : "+history.getDescription());
-        holder.price.setText("سعر الطلب : "+history.getPrice()+" جنيه مصري ");
+        holder.description.setText(history.getDescription());
+        holder.price.setText(history.getPrice());
         holder.date.setText(history.getDate());
-        holder.size.setText( "حجم الطلب : "+history.getSize());
-        holder.ReceiverPhone.setText("رقم المستلم : "+history.getReceiverPhone());
-        holder.ReceiverAddress.setText("عنوان المستلم : "+history.getReceiverAddress());
-
-
+        holder.size.setText(history.getSize());
+        holder.ReceiverPhone.setText(history.getReceiverPhone());
+        holder.ReceiverAddress.setText(history.getReceiverAddress());
 
     }
 
@@ -55,17 +52,17 @@ public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapte
         notifyDataSetChanged();
     }
 
-    public class ClerkViewHolder extends RecyclerView.ViewHolder {
+    public static class ClerkViewHolder extends RecyclerView.ViewHolder {
         private TextView name, description, price,size,ReceiverAddress,ReceiverPhone, date;
 
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);
-            description = itemView.findViewById(R.id.Clerks_history_description);
-            date = itemView.findViewById(R.id.Clerks_history_date);
-            price = itemView.findViewById(R.id.Clerks_history_price);
-            size = itemView.findViewById(R.id.Clerks_history_size);
-            ReceiverAddress = itemView.findViewById(R.id.Clerks_history_Receiver_Address);
-            ReceiverPhone = itemView.findViewById(R.id.Clerks_history_Receiver_Phone);
+            description = itemView.findViewById(R.id.clerkHistory_description_value);
+            date = itemView.findViewById(R.id.clerkHistory_date);
+            price = itemView.findViewById(R.id.clerkHistory_price_value);
+            size = itemView.findViewById(R.id.clerkHistory_size_value);
+            ReceiverAddress = itemView.findViewById(R.id.clerkHistory_address_value);
+            ReceiverPhone = itemView.findViewById(R.id.clerkHistory_phone_value);
 
         }
     }

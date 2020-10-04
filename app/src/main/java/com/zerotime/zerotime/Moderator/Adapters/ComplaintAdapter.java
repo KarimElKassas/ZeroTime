@@ -58,10 +58,10 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
 
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.ComplaintName);
-            phone = itemView.findViewById(R.id.ComplaintPhone);
-            complaint = itemView.findViewById(R.id.Complaint);
-            date = itemView.findViewById(R.id.ComplaintDate);
+            name = itemView.findViewById(R.id.complaint_name_value);
+            phone = itemView.findViewById(R.id.complaint_phone_value);
+            complaint = itemView.findViewById(R.id.complaint_complaint_value);
+            date = itemView.findViewById(R.id.complaint_date);
 
         }
     }
