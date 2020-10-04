@@ -1,80 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.HomeFragment"
-    android:background="#FFF">
+    android:background="#FFF"
+    tools:context=".Fragments.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
-            android:id="@+id/homeFragment_add_order_btn"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            app:layout_constraintTop_toTopOf="parent"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="@dimen/_72sdp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:background="@drawable/btn_back_fb3908"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:fontFamily="@font/changa_medium"
-
-            android:text="@string/home_frag_add_order_btn_text"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
-
-        <Button
-            android:fontFamily="@font/changa_medium"
-            android:id="@+id/homeFragment_month_offers_btn"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            android:layout_marginTop="@dimen/_72sdp"
-            android:background="@drawable/btn_back_087804"
-            android:gravity="center"
-            android:text="@string/home_frag_month_offers_btn_text"
-            android:textColor="#FFF"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="@dimen/_24sdp"/>
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/homeFragment_our_products_btn"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:background="@drawable/btn_back_087804"
-            android:gravity="center"
-            android:text="منتجاتنا"
-            android:textColor="#FFF"
-            android:textSize="22sp"
-            android:fontFamily="@font/changa_medium"
+            <Button
+                android:id="@+id/homeFragment_add_order_btn"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:background="@drawable/btn_back_fb3908"
+                android:fontFamily="@font/changa_medium"
+                android:gravity="center"
+                android:text="@string/home_frag_add_order_btn_text"
+                android:textColor="#FFF"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn"
-            android:layout_marginTop="@dimen/_76sdp"/>
-        <Button
-            android:id="@+id/homeFragment_about_us_btn"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:background="@drawable/btn_back_fb3908"
-            android:gravity="center"
-            android:text="من نحن ؟"
-            android:fontFamily="@font/changa_medium"
+            <Button
+                android:id="@+id/homeFragment_month_offers_btn"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:background="@drawable/btn_back_087804"
+                android:fontFamily="@font/changa_medium"
+                android:gravity="center"
+                android:text="@string/home_frag_month_offers_btn_text"
+                android:textColor="#FFF"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            android:textColor="#FFF"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn"
-            android:layout_marginTop="@dimen/_76sdp"/>
+            <Button
+                android:id="@+id/homeFragment_our_products_btn"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_58sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:background="@drawable/btn_back_087804"
+                android:fontFamily="@font/changa_medium"
+                android:gravity="center"
+                android:text="منتجاتنا"
+                android:textColor="#FFF"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn" />
+
+            <Button
+                android:id="@+id/homeFragment_about_us_btn"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_58sdp"
+                android:background="@drawable/btn_back_fb3908"
+                android:fontFamily="@font/changa_medium"
+                android:gravity="center"
+                android:text="من نحن ؟"
+                android:textColor="#FFF"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

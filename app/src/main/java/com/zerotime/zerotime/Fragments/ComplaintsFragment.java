@@ -1,29 +1,24 @@
 package com.zerotime.zerotime.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
-import es.dmoral.toasty.Toasty;
-import io.reactivex.CompletableObserver;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
-import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,24 +35,29 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 import static android.content.Context.MODE_PRIVATE;
 import static com.zerotime.zerotime.Room.Data.UserDao.MIGRATION_1_2;
 
 
 public class ComplaintsFragment extends Fragment {
 
-    private UserFragmentComplaintsBinding binding;
-    private DatabaseReference usersRef,complaintsRef;
-    HashMap<String,String> complaintMap;
+    HashMap<String, String> complaintMap;
     Context context;
     View view;
     // Room DB
     UserDao userDao;
-
     String name;
     SharedPreferences preferences;
-
     String userPhone, userComplaint;
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
+    private UserFragmentComplaintsBinding binding;
+    private DatabaseReference usersRef, complaintsRef;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -78,6 +78,10 @@ public class ComplaintsFragment extends Fragment {
         complaintsRef = FirebaseDatabase.getInstance().getReference("Complaints");
         complaintMap = new HashMap<>();
 
+        //animation
+        inAnimation = new AlphaAnimation(0f, 2f);
+        outAnimation = new AlphaAnimation(2f, 0f);
+
 
         return view;
     }
@@ -85,6 +89,9 @@ public class ComplaintsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+
         binding.complaintsFragmentSendComplaintBtn.setOnClickListener(view1 -> {
 
             if (TextUtils.isEmpty(binding.complaintsFragmentComplaintEditText.getText())) {
@@ -92,6 +99,13 @@ public class ComplaintsFragment extends Fragment {
                 binding.complaintsFragmentComplaintEditText.requestFocus();
 
             } else {
+                //Progress Bar
+                binding.complaintProgressBarHolder.setAnimation(inAnimation);
+                binding.complaintProgressBarHolder.setVisibility(View.VISIBLE);
+                ((Activity) context).getWindow().setFlags(
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                 @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
                 String currentTime = df.format(Calendar.getInstance().getTime());
 
@@ -99,24 +113,35 @@ public class ComplaintsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         name = snapshot.child("UserName").getValue(String.class);
-
-                        complaintMap.put("UserName",name);
-                        complaintMap.put("UserPhone",userPhone);
-                        complaintMap.put("ComplaintDate",currentTime);
+                        complaintMap.put("UserName", name);
+                        complaintMap.put("UserPhone", userPhone);
+                        complaintMap.put("ComplaintDate", currentTime);
                         complaintMap.put("Complaint", Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString());
 
                         complaintsRef.child(currentTime).setValue(complaintMap)
                                 .addOnSuccessListener(aVoid -> {
+                                    //clear progress bar
+                                    binding.complaintProgressBarHolder.setAnimation(outAnimation);
+                                    binding.complaintProgressBarHolder.setVisibility(View.GONE);
+                                    ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                                     Toasty.success(context,
                                             "تم ارسال الشكوى بنجاح سوف نرد عليك قريباً",
                                             Toasty.LENGTH_LONG,
                                             true).show();
                                     binding.complaintsFragmentComplaintEditText.setText("");
 
-                                }).addOnFailureListener(e -> Toasty.error(context,
-                                        "لقد حدث خطأ ما برجاء المحاولة لاحقاً",
-                                        Toasty.LENGTH_SHORT,
-                                        true).show());
+                                }).addOnFailureListener(e -> {
+                            //clear progress bar
+                            binding.complaintProgressBarHolder.setAnimation(outAnimation);
+                            binding.complaintProgressBarHolder.setVisibility(View.GONE);
+                            ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                            Toasty.error(context,
+                                    "لقد حدث خطأ ما برجاء المحاولة لاحقاً",
+                                    Toasty.LENGTH_SHORT,
+                                    true).show();
+                        });
 
                         userComplaint = Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString();
                         Complaint complaint = new Complaint(userPhone, userComplaint, currentTime, name);
@@ -139,7 +164,6 @@ public class ComplaintsFragment extends Fragment {
                                 });
 
 
-
                     }
 
                     @Override
@@ -151,6 +175,12 @@ public class ComplaintsFragment extends Fragment {
 
             }
         });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("UniqueID", "ComplaintsFragment");
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.setArguments(bundle);
+
     }
 
     @Override
@@ -161,12 +191,26 @@ public class ComplaintsFragment extends Fragment {
         view.setOnKeyListener((v, keyCode, event) -> {
 
             if (keyCode == KeyEvent.KEYCODE_BACK) {
+                Bundle bundle = new Bundle();
+                bundle.putString("UniqueID", "ComplaintsFragment");
+                SettingsFragment fragment = new SettingsFragment();
+                fragment.setArguments(bundle);
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
+
                 return true;
             }
 
             return false;
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Bundle bundle = new Bundle();
+        bundle.putString("UniqueID", "ComplaintsFragment");
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.setArguments(bundle);
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -51,6 +52,23 @@ public class ContactFragment extends Fragment {
             intent.putExtra("UserID", prefs.getString("isLogged", ""));
             intent.putExtra("UniqueID", "ContactFragment");
             startActivity(intent);
+        });
+        binding.goToCallBTn.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + "01017268676"));
+            context.startActivity(intent);
+        });
+        binding.goToMailBTn.setOnClickListener(view1 -> {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"zerotime336@example.com"});
+            i.putExtra(Intent.EXTRA_SUBJECT, "اكتب العنوان هنا");
+            i.putExtra(Intent.EXTRA_TEXT   , "اكتب الرساله هنا");
+            try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

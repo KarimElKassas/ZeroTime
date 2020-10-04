@@ -1,63 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-   tools:context=".Fragments.ProfileFragment">
+    android:layoutDirection="ltr"
+    tools:context=".Fragments.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        android:layout_marginTop="@dimen/_120sdp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:fontFamily="@font/changa_medium"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        android:id="@+id/profile_update_user_data_btn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="@dimen/_180sdp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        android:text="@string/profile_update_data_text"
-        android:textSize="@dimen/_22sdp"
-        android:textColor="#FFF"
-        android:background="@drawable/btn_back_red"
-        />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:fontFamily="@font/changa_medium"
+                    <Button
+                        android:id="@+id/profile_update_user_data_btn"
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_margin="@dimen/_16sdp"
+                        android:background="@drawable/btn_back_red"
+                        android:fontFamily="@font/tajwal"
+                        android:text="@string/profile_update_data_text"
+                        android:textColor="#FFF"
+                        android:textSize="@dimen/_18ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        android:id="@+id/profile_orders_history_btn"
-        app:layout_constraintTop_toBottomOf="@+id/profile_update_user_data_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="@dimen/_180sdp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        android:text="@string/profile_previous_orders_text"
-        android:textSize="@dimen/_22sdp"
-        android:textColor="#FFF"
-        android:background="@drawable/btn_back_red"/>
+                    <Button
+                        android:id="@+id/profile_orders_history_btn"
 
-    <Button
-        android:fontFamily="@font/changa_medium"
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_margin="@dimen/_16sdp"
+                        android:background="@drawable/btn_back_red"
+                        android:fontFamily="@font/tajwal"
+                        android:text="@string/profile_previous_orders_text"
+                        android:textColor="#FFF"
+                        android:textSize="@dimen/_18ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_update_user_data_btn" />
 
-        android:id="@+id/profile_order_progress_btn"
-        app:layout_constraintTop_toBottomOf="@+id/profile_orders_history_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="@dimen/_180sdp"
-        android:layout_margin="@dimen/_16sdp"
-        android:text="@string/profile_follow_orders_text"
-        android:textSize="@dimen/_22sdp"
-        android:textColor="#FFF"
-        android:background="@drawable/btn_back_red"
-        android:layout_height="wrap_content" />
+                    <Button
+                        android:id="@+id/profile_order_progress_btn"
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_margin="@dimen/_16sdp"
+                        android:background="@drawable/btn_back_red"
+                        android:fontFamily="@font/tajwal"
+                        android:text="@string/profile_follow_orders_text"
+                        android:textColor="#FFF"
+                        android:textSize="@dimen/_18ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_orders_history_btn" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

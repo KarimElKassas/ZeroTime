@@ -1,81 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    tools:context=".Fragments.SettingsFragment"
+    android:layoutDirection="ltr">
 
-    tools:context=".Fragments.SettingsFragment">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/_120sdp"
-   >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-   <Button
-       android:fontFamily="@font/changa_medium"
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent">
 
-       android:textColor="#FFF"
-       android:background="@drawable/btn_back_red"
-       android:id="@+id/Settings_complains_btn"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       android:layout_width="@dimen/_200sdp"
-       android:layout_height="wrap_content"
-       android:layout_margin="@dimen/_16sdp"
-       android:text="شكاوي"
-       android:textSize="@dimen/_22sdp" />
+          <Button
+              android:id="@+id/Settings_complains_btn"
+              android:layout_width="@dimen/_200sdp"
+              android:layout_height="@dimen/_50sdp"
+              android:background="@drawable/btn_back_red"
+              android:fontFamily="@font/tajwal"
+              android:text="شكاوى"
+              android:textColor="#FFF"
+              android:textSize="@dimen/_18ssp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
 
-   <Button
-       android:fontFamily="@font/changa_medium"
-
-       android:textColor="#FFF"
-       android:background="@drawable/btn_back_red"
-       android:id="@+id/Settings_rate_btn"
-       app:layout_constraintTop_toBottomOf="@+id/Settings_complains_btn"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       android:layout_width="@dimen/_200sdp"
-       android:layout_height="wrap_content"
-       android:layout_margin="@dimen/_16sdp"
-       android:text="تقييم البرنامج"
-       android:textSize="@dimen/_22sdp" />
-
-
-   <Button
-       android:fontFamily="@font/changa_medium"
-
-       android:textColor="#FFF"
-       android:background="@drawable/btn_back_red"
-       android:id="@+id/Settings_shareApp_btn"
-       app:layout_constraintTop_toBottomOf="@+id/Settings_rate_btn"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       android:layout_width="@dimen/_200sdp"
-       android:layout_height="wrap_content"
-       android:layout_margin="@dimen/_16sdp"
-       android:text="مشاركه التطبيق"
-       android:textSize="@dimen/_22sdp" />
-   <Button
-       android:fontFamily="@font/changa_medium"
-
-       android:textColor="#FFF"
-       android:background="@drawable/btn_back_red"
-       app:layout_constraintTop_toBottomOf="@+id/Settings_shareApp_btn"
-       android:id="@+id/Settings_logout_btn"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       android:layout_width="@dimen/_200sdp"
-       android:layout_height="wrap_content"
-       android:layout_margin="@dimen/_16sdp"
-       android:text="تسجيل الخروج"
-       android:textSize="@dimen/_22sdp" />
+          <Button
+              android:id="@+id/Settings_rate_btn"
+              android:layout_width="@dimen/_200sdp"
+              android:layout_height="@dimen/_50sdp"
+              android:layout_margin="@dimen/_16sdp"
+              android:background="@drawable/btn_back_red"
+              android:fontFamily="@font/tajwal"
+              android:text="تقييم التطبيق"
+              android:textColor="#FFF"
+              android:textSize="@dimen/_18ssp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/Settings_complains_btn" />
 
 
+          <Button
+              android:id="@+id/Settings_shareApp_btn"
+              android:layout_width="@dimen/_200sdp"
+              android:layout_height="@dimen/_50sdp"
+              android:layout_margin="@dimen/_16sdp"
+              android:background="@drawable/btn_back_red"
+              android:fontFamily="@font/tajwal"
+              android:text="مشاركه التطبيق"
+              android:textColor="#FFF"
+              android:textSize="@dimen/_18ssp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/Settings_rate_btn" />
 
+          <Button
+              android:id="@+id/Settings_logout_btn"
+              android:layout_width="@dimen/_200sdp"
+              android:layout_height="@dimen/_50sdp"
+              android:layout_margin="@dimen/_16sdp"
+              android:background="@drawable/btn_back_red"
+              android:fontFamily="@font/tajwal"
+              android:text="تسجيل الخروج"
+              android:textColor="#FFF"
+              android:textSize="@dimen/_18ssp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/Settings_shareApp_btn" />
+       </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

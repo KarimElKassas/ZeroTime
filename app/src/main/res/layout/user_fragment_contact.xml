@@ -5,47 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".Fragments.ContactFragment">
+    tools:context=".Fragments.ContactFragment"
+    android:layoutDirection="ltr">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bghome"
-
         android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_26sdp"
-            android:fontFamily="@font/tajwal"
-            android:text="تواصل مع الدعم"
-            android:textSize="@dimen/_28sdp"
-
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="@dimen/_8sdp">
 
             <Button
-android:fontFamily="@font/changa_medium"
                 android:id="@+id/goToChatBTn"
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:background="@drawable/rounded_btn_back_red"
                 android:drawableStart="@drawable/ic_baseline_message_24"
                 android:drawablePadding="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingStart="@dimen/_16sdp"
+                android:fontFamily="@font/tajwal"
                 android:text="الدردشه"
                 android:textColor="#FFFFFF"
-                android:textSize="20dp"
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
+                android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -55,45 +54,47 @@ android:fontFamily="@font/changa_medium"
 
             <Button
                 android:id="@+id/goToCallBTn"
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/rounded_btn_back_red"
                 android:drawableStart="@drawable/ic_baseline_call_white_24"
                 android:drawablePadding="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingStart="@dimen/_16sdp"
+                android:fontFamily="@font/tajwal"
                 android:text="إتصال"
                 android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:fontFamily="@font/changa_medium"
-
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
+                android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goToChatBTn"
-
-
-                />
+                app:layout_constraintTop_toBottomOf="@+id/goToChatBTn" />
 
             <Button
                 android:id="@+id/goToMailBTn"
-                android:fontFamily="@font/changa_medium"
-
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/rounded_btn_back_red"
                 android:drawableStart="@drawable/ic_message_icon"
-                android:text="إرسال بريد "
+                android:fontFamily="@font/tajwal"
+                android:text="ايميل"
                 android:textColor="#FFFFFF"
-                android:textSize="20dp"
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
+                android:paddingEnd="@dimen/_16sdp"
+                android:paddingStart="@dimen/_16sdp"
+                android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/goToCallBTn"
 
                 />
 
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
