@@ -1,7 +1,9 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.widget.Toast;
 
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentHomeBinding;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,6 +75,7 @@ public class HomeFragment extends Fragment {
         });
         //About Us Button
         binding.homeFragmentAboutUsBtn.setOnClickListener(view1 -> {
+
             // Create new fragment and transaction
             FragmentManager fragmentManager = getFragmentManager();
             AboutUsFragment fragment = new AboutUsFragment();
@@ -85,8 +90,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-
     @Override
     public void onResume() {
 
@@ -95,7 +98,21 @@ public class HomeFragment extends Fragment {
 
             view.setFocusableInTouchMode(true);
             view.requestFocus();
-            view.setOnKeyListener((v, keyCode, event) -> false);
+            view.setOnKeyListener((v, keyCode, event) -> {
+
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+
+                    ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                    getActivity().finish();
+
+                    return true;
+
+                }
+
+                return false;
+            });
 
         } catch (Exception e) {
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
@@ -104,4 +121,5 @@ public class HomeFragment extends Fragment {
 
 
     }
+
 }

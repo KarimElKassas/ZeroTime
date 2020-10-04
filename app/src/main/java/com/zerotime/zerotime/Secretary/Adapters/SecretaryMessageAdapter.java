@@ -67,7 +67,8 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dialogLayout = inflater.inflate(R.layout.dialog_chat_image, null);
                 dialog.setView(dialogLayout);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.requestWindowFeature(Window.DECOR_CAPTION_SHADE_DARK);
 
                 ImageView image = dialogLayout.findViewById(R.id.dialog_chat_image_imageView);
                 try {

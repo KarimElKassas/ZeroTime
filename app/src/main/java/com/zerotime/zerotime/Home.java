@@ -1,46 +1,25 @@
 package com.zerotime.zerotime;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Fragments.ContactFragment;
 import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
 import com.zerotime.zerotime.Fragments.SettingsFragment;
-import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
-
-import java.util.Random;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class Home extends AppCompatActivity {
     private UserActivityHomeBinding binding;
     String userId;
 
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
 
             this.finish();
@@ -68,10 +47,8 @@ public class Home extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         userId = prefs.getString("isLogged", "");
-
 
         // Default Fragment To Open
         getSupportFragmentManager().beginTransaction().replace(R.id.Frame_Content, new HomeFragment()).commit();
@@ -79,7 +56,9 @@ public class Home extends AppCompatActivity {
         //Attach Listener To Bottom Nav
         binding.bottomNav.setCurrentActiveItem(3);
         binding.bottomNav.setNavigationChangeListener((view1, position) -> {
+
             //navigation changed, do something
+
             switch (position) {
                 case 3:
                     Fragment newFragment = new HomeFragment();
@@ -87,8 +66,8 @@ public class Home extends AppCompatActivity {
                     transaction.replace(R.id.Frame_Content, newFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
                     break;
+
                 case 2:
                     ProfileFragment fragment2 = new ProfileFragment();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
@@ -96,6 +75,7 @@ public class Home extends AppCompatActivity {
                     fragmentTransaction2.addToBackStack(null);
                     fragmentTransaction2.commit();
                     break;
+
                 case 1:
                     ContactFragment fragment3 = new ContactFragment();
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
@@ -103,6 +83,7 @@ public class Home extends AppCompatActivity {
                     fragmentTransaction3.addToBackStack(null);
                     fragmentTransaction3.commit();
                     break;
+
                 case 0:
                     SettingsFragment fragment4 = new SettingsFragment();
                     FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
@@ -110,8 +91,8 @@ public class Home extends AppCompatActivity {
                     fragmentTransaction4.addToBackStack(null);
                     fragmentTransaction4.commit();
                     break;
+
             }
         });
     }
-
 }

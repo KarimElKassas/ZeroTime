@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="@dimen/_250sdp"
+    android:layout_height="@dimen/_400sdp"
     android:paddingStart="@dimen/_8sdp"
+    android:background="#000"
+    android:layout_gravity="center"
     android:paddingEnd="@dimen/_8sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
