@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/newlogo"
         android:label="@string/app_name"
@@ -67,6 +69,7 @@
             android:name=".Home"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Message" />
+        <activity android:name=".Moderator.StartingScreen" />
         <activity android:name=".History" /> <!-- Global -->
         <activity android:name=".SplashScreen">
             <intent-filter>

@@ -1,7 +1,5 @@
 package com.zerotime.zerotime;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -11,10 +9,14 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
+import com.zerotime.zerotime.Moderator.StartingScreen;
 import com.zerotime.zerotime.databinding.ActivitySplashScreenBinding;
 
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
     private ActivitySplashScreenBinding binding;
@@ -22,6 +24,7 @@ public class SplashScreen extends AppCompatActivity {
     private AlphaAnimation outAnimation = new AlphaAnimation(2f, 0f);
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,7 @@ public class SplashScreen extends AppCompatActivity {
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         prefs.getString("isLogged", "");
 
-     /*   editor = prefs.edit();
-        editor.putString("FirstTime", "false");
-        editor.apply();
-*/
+
         //-------------------------------------------------------------------------------
         //Animation
         animation();
@@ -47,21 +47,34 @@ public class SplashScreen extends AppCompatActivity {
         int splashTimeOut = 3000;
         new Handler().postDelayed(() -> {
 
+            if (prefs.getBoolean("my_first_time", true)) {
+
+                prefs.edit().putBoolean("my_first_time", false).apply();
+
+                //the app is being launched for first time, do something
+                Intent intent = new Intent(SplashScreen.this, StartingScreen.class);
+                startActivity(intent);
+                finish();
+                // record the fact that the app has been started at least once
+                return;
+            }
 
 
             prefs.getString("isLogged", "");
             if (!Objects.requireNonNull(prefs.getString("isLogged", "null")).equals("null")) {
                 checkInternetConnection();
                 goToHome();
-            }
+            } else {
 
-            else {
                 checkInternetConnection();
+
                 goToLogin();
+
             }
 
         }, splashTimeOut);
     }
+
 
     private void animation() {
         binding.splashImg.setTranslationY(-100f);
@@ -86,11 +99,12 @@ public class SplashScreen extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
-    private void checkInternetConnection(){
-        myBroadCast broadCast=new myBroadCast();
-        IntentFilter intentFilter=new IntentFilter();
+
+    private void checkInternetConnection() {
+        myBroadCast broadCast = new myBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast,intentFilter);
+        registerReceiver(broadCast, intentFilter);
 
     }
 }

@@ -108,6 +108,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
 
         });
         holder.arrow.setOnClickListener(view -> {
+
             if (holder.expandableConstraint.getVisibility() == View.GONE) {
                 holder.expandableConstraint.setVisibility(View.VISIBLE);
                 holder.arrow.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24);

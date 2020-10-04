@@ -2,6 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aldrich</item>
+        <item>@font/changa_medium</item>
+        <item>@font/reem_kufi</item>
         <item>@font/stencil</item>
     </array>
 </resources>

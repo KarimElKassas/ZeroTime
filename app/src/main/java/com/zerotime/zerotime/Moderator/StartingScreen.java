@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.SignUp;
 import com.zerotime.zerotime.databinding.ActivityStartingScreenBinding;
 import com.zerotime.zerotime.sliderAdapter;
 
@@ -93,7 +95,7 @@ public class StartingScreen extends AppCompatActivity {
                 binding.nextBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(StartingScreen.this,Login.class);
+                        Intent intent=new Intent(StartingScreen.this, Login.class);
                         startActivity(intent);
                     }
                 });
@@ -116,5 +118,11 @@ public class StartingScreen extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+        finish();
 
+    }
 }
