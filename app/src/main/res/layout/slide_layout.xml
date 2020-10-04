@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageSlider"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_300sdp"
+        android:src="@drawable/s_deliver_everywhere"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        />
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="مرحباً بك في زيرو تايم "
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+
+    <TextView
+        android:layout_marginTop="@dimen/_16sdp"
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:gravity="center"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/heading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="معنا ستشحن من اي مكان في مصر و إلي اي مكان في مصر \n وفي اسرع وقت ونتحدي "
+
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,8 @@ public class SplashScreen extends AppCompatActivity {
     private ActivitySplashScreenBinding binding;
     private AlphaAnimation inAnimation = new AlphaAnimation(0f, 2f);
     private AlphaAnimation outAnimation = new AlphaAnimation(2f, 0f);
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +31,31 @@ public class SplashScreen extends AppCompatActivity {
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        prefs = getSharedPreferences("UserState", MODE_PRIVATE);
+        prefs.getString("isLogged", "");
 
-
+     /*   editor = prefs.edit();
+        editor.putString("FirstTime", "false");
+        editor.apply();
+*/
         //-------------------------------------------------------------------------------
         //Animation
         animation();
         //-------------------------------------------------------------------------------
 
-        SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
 
         int splashTimeOut = 3000;
         new Handler().postDelayed(() -> {
+
+
+
             prefs.getString("isLogged", "");
             if (!Objects.requireNonNull(prefs.getString("isLogged", "null")).equals("null")) {
                 checkInternetConnection();
                 goToHome();
-            } else {
+            }
+
+            else {
                 checkInternetConnection();
                 goToLogin();
             }

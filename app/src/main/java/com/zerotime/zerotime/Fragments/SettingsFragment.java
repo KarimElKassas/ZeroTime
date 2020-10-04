@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.BuildConfig;
 import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentSettingsBinding;
@@ -64,6 +65,28 @@ public class SettingsFragment extends Fragment {
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         });
+
+        // share app btn
+        binding.SettingsShareAppBtn.setOnClickListener(view -> {
+
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Zero Time");
+                String shareMessage= "\nLet me recommend you this application\n\n";
+                shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "choose one"));
+            } catch(Exception e) {
+                //e.toString();
+            }
+
+
+
+        });
+
+
+
 
         //Log Out Button
         binding.SettingsLogoutBtn.setOnClickListener(view1 -> {
