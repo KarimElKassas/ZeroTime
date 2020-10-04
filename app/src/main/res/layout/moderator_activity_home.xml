@@ -16,6 +16,7 @@
 
 
         <Button
+            android:fontFamily="@font/changa_medium"
 
             android:id="@+id/Moderator_Home_Orders_btn"
             android:layout_width="@dimen/_120sdp"
@@ -30,6 +31,8 @@
             app:layout_constraintStart_toEndOf="@id/Moderator_Home_addClerk_btn"/>
 
         <Button
+            android:fontFamily="@font/changa_medium"
+
             android:id="@+id/Moderator_Home_addClerk_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_100sdp"
@@ -44,6 +47,8 @@
 
 
         <Button
+            android:fontFamily="@font/changa_medium"
+
             android:id="@+id/Moderator_Home_viewClerks_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_100sdp"
@@ -57,6 +62,8 @@
             app:layout_constraintTop_toBottomOf="@+id/Moderator_Home_Orders_btn" />
 
         <Button
+            android:fontFamily="@font/changa_medium"
+
             android:id="@+id/Moderator_Home_addOffers_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_100sdp"
@@ -70,6 +77,8 @@
             app:layout_constraintTop_toBottomOf="@+id/Moderator_Home_addClerk_btn" />
 
         <Button
+            android:fontFamily="@font/changa_medium"
+
             android:id="@+id/Moderator_Home_complaints_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_100sdp"
@@ -83,6 +92,8 @@
             app:layout_constraintTop_toBottomOf="@+id/Moderator_Home_viewClerks_btn" />
 
         <Button
+            android:fontFamily="@font/changa_medium"
+
             android:id="@+id/Moderator_Home_NumberOFOrders_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_100sdp"

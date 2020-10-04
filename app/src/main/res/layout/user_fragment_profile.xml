@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bghome"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
    tools:context=".Fragments.ProfileFragment">
@@ -15,6 +14,8 @@
         android:layout_marginTop="@dimen/_120sdp">
 
     <Button
+        android:fontFamily="@font/changa_medium"
+
         android:id="@+id/profile_update_user_data_btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +30,8 @@
         />
 
     <Button
+        android:fontFamily="@font/changa_medium"
+
         android:id="@+id/profile_orders_history_btn"
         app:layout_constraintTop_toBottomOf="@+id/profile_update_user_data_btn"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +45,8 @@
         android:background="@drawable/btn_back_red"/>
 
     <Button
+        android:fontFamily="@font/changa_medium"
+
         android:id="@+id/profile_order_progress_btn"
         app:layout_constraintTop_toBottomOf="@+id/profile_orders_history_btn"
         app:layout_constraintStart_toStartOf="parent"

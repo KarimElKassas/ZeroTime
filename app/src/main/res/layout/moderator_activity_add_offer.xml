@@ -20,6 +20,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:fontFamily="@font/changa_medium"
                 android:id="@+id/moderator_add_offer_first_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,6 +37,8 @@
                 android:id="@+id/moderator_add_offer_first_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_120sdp"
+                android:fontFamily="@font/tajwal"
+
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
@@ -49,6 +52,8 @@
 
 
             <TextView
+                android:fontFamily="@font/changa_medium"
+
                 android:id="@+id/moderator_add_offer_second_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,8 +74,11 @@
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
                 android:gravity="top"
+
                 android:hint="اكتب  العرض الثانى هنا ..."
                 android:padding="@dimen/_12sdp"
+                android:fontFamily="@font/tajwal"
+
                 android:textColorHint="#535353"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +86,8 @@
 
 
             <TextView
+                android:fontFamily="@font/changa_medium"
+
                 android:id="@+id/moderator_add_offer_third_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,6 +108,8 @@
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
                 android:gravity="top"
+                android:fontFamily="@font/tajwal"
+
                 android:hint="اكتب  العرض الثالث هنا ..."
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
@@ -107,6 +119,7 @@
 
 
             <TextView
+
                 android:id="@+id/moderator_add_offer_fourth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,6 +128,8 @@
                 android:text="العرض الرابع :"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
+                android:fontFamily="@font/changa_medium"
+
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_edit_text" />
@@ -127,6 +142,8 @@
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
                 android:gravity="top"
+                android:fontFamily="@font/tajwal"
+
                 android:hint="اكتب  العرض الرابع هنا ..."
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
@@ -136,6 +153,8 @@
 
 
             <TextView
+                android:fontFamily="@font/changa_medium"
+
                 android:id="@+id/moderator_add_offer_fifth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -156,6 +175,8 @@
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
                 android:gravity="top"
+                android:fontFamily="@font/tajwal"
+
                 android:hint="اكتب  العرض الخامس هنا ..."
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
@@ -172,6 +193,8 @@
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:text="العرض السادس :"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/changa_medium"
+
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -185,6 +208,8 @@
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
                 android:gravity="top"
+                android:fontFamily="@font/tajwal"
+
                 android:hint="اكتب  العرض السادس هنا ..."
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
@@ -201,6 +226,7 @@
                 android:padding="@dimen/_4sdp"
                 android:background="@drawable/edit_text_back_corner_less"
                 android:text="تحديث"
+                android:fontFamily="@font/changa_medium"
                 android:textColor="#595a5b"
                 android:textSize="20sp"
                 android:textStyle="bold"

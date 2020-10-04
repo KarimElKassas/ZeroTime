@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/bghome"
 
     tools:context=".Fragments.SettingsFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +14,8 @@
    >
 
    <Button
+       android:fontFamily="@font/changa_medium"
+
        android:textColor="#FFF"
        android:background="@drawable/btn_back_red"
        android:id="@+id/Settings_complains_btn"
@@ -28,6 +29,8 @@
        android:textSize="@dimen/_22sdp" />
 
    <Button
+       android:fontFamily="@font/changa_medium"
+
        android:textColor="#FFF"
        android:background="@drawable/btn_back_red"
        android:id="@+id/Settings_rate_btn"
@@ -42,6 +45,8 @@
 
 
    <Button
+       android:fontFamily="@font/changa_medium"
+
        android:textColor="#FFF"
        android:background="@drawable/btn_back_red"
        android:id="@+id/Settings_shareApp_btn"
@@ -54,6 +59,8 @@
        android:text="مشاركه التطبيق"
        android:textSize="@dimen/_22sdp" />
    <Button
+       android:fontFamily="@font/changa_medium"
+
        android:textColor="#FFF"
        android:background="@drawable/btn_back_red"
        app:layout_constraintTop_toBottomOf="@+id/Settings_shareApp_btn"

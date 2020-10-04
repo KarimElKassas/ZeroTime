@@ -17,9 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_26sdp"
-            android:fontFamily="@font/reem_kufi"
+            android:fontFamily="@font/tajwal"
             android:text="تواصل مع الدعم"
             android:textSize="@dimen/_28sdp"
+
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,7 @@
 
 
             <Button
-
+android:fontFamily="@font/changa_medium"
                 android:id="@+id/goToChatBTn"
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="50dp"
@@ -63,6 +64,8 @@
                 android:text="إتصال"
                 android:textColor="#FFFFFF"
                 android:textSize="20dp"
+                android:fontFamily="@font/changa_medium"
+
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,6 +76,8 @@
 
             <Button
                 android:id="@+id/goToMailBTn"
+                android:fontFamily="@font/changa_medium"
+
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/_16sdp"

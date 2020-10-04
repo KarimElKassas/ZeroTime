@@ -34,7 +34,6 @@ import java.util.Random;
 
 public class Home extends AppCompatActivity {
     private UserActivityHomeBinding binding;
-    private DatabaseReference chatRef;
     String userId;
 
 
@@ -43,6 +42,7 @@ public class Home extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
+
             this.finish();
             return;
         }

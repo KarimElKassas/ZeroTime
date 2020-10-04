@@ -9,7 +9,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bghome"
         android:layout_height="match_parent">
         <Button
             android:id="@+id/homeFragment_add_order_btn"
@@ -22,11 +21,14 @@
             android:background="@drawable/btn_back_fb3908"
             android:textColor="#FFF"
             android:gravity="center"
+            android:fontFamily="@font/changa_medium"
+
             android:text="@string/home_frag_add_order_btn_text"
             android:textSize="22sp"
             android:textStyle="bold"/>
 
         <Button
+            android:fontFamily="@font/changa_medium"
             android:id="@+id/homeFragment_month_offers_btn"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
@@ -51,6 +53,8 @@
             android:text="منتجاتنا"
             android:textColor="#FFF"
             android:textSize="22sp"
+            android:fontFamily="@font/changa_medium"
+
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/homeFragment_add_order_btn"
@@ -63,6 +67,8 @@
             android:background="@drawable/btn_back_fb3908"
             android:gravity="center"
             android:text="من نحن ؟"
+            android:fontFamily="@font/changa_medium"
+
             android:textColor="#FFF"
             android:textSize="22sp"
             android:textStyle="bold"

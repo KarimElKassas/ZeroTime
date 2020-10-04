@@ -1,9 +1,7 @@
 package com.zerotime.zerotime.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +23,13 @@ public class HomeFragment extends Fragment {
     Context context;
     View view;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = UserFragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         context = container.getContext();
-
 
         return view;
     }
@@ -41,7 +39,7 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Our Products Button
-        binding.homeFragmentOurProductsBtn.setOnClickListener(view1 -> Toasty.info(context, "قريباً", Toasty.LENGTH_SHORT, true).show());
+        binding.homeFragmentOurProductsBtn.setOnClickListener(view1 -> Toasty.warning(context, "قريباً", Toasty.LENGTH_SHORT, true).show());
 
         //Month Offers Button
         binding.homeFragmentMonthOffersBtn.setOnClickListener(view1 -> {
@@ -87,25 +85,17 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
+
     @Override
     public void onResume() {
 
         super.onResume();
         try {
 
-
             view.setFocusableInTouchMode(true);
             view.requestFocus();
-            view.setOnKeyListener((v, keyCode, event) -> {
-
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    ((Activity) context).finish();
-                    return true;
-                }
-
-                return false;
-            });
+            view.setOnKeyListener((v, keyCode, event) -> false);
 
         } catch (Exception e) {
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
