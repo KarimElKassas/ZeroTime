@@ -7,25 +7,25 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentHomeBinding;
-import com.zerotime.zerotime.MyBroadCast;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import java.util.Objects;
-
 import es.dmoral.toasty.Toasty;
 
 
@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment {
     UserFragmentHomeBinding binding;
     Context context;
     View view;
+    private boolean isFirstBackPressed = false;
 
 
     @Override
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment {
                     .commit();
         });
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -123,6 +125,7 @@ public class HomeFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -130,29 +133,37 @@ public class HomeFragment extends Fragment {
         context.registerReceiver(broadCast, intentFilter);
 
     }
+
     @Override
     public void onResume() {
 
         super.onResume();
+
         try {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    view.setFocusableInTouchMode(true);
+                    view.requestFocus();
+                    view.setOnKeyListener((v, keyCode, event) -> {
 
-            view.setFocusableInTouchMode(true);
-            view.requestFocus();
-            view.setOnKeyListener((v, keyCode, event) -> {
-
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            Objects.requireNonNull(getActivity()).onBackPressed();
 
 
-                    ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                            //((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                    Objects.requireNonNull(getActivity()).finish();
+                            //Objects.requireNonNull(getActivity()).finish();
 
-                    return true;
+                            return true;
 
+                        }
+
+                        return false;
+                    });
                 }
+            }, 50000);
 
-                return false;
-            });
 
         } catch (Exception e) {
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();

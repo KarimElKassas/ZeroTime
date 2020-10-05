@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#ecf2fe"
     tools:context=".Fragments.ContactFragment"
     android:layoutDirection="ltr">
 
@@ -32,12 +32,12 @@
 
             <Button
                 android:id="@+id/goToChatBTn"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:background="@drawable/rounded_btn_back_red"
                 android:drawableStart="@drawable/ic_baseline_message_24"
                 android:drawablePadding="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_20sdp"
                 android:paddingStart="@dimen/_16sdp"
                 android:fontFamily="@font/tajwal"
                 android:text="الدردشه"
@@ -54,13 +54,13 @@
 
             <Button
                 android:id="@+id/goToCallBTn"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/rounded_btn_back_red"
                 android:drawableStart="@drawable/ic_baseline_call_white_24"
                 android:drawablePadding="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_20sdp"
                 android:paddingStart="@dimen/_16sdp"
                 android:fontFamily="@font/tajwal"
                 android:text="إتصال"
@@ -74,7 +74,7 @@
 
             <Button
                 android:id="@+id/goToMailBTn"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/rounded_btn_back_red"
@@ -84,7 +84,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
-                android:paddingEnd="@dimen/_16sdp"
+                android:paddingEnd="@dimen/_20sdp"
                 android:paddingStart="@dimen/_16sdp"
                 android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"

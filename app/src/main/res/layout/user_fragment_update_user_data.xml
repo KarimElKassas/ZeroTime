@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         tools:context=".SignUp">
         <ScrollView
+            android:background="#ecf2fe"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/scroll_layout"
@@ -56,8 +58,8 @@
                         android:drawablePadding="@dimen/_8sdp"
                         android:fontFamily="@font/changa_medium"
                         android:hint="@string/signup_user_password_hint"
-                        android:inputType="textPassword"
-                        android:textAlignment="textEnd"
+                        android:inputType="textVisiblePassword"
+                        android:textAlignment="textStart"
                         android:textColor="#005b96"
                         android:textColorHint="#005b96"
                         android:textSize="14sp"

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
+    android:background="#ecf2fe"
+
     tools:context=".Moderator.ModeratorAddClerk">
 
     <androidx.constraintlayout.widget.ConstraintLayout

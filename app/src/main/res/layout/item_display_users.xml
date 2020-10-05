@@ -3,7 +3,7 @@
     android:id="@+id/display_users_row_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFF"
+    android:background="#ecf2fe"
     android:foreground="?android:attr/selectableItemBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

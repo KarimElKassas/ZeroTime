@@ -32,7 +32,6 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     private List<OrderState> ordersList;
     private Context context;
     String[] steps = {"   لم يتم \n الإستلام", "     تم \n الإستلام", "   جاري \n التوصيل", "     تم \n التوصيل"};
-    Dialog clerksDialog;
 
     public FollowingOrderAdapter(List<OrderState> ordersList, Context context) {
         this.ordersList = ordersList;
@@ -42,8 +41,6 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     @NonNull
     @Override
     public FollowingOrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        clerksDialog = new Dialog(context);
-        clerksDialog.setContentView(R.layout.dialog_clercks);
 
         return new FollowingOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_following_order, parent, false));
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F3F3F3"
+    android:background="#ecf2fe"
     android:layout_marginBottom="@dimen/_8sdp"
     tools:context=".Fragments.FollowMyOrdersFragment">
 

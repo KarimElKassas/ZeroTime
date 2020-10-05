@@ -190,9 +190,11 @@ public class SettingsFragment extends Fragment {
                 view.requestFocus();
                 view.setOnKeyListener((v, keyCode, event) -> {
 
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        ((Activity) context).finish();
+                    if( keyCode == KeyEvent.KEYCODE_BACK )
+                    {
+                        Objects.requireNonNull(getActivity()).onBackPressed();
+
+
                         return true;
                     }
 
@@ -200,9 +202,9 @@ public class SettingsFragment extends Fragment {
                 });
 
             }, 1000000);
-        } catch (Exception e) {
+        }catch (Exception e){
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 }
