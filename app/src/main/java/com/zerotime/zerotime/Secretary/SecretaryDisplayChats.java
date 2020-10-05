@@ -1,5 +1,6 @@
 package com.zerotime.zerotime.Secretary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -63,6 +64,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
 
         random = new Random();
 
+        binding.secretaryChatsProgress.setVisibility(View.VISIBLE);
 
         userList = new ArrayList<>();
 
@@ -113,28 +115,48 @@ public class SecretaryDisplayChats extends AppCompatActivity {
         chatListRef1 = FirebaseDatabase.getInstance().getReference("Users");
         chatListRef1.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mUsers.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String userPrimaryPhone = ds.child("UserPrimaryPhone").getValue(String.class);
-                    String userName = ds.child("UserName").getValue(String.class);
-                    int rand_int = random.nextInt(10);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()){
+                    binding.secretaryChatsProgress.setVisibility(View.GONE);
+                    binding.secretaryDisplayChatsRecycler.setVisibility(View.GONE);
+                    binding.secretaryChatsNoResult.setVisibility(View.VISIBLE);
+                }
+                if (snapshot.exists()){
+                    if (!snapshot.hasChildren()){
 
-                    Users users = new Users();
-                    users.setUserPrimaryPhone(userPrimaryPhone);
-                    users.setUserName(userName);
-                    users.setRandom(rand_int);
+                        binding.secretaryChatsProgress.setVisibility(View.GONE);
+                        binding.secretaryDisplayChatsRecycler.setVisibility(View.GONE);
+                        binding.secretaryChatsNoResult.setVisibility(View.VISIBLE);
 
-                    for (ChatList chatList : userList) {
-                        //Toast.makeText(context,users.getUser_ID() + "\n" + chatList.getUser_ID(),Toast.LENGTH_SHORT).show();
+                    }else {
+                        binding.secretaryChatsProgress.setVisibility(View.GONE);
+                        binding.secretaryDisplayChatsRecycler.setVisibility(View.VISIBLE);
+                        binding.secretaryChatsNoResult.setVisibility(View.GONE);
 
-                        if (users.getUserPrimaryPhone().equals(chatList.getUserPrimaryPhone())) {
-                            mUsers.add(users);
+                        mUsers.clear();
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            String userPrimaryPhone = ds.child("UserPrimaryPhone").getValue(String.class);
+                            String userName = ds.child("UserName").getValue(String.class);
+                            int rand_int = random.nextInt(10);
+
+                            Users users = new Users();
+                            users.setUserPrimaryPhone(userPrimaryPhone);
+                            users.setUserName(userName);
+                            users.setRandom(rand_int);
+
+                            for (ChatList chatList : userList) {
+                                //Toast.makeText(context,users.getUser_ID() + "\n" + chatList.getUser_ID(),Toast.LENGTH_SHORT).show();
+
+                                if (users.getUserPrimaryPhone().equals(chatList.getUserPrimaryPhone())) {
+                                    mUsers.add(users);
+                                }
+                            }
                         }
+                        userAdapter = new DisplayChatsAdapter(SecretaryDisplayChats.this, mUsers);
+                        binding.secretaryDisplayChatsRecycler.setAdapter(userAdapter);
                     }
                 }
-                userAdapter = new DisplayChatsAdapter(SecretaryDisplayChats.this, mUsers);
-                binding.secretaryDisplayChatsRecycler.setAdapter(userAdapter);
+
             }
 
             @Override

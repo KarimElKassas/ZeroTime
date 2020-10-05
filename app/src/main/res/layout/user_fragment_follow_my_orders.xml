@@ -5,18 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ecf2fe"
+    android:background="#FFF"
     android:layout_marginBottom="@dimen/_8sdp"
     tools:context=".Fragments.FollowMyOrdersFragment">
-
+    <ImageView
+        android:id="@+id/my_orders_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/noresult"
+        android:visibility="invisible"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/followingMyOrders_fragment_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#F3F3F3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_following_order"
         android:layout_marginBottom="@dimen/_8sdp"
+        android:visibility="invisible"
         />
     <ProgressBar
         android:id="@+id/my_orders_fragment_progress"
@@ -27,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:indeterminate="true"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

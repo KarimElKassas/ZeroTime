@@ -55,6 +55,8 @@ public class History extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.historyRecycler.setLayoutManager(linearLayoutManager);
 
+        binding.myHistoryProgress.setVisibility(View.VISIBLE);
+
         preferences = getSharedPreferences("UserState", MODE_PRIVATE);
         historyPojos=new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("DeliveredOrders");
@@ -62,8 +64,25 @@ public class History extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    binding.historyRecycler.setVisibility(View.GONE);
+                    binding.myHistoryProgress.setVisibility(View.GONE);
+                    binding.myHistoryNoResult.setVisibility(View.VISIBLE);
+                }
                 if (snapshot.exists()) {
-                    if (snapshot.hasChildren()) {
+                    if (!snapshot.hasChildren()) {
+
+                        binding.historyRecycler.setVisibility(View.GONE);
+                        binding.myHistoryProgress.setVisibility(View.GONE);
+                        binding.myHistoryNoResult.setVisibility(View.VISIBLE);
+
+                    } else {
+                        binding.historyRecycler.setVisibility(View.GONE);
+                        binding.myHistoryProgress.setVisibility(View.VISIBLE);
+                        binding.myHistoryNoResult.setVisibility(View.GONE);
+
+                        historyPojos.clear();
+
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 
                             binding.myHistoryProgress.setVisibility(View.GONE);

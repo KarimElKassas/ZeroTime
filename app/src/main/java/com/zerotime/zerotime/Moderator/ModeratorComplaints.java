@@ -91,23 +91,26 @@ public class ModeratorComplaints extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.recyclerComplaints.setLayoutManager(mLayoutManager);
 
+
+        binding.complaintsFragmentProgress.setVisibility(View.VISIBLE);
         complaintsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
+                    binding.complaintsFragmentProgress.setVisibility(View.GONE);
                     binding.deleteAllComplaints.setVisibility(View.GONE);
                     binding.recyclerComplaints.setVisibility(View.GONE);
                     binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
                 }
                 if (snapshot.exists()) {
                     if (!snapshot.hasChildren()) {
-
+                        binding.complaintsFragmentProgress.setVisibility(View.GONE);
                         binding.deleteAllComplaints.setVisibility(View.GONE);
                         binding.recyclerComplaints.setVisibility(View.GONE);
                         binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
 
                     } else {
-
+                        binding.complaintsFragmentProgress.setVisibility(View.GONE);
                         binding.deleteAllComplaints.setVisibility(View.VISIBLE);
                         binding.recyclerComplaints.setVisibility(View.VISIBLE);
                         binding.moderatorComplaintNoResult.setVisibility(View.GONE);

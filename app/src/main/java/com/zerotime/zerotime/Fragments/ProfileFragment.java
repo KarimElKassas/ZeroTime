@@ -27,6 +27,8 @@ import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentProfileBinding;
 
+import java.util.Objects;
+
 public class ProfileFragment extends Fragment {
 
     UserFragmentProfileBinding binding;
@@ -125,7 +127,7 @@ public class ProfileFragment extends Fragment {
 
                     if( keyCode == KeyEvent.KEYCODE_BACK )
                     {
-                        getActivity().onBackPressed();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
 
 
                         return true;

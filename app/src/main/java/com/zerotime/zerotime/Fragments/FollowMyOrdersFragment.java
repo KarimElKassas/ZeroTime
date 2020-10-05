@@ -121,9 +121,24 @@ public class FollowMyOrdersFragment extends Fragment {
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        if (snapshot.hasChildren()) {
+                    if (!snapshot.exists()){
+                        binding.followingMyOrdersFragmentRecycler.setVisibility(View.GONE);
+                        binding.myOrdersFragmentProgress.setVisibility(View.GONE);
+                        binding.myOrdersNoResult.setVisibility(View.VISIBLE);
+                    }
 
+                    if (snapshot.exists()) {
+                        if (!snapshot.hasChildren()){
+                            binding.followingMyOrdersFragmentRecycler.setVisibility(View.GONE);
+                            binding.myOrdersFragmentProgress.setVisibility(View.GONE);
+                            binding.myOrdersNoResult.setVisibility(View.VISIBLE);
+                        }
+                        if (snapshot.hasChildren()) {
+                            binding.followingMyOrdersFragmentRecycler.setVisibility(View.GONE);
+                            binding.myOrdersFragmentProgress.setVisibility(View.VISIBLE);
+                            binding.myOrdersNoResult.setVisibility(View.GONE);
+
+                            ordersList.clear();
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                                 binding.myOrdersFragmentProgress.setVisibility(View.GONE);

@@ -109,15 +109,15 @@ public class FollowingTheOrderState extends AppCompatActivity {
         //-----------------------------------
 
 
-        Drawable progressDrawable = binding.secretaryFollowingOrdersProgress.getIndeterminateDrawable().mutate();
+        Drawable progressDrawable = binding.secretaryOrdersProgress.getIndeterminateDrawable().mutate();
         progressDrawable.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
-        binding.secretaryFollowingOrdersProgress.setProgressDrawable(progressDrawable);
+        binding.secretaryOrdersProgress.setProgressDrawable(progressDrawable);
+        binding.secretaryOrdersProgress.setVisibility(View.VISIBLE);
 
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
         LinearLayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.OrderStateRecycler.setLayoutManager(mLayoutManager);
         firstVisibleInListview = mLayoutManager.findFirstVisibleItemPosition();
-
 
         binding.OrderStateRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -157,9 +157,25 @@ public class FollowingTheOrderState extends AppCompatActivity {
         orderStateRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()){
+                    binding.secretaryOrdersProgress.setVisibility(View.GONE);
+                    binding.OrderStateRecycler.setVisibility(View.GONE);
+                    binding.secretaryFollowingOrdersNoResult.setVisibility(View.VISIBLE);
+                }
+
                 if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()){
+                        binding.secretaryOrdersProgress.setVisibility(View.GONE);
+                        binding.OrderStateRecycler.setVisibility(View.GONE);
+                        binding.secretaryFollowingOrdersNoResult.setVisibility(View.VISIBLE);
+                    }
                     if (snapshot.hasChildren()) {
+                        binding.secretaryOrdersProgress.setVisibility(View.GONE);
+                        binding.OrderStateRecycler.setVisibility(View.VISIBLE);
+                        binding.secretaryFollowingOrdersNoResult.setVisibility(View.GONE);
+
                         ordersList.clear();
+
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                             String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
@@ -216,11 +232,25 @@ public class FollowingTheOrderState extends AppCompatActivity {
         new Handler().postDelayed(() -> orderStateRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()){
+                    binding.secretaryOrdersProgress.setVisibility(View.GONE);
+                    binding.OrderStateRecycler.setVisibility(View.GONE);
+                    binding.secretaryFollowingOrdersNoResult.setVisibility(View.VISIBLE);
+                }
                 if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()){
+                        binding.secretaryOrdersProgress.setVisibility(View.GONE);
+                        binding.OrderStateRecycler.setVisibility(View.GONE);
+                        binding.secretaryFollowingOrdersNoResult.setVisibility(View.VISIBLE);
+                    }
                     if (snapshot.hasChildren()) {
+                        binding.secretaryOrdersProgress.setVisibility(View.GONE);
+                        binding.OrderStateRecycler.setVisibility(View.VISIBLE);
+                        binding.secretaryFollowingOrdersNoResult.setVisibility(View.GONE);
+
                         ordersList.clear();
+
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            //  binding.OrderStateRecycler.setVisibility(View.VISIBLE);
                             String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
                             String orderDate = dataSnapshot.child("OrderDate").getValue(String.class);
                             String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);

@@ -66,22 +66,26 @@ public class ModeratorClerksHistory extends AppCompatActivity {
         ClerksRef = FirebaseDatabase.getInstance().getReference().child("DeliveredOrders");
         clerksList = new ArrayList<>();
 
+        binding.clerkHistoryFragmentProgress.setVisibility(View.VISIBLE);
+
         ClerksRef.orderByChild("ClerkPhone1").equalTo(ClerkPhone).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (!snapshot.exists()) {
+                    binding.clerkHistoryFragmentProgress.setVisibility(View.GONE);
                     binding.recyclerClerksHistory.setVisibility(View.GONE);
                     binding.clerkHistoryNoResult.setVisibility(View.VISIBLE);
                 }
                 if (snapshot.exists()) {
                     if (!snapshot.hasChildren()) {
+                        binding.clerkHistoryFragmentProgress.setVisibility(View.GONE);
                         binding.recyclerClerksHistory.setVisibility(View.GONE);
                         binding.clerkHistoryNoResult.setVisibility(View.VISIBLE);
                     } else {
+                        binding.clerkHistoryFragmentProgress.setVisibility(View.GONE);
                         binding.recyclerClerksHistory.setVisibility(View.VISIBLE);
                         binding.clerkHistoryNoResult.setVisibility(View.GONE);
-
                         clerksList.clear();
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 

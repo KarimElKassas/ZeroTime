@@ -64,14 +64,31 @@ public class ModeratorNumberOfOrders extends AppCompatActivity {
         binding.recyclerOrdersNumber.setLayoutManager(linearLayoutManager);
         binding.recyclerOrdersNumber.setItemAnimator(new DefaultItemAnimator());
 
+        binding.numberOfOrdersFragmentProgress.setVisibility(View.VISIBLE);
+
         preferences = getSharedPreferences("UserState", MODE_PRIVATE);
         ordersNumbers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("OrdersCount");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()){
+                    binding.numberOfOrdersFragmentProgress.setVisibility(View.GONE);
+                    binding.recyclerOrdersNumber.setVisibility(View.GONE);
+                    binding.moderatorNumberOfOrdersNoResult.setVisibility(View.VISIBLE);
+                }
                 if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()){
+                        binding.numberOfOrdersFragmentProgress.setVisibility(View.GONE);
+                        binding.recyclerOrdersNumber.setVisibility(View.GONE);
+                        binding.moderatorNumberOfOrdersNoResult.setVisibility(View.VISIBLE);
+                    }
                     if (snapshot.hasChildren()) {
+                        binding.numberOfOrdersFragmentProgress.setVisibility(View.GONE);
+                        binding.recyclerOrdersNumber.setVisibility(View.VISIBLE);
+                        binding.moderatorNumberOfOrdersNoResult.setVisibility(View.GONE);
+
+                        ordersNumbers.clear();
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 
                             String userName = dataSnapshot1.child("UserName").getValue(String.class);

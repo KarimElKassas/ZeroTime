@@ -71,6 +71,7 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
 
         clerksList = new ArrayList<>();
 
+        binding.moderatorViewClerkProgress.setVisibility(View.VISIBLE);
         //Firebase Database Reference Initialization
         clerksRef = FirebaseDatabase.getInstance().getReference().child("Clerks");
         clerksRef.addValueEventListener(new ValueEventListener() {
@@ -88,14 +89,14 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
                         binding.viewClerksNoResult.setVisibility(View.VISIBLE);
                     }
                     if (snapshot.hasChildren()) {
+                        binding.moderatorViewClerkProgress.setVisibility(View.GONE);
                         binding.recycler.setVisibility(View.VISIBLE);
                         binding.viewClerksNoResult.setVisibility(View.GONE);
 
                         clerksList.clear();
 
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                            binding.moderatorViewClerkProgress.setVisibility(View.GONE);
-                            binding.recycler.setVisibility(View.VISIBLE);
+
 
                             String name = (String) dataSnapshot1.child("ClerkName").getValue();
                             String address = (String) dataSnapshot1.child("ClerkAddress").getValue();
