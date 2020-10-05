@@ -13,11 +13,11 @@
         android:id="@+id/Frame_Content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layoutDirection="ltr"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layoutDirection="ltr">
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 
@@ -26,7 +26,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFF"
+        android:background="#ecf2fe"
         android:elevation="4dp"
         android:padding="12dp"
         app:bnc_mode="spread"
@@ -50,6 +50,7 @@
             app:layout_constraintEnd_toStartOf="@id/home_bottom_nav_contact_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/home_bottom_nav_contact_item"
             android:layout_width="wrap_content"
@@ -98,7 +99,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/home_bottom_nav_personal_item"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 </androidx.constraintlayout.widget.ConstraintLayout>

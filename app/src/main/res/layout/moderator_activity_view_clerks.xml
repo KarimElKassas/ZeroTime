@@ -6,7 +6,7 @@
     android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ecf2fe"
+    android:background="#FFF"
     tools:context=".Moderator.ModeratorViewClerks">
     <ImageView
         android:id="@+id/view_clerks_no_result"

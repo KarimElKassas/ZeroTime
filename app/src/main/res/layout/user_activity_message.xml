@@ -33,7 +33,7 @@
             android:layout_marginEnd="@dimen/_6sdp"
             android:layout_marginBottom="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_6sdp"
-            android:hint="Write Your Message Here"
+            android:hint="اكتب رسالتك هنا .."
             android:padding="@dimen/_8sdp"
             android:textAlignment="textStart"
             android:textColor="@color/DarkBlue"

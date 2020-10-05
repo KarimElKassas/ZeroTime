@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ecf2fe"
+    android:background="#FFF"
     tools:context=".Moderator.ModeratorClerksHistory">
     <ImageView
         android:id="@+id/clerkHistory_no_result"

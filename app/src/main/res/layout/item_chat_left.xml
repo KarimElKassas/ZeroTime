@@ -35,6 +35,7 @@
         android:background="@drawable/background_left"
         android:padding="@dimen/_8sdp"
         android:text="Hello"
+        android:fontFamily="@font/tajwal"
         android:textColor="#FFF"
         android:textSize="@dimen/_18sdp"
         app:layout_constraintStart_toStartOf="parent"
