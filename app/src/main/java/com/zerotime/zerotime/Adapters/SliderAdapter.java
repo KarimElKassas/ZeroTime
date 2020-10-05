@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
-public class sliderAdapter extends PagerAdapter {
+import com.zerotime.zerotime.R;
+
+public class SliderAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
 
-    public sliderAdapter(Context context) {
+    public SliderAdapter(Context context) {
         this.context = context;
     }
 

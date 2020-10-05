@@ -22,7 +22,7 @@ import com.anton46.stepsview.StepsView;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.FollowingOrderSettings;
 import com.zerotime.zerotime.Secretary.Pojos.OrderState;
-import com.zerotime.zerotime.Secretary.Secretary_UserData;
+import com.zerotime.zerotime.Secretary.SecretaryUserData;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         holder.phone.setText(orderState.getPhone());
 
         holder.userData.setOnClickListener(view -> {
-            Intent intent = new Intent(context, Secretary_UserData.class);
+            Intent intent = new Intent(context, SecretaryUserData.class);
             intent.putExtra("UserPhone", orderState.getUser_Phone());
             context.startActivity(intent);
 

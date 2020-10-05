@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity android:name=".ForgotPassword.ForgotPassword" />
-        <activity android:name=".No_Internet_Connection" />
+        <activity android:name=".No_Internet_Connection" android:launchMode="singleInstance" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -55,7 +55,7 @@
         <activity android:name=".Moderator.ModeratorComplaints" android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- Secretary -->
         <activity android:name=".Secretary.SecretaryDisplayChats" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".Secretary.FollowingTheOrderState" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Secretary.Secretary_UserData" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".Secretary.SecretaryUserData" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".Secretary.FollowingOrderSettings" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".Secretary.SecretaryHome" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".Secretary.SecretaryMessage" android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- Users -->
@@ -96,7 +96,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".myBroadCast">
+        <receiver android:name=".MyBroadCast">
             <intent-filter>
                 <action
                     android:name="android.net.conn.CONNECTIVITY_CHANGE"

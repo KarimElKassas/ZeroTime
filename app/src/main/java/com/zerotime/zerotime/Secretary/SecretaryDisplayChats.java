@@ -1,11 +1,13 @@
 package com.zerotime.zerotime.Secretary;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,14 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.zerotime.zerotime.Moderator.ModeratorHome;
-import com.zerotime.zerotime.Moderator.ModeratorNumberOfOrders;
+import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.Notifications.Token;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Adapters.DisplayChatsAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.ChatList;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
 import com.zerotime.zerotime.databinding.SecretaryActivityDisplayChatsBinding;
-import com.zerotime.zerotime.myBroadCast;
+import com.zerotime.zerotime.MyBroadCast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,17 @@ public class SecretaryDisplayChats extends AppCompatActivity {
         binding = SecretaryActivityDisplayChatsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(SecretaryDisplayChats.this, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
         checkInternetConnection();
+        //-----------------------------------
         binding.secretaryDisplayChatsRecycler.setHasFixedSize(true);
         binding.secretaryDisplayChatsRecycler.setLayoutManager(new LinearLayoutManager(this));
 
@@ -163,9 +175,24 @@ public class SecretaryDisplayChats extends AppCompatActivity {
             }
         });
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
     private void checkInternetConnection() {
-        myBroadCast broadCast = new myBroadCast();
+        MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(broadCast, intentFilter);

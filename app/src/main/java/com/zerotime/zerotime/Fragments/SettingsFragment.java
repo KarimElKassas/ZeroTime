@@ -3,9 +3,14 @@ package com.zerotime.zerotime.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,8 @@ import android.widget.Toast;
 
 import com.zerotime.zerotime.BuildConfig;
 import com.zerotime.zerotime.Login;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentSettingsBinding;
 
@@ -43,6 +50,16 @@ public class SettingsFragment extends Fragment {
         view = binding.getRoot();
         context = container.getContext();
 
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(context, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity) context).finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
 
         return view;
     }
@@ -137,23 +154,35 @@ public class SettingsFragment extends Fragment {
 
         });
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(broadCast, intentFilter);
+
+    }
     @Override
     public void onResume() {
         super.onResume();
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String unique = bundle.getString("UniqueID", "Not Found");
-            Toast.makeText(context, unique, Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(context, "null bundle", Toast.LENGTH_SHORT).show();
-        /*if (getArguments() != null){
 
-            String bundle = getArguments().getString("UniqueID");
-            Toast.makeText(context, bundle, Toast.LENGTH_SHORT).show();
 
-        }else Toast.makeText(context, "Argument Null", Toast.LENGTH_SHORT).show();*/
-
-        /*try {
+        try {
 
             new Handler().postDelayed(() -> {
 
@@ -174,6 +203,6 @@ public class SettingsFragment extends Fragment {
         } catch (Exception e) {
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-        }*/
+        }
     }
 }

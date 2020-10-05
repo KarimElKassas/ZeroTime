@@ -1,11 +1,16 @@
 package com.zerotime.zerotime.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,8 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentDisplayOffersBinding;
+import com.zerotime.zerotime.MyBroadCast;
 
 import java.util.Objects;
 
@@ -29,14 +36,27 @@ public class DisplayOffersFragment extends Fragment {
 
     private DatabaseReference offersRef;
     View view;
+    Context context;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = UserFragmentDisplayOffersBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
+        context = container.getContext();
+
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(context, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity) context).finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
 
         offersRef = FirebaseDatabase.getInstance().getReference("Offers");
 
@@ -113,7 +133,29 @@ public class DisplayOffersFragment extends Fragment {
             }
         });
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(broadCast, intentFilter);
+
+    }
     @Override
     public void onResume() {
 

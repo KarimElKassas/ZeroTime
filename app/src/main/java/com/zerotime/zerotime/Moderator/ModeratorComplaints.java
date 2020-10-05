@@ -3,6 +3,8 @@ package com.zerotime.zerotime.Moderator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -15,11 +17,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.Adapters.ComplaintAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Data.UserDao;
 import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.databinding.ModeratorActivityComplaintsBinding;
-import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
 
@@ -69,7 +72,16 @@ public class ModeratorComplaints extends AppCompatActivity {
         binding.recyclerComplaints.setAdapter(adapter);
         binding.recyclerComplaints.setItemAnimator(new DefaultItemAnimator());
 
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(ModeratorComplaints.this, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
         checkInternetConnection();
+        //-----------------------------------
         //Room DB
         dataBase = Room.databaseBuilder(this, UserDataBase.class, "Complaint")
                 .allowMainThreadQueries().build();
@@ -161,18 +173,26 @@ public class ModeratorComplaints extends AppCompatActivity {
             pDialog.setCanceledOnTouchOutside(false);
             pDialog.show();
         });
-       /* binding.deleteAllComplaints.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                db.nukeTable();
-                notifyAll();
-            }
-        });*/
 
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
     private void checkInternetConnection() {
-        myBroadCast broadCast = new myBroadCast();
+        MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(broadCast, intentFilter);

@@ -3,7 +3,11 @@ package com.zerotime.zerotime.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +26,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.zerotime.zerotime.No_Internet_Connection;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentAddOrderBinding;
+import com.zerotime.zerotime.MyBroadCast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,6 +61,17 @@ public class AddOrderFragment extends Fragment {
         binding = UserFragmentAddOrderBinding.inflate(inflater,container,false);
         view = binding.getRoot();
         context = container.getContext();
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(getActivity(), No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity) context).finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
+
         //animation
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
@@ -226,7 +244,29 @@ public class AddOrderFragment extends Fragment {
         binding.addOrderMediumOrderRadioBtn.setChecked(false);
         binding.addOrderBigOrderRadioBtn.setChecked(false);
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(broadCast, intentFilter);
+
+    }
     @Override
     public void onResume() {
 
@@ -245,4 +285,6 @@ public class AddOrderFragment extends Fragment {
             return false;
         });
     }
+
+
 }

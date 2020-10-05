@@ -1,14 +1,13 @@
 package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,19 +17,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Moderator.Pojos.Clerks;
+import com.zerotime.zerotime.No_Internet_Connection;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.SecretaryActivityUserDataBinding;
-import com.zerotime.zerotime.myBroadCast;
+import com.zerotime.zerotime.MyBroadCast;
 
 import java.util.ArrayList;
 
-public class Secretary_UserData extends AppCompatActivity {
+public class SecretaryUserData extends AppCompatActivity {
     private SecretaryActivityUserDataBinding binding;
     String phone;
     private ArrayList<Clerks> UsersList;
     private DatabaseReference UserRef;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,17 @@ public class Secretary_UserData extends AppCompatActivity {
         binding = SecretaryActivityUserDataBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(SecretaryUserData.this, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
         checkInternetConnection();
+        //-----------------------------------
 
         Intent intent = getIntent();
 
@@ -75,9 +83,24 @@ public class Secretary_UserData extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
     private void checkInternetConnection(){
-        myBroadCast broadCast=new myBroadCast();
+        MyBroadCast broadCast=new MyBroadCast();
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(broadCast,intentFilter);

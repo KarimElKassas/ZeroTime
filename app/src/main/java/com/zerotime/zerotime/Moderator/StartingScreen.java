@@ -5,20 +5,18 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zerotime.zerotime.Login;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.SignUp;
 import com.zerotime.zerotime.databinding.ActivityStartingScreenBinding;
-import com.zerotime.zerotime.sliderAdapter;
+import com.zerotime.zerotime.Adapters.SliderAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 public class StartingScreen extends AppCompatActivity {
     private ActivityStartingScreenBinding binding;
-    private sliderAdapter adapter;
+    private SliderAdapter adapter;
 
     private TextView[] mDots;
     private int mCurrentPage;
@@ -29,7 +27,7 @@ public class StartingScreen extends AppCompatActivity {
         binding = ActivityStartingScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        adapter = new sliderAdapter(this);
+        adapter = new SliderAdapter(this);
         binding.viewPager.setAdapter(adapter);
         addDotsIndicator(0);
         binding.viewPager.addOnPageChangeListener(listener);

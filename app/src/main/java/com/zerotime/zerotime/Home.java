@@ -1,44 +1,31 @@
 package com.zerotime.zerotime;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import com.zerotime.zerotime.Fragments.ContactFragment;
-import com.zerotime.zerotime.Fragments.HomeFragment;
-import com.zerotime.zerotime.Fragments.ProfileFragment;
-import com.zerotime.zerotime.Fragments.SettingsFragment;
-import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.zerotime.zerotime.Fragments.AboutUsFragment;
+import com.zerotime.zerotime.Fragments.AddOrderFragment;
+import com.zerotime.zerotime.Fragments.ContactFragment;
+import com.zerotime.zerotime.Fragments.DisplayOffersFragment;
+import com.zerotime.zerotime.Fragments.HomeFragment;
+import com.zerotime.zerotime.Fragments.ProfileFragment;
+import com.zerotime.zerotime.Fragments.SettingsFragment;
+import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
+
 public class Home extends AppCompatActivity {
-    private UserActivityHomeBinding binding;
     String userId;
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
-
-            this.finish();
-            return;
-        }
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 2) {
-
-            binding.bottomNav.setCurrentActiveItem(3);
-            return;
-        }
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 1) {
-            binding.bottomNav.setCurrentActiveItem(3);
-            return;
-        }
-        if (binding.bottomNav.getCurrentActiveItemPosition() == 0) {
-            binding.bottomNav.setCurrentActiveItem(3);
-        }
-
-    }
+    private UserActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +33,17 @@ public class Home extends AppCompatActivity {
         binding = UserActivityHomeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(Home.this, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
 
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         userId = prefs.getString("isLogged", "");
@@ -95,4 +93,55 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast, intentFilter);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
+
+            this.finish();
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 2) {
+
+            binding.bottomNav.setCurrentActiveItem(3);
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 1) {
+            binding.bottomNav.setCurrentActiveItem(3);
+            return;
+        }
+        if (binding.bottomNav.getCurrentActiveItemPosition() == 0) {
+            binding.bottomNav.setCurrentActiveItem(3);
+        }
+
+    }
+
 }

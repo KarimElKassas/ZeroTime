@@ -2,6 +2,10 @@ package com.zerotime.zerotime.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -9,16 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentHomeBinding;
-
-import java.util.Objects;
+import com.zerotime.zerotime.MyBroadCast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 
 
@@ -34,6 +41,17 @@ public class HomeFragment extends Fragment {
         binding = UserFragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         context = container.getContext();
+
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(context, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity) context).finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
 
         return view;
     }
@@ -89,7 +107,29 @@ public class HomeFragment extends Fragment {
                     .commit();
         });
     }
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
 
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(broadCast, intentFilter);
+
+    }
     @Override
     public void onResume() {
 
@@ -105,7 +145,7 @@ public class HomeFragment extends Fragment {
 
                     ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
-                    getActivity().finish();
+                    Objects.requireNonNull(getActivity()).finish();
 
                     return true;
 
@@ -118,7 +158,6 @@ public class HomeFragment extends Fragment {
             Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
 
     }
 
