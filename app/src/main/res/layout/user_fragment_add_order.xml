@@ -21,6 +21,7 @@
                 android:id="@+id/addOrder_order_description_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_50sdp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +31,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="cursive"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="text"
                 android:background="@drawable/add_order_edit_text_back"
                 android:maxLines="1"
@@ -47,7 +48,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="numberDecimal"
                 android:background="@drawable/add_order_edit_text_back"
                 android:maxLines="1"/>
@@ -63,7 +64,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="text"
                 android:maxLines="1"
                 android:background="@drawable/add_order_edit_text_back"/>
@@ -81,7 +82,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="textPersonName"
                 android:background="@drawable/add_order_edit_text_back"
                 android:maxLines="1"
@@ -99,7 +100,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="phone"
                 android:background="@drawable/add_order_edit_text_back"
                 android:maxLines="1"
@@ -116,7 +117,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="phone"
                 android:background="@drawable/add_order_edit_text_back"
                 android:maxLines="1"/>
@@ -132,7 +133,7 @@
                 android:textColorHint="#005b96"
                 android:textSize="18sp"
                 android:textColor="#005b96"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/changa_medium"
                 android:inputType="text"
                 android:maxLines="1"
                 android:background="@drawable/add_order_edit_text_back"/>
@@ -146,6 +147,8 @@
                 app:layout_constraintTop_toBottomOf="@id/addOrder_receiver_address_edit_text"
                 android:layout_marginTop="@dimen/_12sdp">
                 <RadioGroup
+                    android:fontFamily="@font/changa_medium"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -155,12 +158,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:fontFamily="@font/changa_medium"
+
                         android:id="@+id/addOrder_small_order_radio_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/small"
                         android:textStyle="bold"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textColor="#005b96"
                         android:gravity="start"
                         android:layout_marginStart="@dimen/_8sdp"
@@ -168,6 +173,8 @@
                         android:buttonTint="#005b96"
                         />
                     <RadioButton
+                        android:fontFamily="@font/changa_medium"
+
                         android:id="@+id/addOrder_medium_order_radio_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -175,7 +182,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:text="@string/medium"
                         android:textStyle="bold"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textColor="#005b96"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="@dimen/_8sdp"
@@ -183,6 +190,8 @@
                         android:buttonTint="#005b96"
                         />
                     <RadioButton
+                        android:fontFamily="@font/changa_medium"
+
                         android:id="@+id/addOrder_big_order_radio_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -190,7 +199,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:text="@string/big"
                         android:textStyle="bold"
-                        android:textSize="22sp"
+                        android:textSize="@dimen/_18ssp"
                         android:textColor="#005b96"
                         android:layout_gravity="end"
                         android:layout_marginStart="@dimen/_8sdp"
@@ -212,10 +221,11 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:background="@drawable/add_order_btn_back"
                 android:textColor="#FFF"
+                android:fontFamily="@font/tajwal"
                 android:text="@string/add_order_order_button_hint"
                 android:textStyle="bold"
                 android:textAllCaps="false"
-                android:textSize="22sp"
+                android:textSize="@dimen/_18ssp"
                 />
             <FrameLayout
                 android:id="@+id/addOrder_progressBarHolder"

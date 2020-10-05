@@ -1,31 +1,13 @@
 package com.zerotime.zerotime.Moderator;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import es.dmoral.toasty.Toasty;
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,13 +17,21 @@ import com.zerotime.zerotime.Moderator.Adapters.ComplaintAdapter;
 import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Data.UserDao;
-import com.zerotime.zerotime.Room.Model.Complaint;
 import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.databinding.ModeratorActivityComplaintsBinding;
 import com.zerotime.zerotime.myBroadCast;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
 
 public class ModeratorComplaints extends AppCompatActivity {
     private ModeratorActivityComplaintsBinding binding;
@@ -92,46 +82,46 @@ public class ModeratorComplaints extends AppCompatActivity {
         complaintsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()){
+                if (!snapshot.exists()) {
                     binding.deleteAllComplaints.setVisibility(View.GONE);
                     binding.recyclerComplaints.setVisibility(View.GONE);
                     binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
                 }
-            if (snapshot.exists()){
-                if (!snapshot.hasChildren()){
+                if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()) {
 
-                    binding.deleteAllComplaints.setVisibility(View.GONE);
-                    binding.recyclerComplaints.setVisibility(View.GONE);
-                    binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
+                        binding.deleteAllComplaints.setVisibility(View.GONE);
+                        binding.recyclerComplaints.setVisibility(View.GONE);
+                        binding.moderatorComplaintNoResult.setVisibility(View.VISIBLE);
 
-                }else {
+                    } else {
 
-                    binding.deleteAllComplaints.setVisibility(View.VISIBLE);
-                    binding.recyclerComplaints.setVisibility(View.VISIBLE);
-                    binding.moderatorComplaintNoResult.setVisibility(View.GONE);
+                        binding.deleteAllComplaints.setVisibility(View.VISIBLE);
+                        binding.recyclerComplaints.setVisibility(View.VISIBLE);
+                        binding.moderatorComplaintNoResult.setVisibility(View.GONE);
 
-                    complaintList.clear();
+                        complaintList.clear();
 
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                        String complaint = dataSnapshot.child("Complaint").getValue(String.class);
-                        String complaintDate = dataSnapshot.child("ComplaintDate").getValue(String.class);
-                        String userName = dataSnapshot.child("UserName").getValue(String.class);
-                        String userPhone = dataSnapshot.child("UserPhone").getValue(String.class);
+                            String complaint = dataSnapshot.child("Complaint").getValue(String.class);
+                            String complaintDate = dataSnapshot.child("ComplaintDate").getValue(String.class);
+                            String userName = dataSnapshot.child("UserName").getValue(String.class);
+                            String userPhone = dataSnapshot.child("UserPhone").getValue(String.class);
 
-                        Complaint_Pojo complaintPojo = new Complaint_Pojo();
-                        complaintPojo.setComplaint(complaint);
-                        complaintPojo.setComplaintDate(complaintDate);
-                        complaintPojo.setUserName(userName);
-                        complaintPojo.setUserPhone(userPhone);
+                            Complaint_Pojo complaintPojo = new Complaint_Pojo();
+                            complaintPojo.setComplaint(complaint);
+                            complaintPojo.setComplaintDate(complaintDate);
+                            complaintPojo.setUserName(userName);
+                            complaintPojo.setUserPhone(userPhone);
 
-                        complaintList.add(complaintPojo);
+                            complaintList.add(complaintPojo);
 
+                        }
+                        adapter = new ComplaintAdapter(complaintList, ModeratorComplaints.this);
+                        binding.recyclerComplaints.setAdapter(adapter);
                     }
-                    adapter = new ComplaintAdapter(complaintList,ModeratorComplaints.this);
-                    binding.recyclerComplaints.setAdapter(adapter);
                 }
-            }
             }
 
             @Override
@@ -153,12 +143,12 @@ public class ModeratorComplaints extends AppCompatActivity {
                         complaintsRef.removeValue().addOnSuccessListener(aVoid -> {
                             complaintList.clear();
                             adapter.notifyDataSetChanged();
-                            Toasty.success(getApplicationContext(),"تم الحذف بنجاح",Toasty.LENGTH_SHORT,true).show();
+                            Toasty.success(getApplicationContext(), "تم الحذف بنجاح", Toasty.LENGTH_SHORT, true).show();
                             sweetAlertDialog.cancel();
 
                         }).addOnFailureListener(e -> {
 
-                            Toasty.error(getApplicationContext(),"لقد حدث خطأ ما برجاء المحاولة لاحقاً",Toasty.LENGTH_SHORT,true).show();
+                            Toasty.error(getApplicationContext(), "لقد حدث خطأ ما برجاء المحاولة لاحقاً", Toasty.LENGTH_SHORT, true).show();
                             sweetAlertDialog.cancel();
                         });
                     })

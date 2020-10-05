@@ -45,7 +45,8 @@ public class FollowMyOrdersFragment extends Fragment {
     Context context;
     View view;
     Query query;
-
+    private static int firstVisibleInListview;
+    int currentFirstVisible;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,7 +83,12 @@ public class FollowMyOrdersFragment extends Fragment {
 
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                     isScrolling = false;
-                    fetchData();
+                    //fetchData();
+                    if (!(currentFirstVisible > firstVisibleInListview)) {
+                        binding.myOrdersFragmentProgress.setVisibility(View.INVISIBLE);
+                    } else
+                        fetchData();
+                    firstVisibleInListview = currentFirstVisible;
 
                 }
 

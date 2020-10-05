@@ -1,6 +1,5 @@
 package com.zerotime.zerotime.Secretary.Adapters;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,23 +9,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
+import com.zerotime.zerotime.image_dialog;
+
+import java.util.List;
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-
-import java.util.List;
-import java.util.Objects;
-
 public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessageAdapter.MessageViewHolder> {
     public static final int msgTypeLeft = 0;
     public static final int msgTypeRight = 1;
     Context context;
-    Dialog imageDialog;
+    image_dialog imageDialog;
     private List<SecretaryChatPojo> secretaryChatPojos;
 
     public SecretaryMessageAdapter(Context context, List<SecretaryChatPojo> secretaryChatPojos) {
@@ -50,6 +50,7 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         SecretaryChatPojo mchat = secretaryChatPojos.get(position);
+        imageDialog = new image_dialog();
         if (mchat.getType().equals("Text")) {
             holder.showMessage.setText(mchat.getMessage());
         } else {
@@ -59,38 +60,29 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
                     .load(mchat.getMessage())
                     .into(holder.showMessageImage);
 
+
             holder.showMessageImage.setOnClickListener(view -> {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                final AlertDialog dialog = builder.create();
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialogLayout = inflater.inflate(R.layout.dialog_chat_image, null);
-                dialog.setView(dialogLayout);
 
-                dialog.requestWindowFeature(Window.DECOR_CAPTION_SHADE_DARK);
+                View dialoglayout = inflater.inflate(R.layout.dialog_chat_image, null);
 
-                ImageView image = dialogLayout.findViewById(R.id.dialog_chat_image_imageView);
+                builder.setView(dialoglayout);
+
+                ImageView image = dialoglayout.findViewById(R.id.dialog_chat_image_imageView);
                 try {
                     Objects.requireNonNull(image).setImageDrawable(holder.showMessageImage.getDrawable());
 
                 } catch (Exception e) {
                     Toast.makeText(context, "catch\n" + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+                builder.show();
 
-                dialog.show();
 
-               /* dialog.setOnShowListener((DialogInterface.OnShowListener) d -> {
-                    Toast.makeText(context, "on show", Toast.LENGTH_SHORT).show();
-                    ImageView image = (ImageView) dialog.findViewById(R.id.dialog_chat_image_imageView);
-                    if (image == null){
-                        Toast.makeText(context, "null image", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(context, "not null image", Toast.LENGTH_SHORT).show();
-                        image.setImageDrawable(holder.showMessageImage.getDrawable());
-                    }
-                });*/
             });
+
+
         }
         if (position == secretaryChatPojos.size() - 1) {
 

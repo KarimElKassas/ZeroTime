@@ -30,7 +30,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAdapter.FollowingOrderViewHolder> {
     private List<OrderState> ordersList;
-
     private Context context;
     String[] steps = {"   لم يتم \n الإستلام", "     تم \n الإستلام", "   جاري \n التوصيل", "     تم \n التوصيل"};
     Dialog clerksDialog;
@@ -38,7 +37,6 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
     public FollowingOrderAdapter(List<OrderState> ordersList, Context context) {
         this.ordersList = ordersList;
         this.context = context;
-        setHasStableIds(true);
     }
 
     @NonNull
@@ -48,16 +46,6 @@ public class FollowingOrderAdapter extends RecyclerView.Adapter<FollowingOrderAd
         clerksDialog.setContentView(R.layout.dialog_clercks);
 
         return new FollowingOrderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_following_order, parent, false));
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
     }
 
     @SuppressLint("PrivateResource")

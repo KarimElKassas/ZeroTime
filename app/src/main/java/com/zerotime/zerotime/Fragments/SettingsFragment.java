@@ -4,19 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.zerotime.zerotime.BuildConfig;
 import com.zerotime.zerotime.Login;
@@ -25,6 +18,11 @@ import com.zerotime.zerotime.databinding.UserFragmentSettingsBinding;
 
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -72,6 +70,21 @@ public class SettingsFragment extends Fragment {
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         });
+
+
+        // Rate app
+        binding.SettingsRateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + context.getPackageName());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Unable to open \n"+e.getMessage(), Toast.LENGTH_SHORT).show();                }
+            }
+        });
+
 
         // share app btn
         binding.SettingsShareAppBtn.setOnClickListener(view -> {
@@ -132,7 +145,7 @@ public class SettingsFragment extends Fragment {
         if (bundle != null) {
             String unique = bundle.getString("UniqueID", "Not Found");
             Toast.makeText(context, unique, Toast.LENGTH_SHORT).show();
-        }else Toast.makeText(context, "null bundle", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(context, "null bundle", Toast.LENGTH_SHORT).show();
         /*if (getArguments() != null){
 
             String bundle = getArguments().getString("UniqueID");

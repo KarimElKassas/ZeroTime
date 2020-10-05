@@ -1,4 +1,5 @@
 package com.zerotime.zerotime.Secretary;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AbsListView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,14 +25,17 @@ import com.zerotime.zerotime.Secretary.Adapters.FollowingOrderAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.OrderState;
 import com.zerotime.zerotime.databinding.SecretaryActivityFollowingTheOrderStateBinding;
 import com.zerotime.zerotime.myBroadCast;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 public class FollowingTheOrderState extends AppCompatActivity {
     private SecretaryActivityFollowingTheOrderStateBinding binding;
     private FollowingOrderAdapter adapter;
@@ -38,6 +43,9 @@ public class FollowingTheOrderState extends AppCompatActivity {
     private boolean isScrolling = false;
     private int currentItems, totalItems, scrollOutItems;
     DatabaseReference orderStateRef;
+    private static int firstVisibleInListview;
+    int currentFirstVisible;
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -77,6 +85,7 @@ public class FollowingTheOrderState extends AppCompatActivity {
         recyclerView.scheduleLayoutAnimation();
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +97,13 @@ public class FollowingTheOrderState extends AppCompatActivity {
         Drawable progressDrawable = binding.secretaryFollowingOrdersProgress.getIndeterminateDrawable().mutate();
         progressDrawable.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
         binding.secretaryFollowingOrdersProgress.setProgressDrawable(progressDrawable);
+
         binding.OrderStateRecycler.setLayoutManager(new LinearLayoutManager(this));
         LinearLayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         binding.OrderStateRecycler.setLayoutManager(mLayoutManager);
+        firstVisibleInListview = mLayoutManager.findFirstVisibleItemPosition();
+
+
         binding.OrderStateRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -100,22 +113,31 @@ public class FollowingTheOrderState extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                currentFirstVisible = mLayoutManager.findFirstVisibleItemPosition();
                 currentItems = mLayoutManager.getChildCount();
                 totalItems = mLayoutManager.getItemCount();
                 scrollOutItems = mLayoutManager.findFirstVisibleItemPosition();
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                     isScrolling = false;
-                    fetchData();
+                    //  fetchData();
+
+                    if (!(currentFirstVisible > firstVisibleInListview)) {
+                        binding.secretaryFollowingOrdersProgress.setVisibility(View.INVISIBLE);
+                    } else
+                        fetchData();
+                    firstVisibleInListview = currentFirstVisible;
+
                 }
             }
         });
 
+
         binding.OrderStateRecycler.setItemAnimator(new DefaultItemAnimator());
         ordersList = new ArrayList<>();
-
         orderStateRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
         orderStateRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,69 +183,74 @@ public class FollowingTheOrderState extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+        // fetchData();
+
+
     }
+
+
     private void fetchData() {
+
         binding.secretaryFollowingOrdersProgress.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(() -> orderStateRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void run() {
-                orderStateRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            if (snapshot.hasChildren()) {
-                                ordersList.clear();
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    //  binding.OrderStateRecycler.setVisibility(View.VISIBLE);
-                                    String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
-                                    String orderDate = dataSnapshot.child("OrderDate").getValue(String.class);
-                                    String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);
-                                    String receiverName = dataSnapshot.child("ReceiverName").getValue(String.class);
-                                    String OrderState = dataSnapshot.child("OrderState").getValue(String.class);
-                                    String receiverAddress = dataSnapshot.child("ReceiverAddress").getValue(String.class);
-                                    String receiverPrimaryPhone = dataSnapshot.child("ReceiverPrimaryPhone").getValue(String.class);
-                                    String userPrimaryPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.hasChildren()) {
+                        ordersList.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            //  binding.OrderStateRecycler.setVisibility(View.VISIBLE);
+                            String orderDescription = dataSnapshot.child("OrderDescription").getValue(String.class);
+                            String orderDate = dataSnapshot.child("OrderDate").getValue(String.class);
+                            String orderPrice = dataSnapshot.child("OrderPrice").getValue(String.class);
+                            String receiverName = dataSnapshot.child("ReceiverName").getValue(String.class);
+                            String OrderState = dataSnapshot.child("OrderState").getValue(String.class);
+                            String receiverAddress = dataSnapshot.child("ReceiverAddress").getValue(String.class);
+                            String receiverPrimaryPhone = dataSnapshot.child("ReceiverPrimaryPhone").getValue(String.class);
+                            String userPrimaryPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
 
-                                    OrderState orderState = new OrderState();
-                                    orderState.setDescription(orderDescription);
-                                    orderState.setDate(orderDate);
-                                    orderState.setPrice(orderPrice);
-                                    orderState.setName(receiverName);
-                                    orderState.setAddress(receiverAddress);
-                                    orderState.setPhone(receiverPrimaryPhone);
-                                    orderState.setUser_Phone(userPrimaryPhone);
-                                    assert OrderState != null;
-                                    if (OrderState.equals("لم يتم الاستلام"))
-                                        orderState.setCurrentState(0);
-                                    if (OrderState.equals("تم الاستلام"))
-                                        orderState.setCurrentState(1);
-                                    if (OrderState.equals("جارى التوصيل"))
-                                        orderState.setCurrentState(2);
-                                    if (OrderState.equals("تم التوصيل"))
-                                        orderState.setCurrentState(3);
+                            OrderState orderState = new OrderState();
+                            orderState.setDescription(orderDescription);
+                            orderState.setDate(orderDate);
+                            orderState.setPrice(orderPrice);
+                            orderState.setName(receiverName);
+                            orderState.setAddress(receiverAddress);
+                            orderState.setPhone(receiverPrimaryPhone);
+                            orderState.setUser_Phone(userPrimaryPhone);
 
-                                    ordersList.add(orderState);
+                            assert OrderState != null;
+                            if (OrderState.equals("لم يتم الاستلام"))
+                                orderState.setCurrentState(0);
+                            if (OrderState.equals("تم الاستلام"))
+                                orderState.setCurrentState(1);
+                            if (OrderState.equals("جارى التوصيل"))
+                                orderState.setCurrentState(2);
+                            if (OrderState.equals("تم التوصيل"))
+                                orderState.setCurrentState(3);
 
-                                }
-                                adapter.notifyDataSetChanged();
-                                binding.secretaryFollowingOrdersProgress.setVisibility(View.GONE);
+                            ordersList.add(orderState);
 
-                            }
                         }
+                        adapter.notifyDataSetChanged();
+                        binding.secretaryFollowingOrdersProgress.setVisibility(View.INVISIBLE);
+                    }
+                }
 
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
             }
-        }, 3000);
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        }), 3000);
 
     }
+
     private void checkInternetConnection() {
         myBroadCast broadCast = new myBroadCast();
         IntentFilter intentFilter = new IntentFilter();
