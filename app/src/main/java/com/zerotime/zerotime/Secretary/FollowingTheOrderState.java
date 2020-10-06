@@ -138,7 +138,6 @@ public class FollowingTheOrderState extends AppCompatActivity {
                 scrollOutItems = mLayoutManager.findFirstVisibleItemPosition();
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                     isScrolling = false;
-                    //  fetchData();
 
                     if (!(currentFirstVisible > firstVisibleInListview)) {
                         binding.secretaryFollowingOrdersProgress.setVisibility(View.INVISIBLE);
@@ -220,7 +219,6 @@ public class FollowingTheOrderState extends AppCompatActivity {
             }
         });
 
-        // fetchData();
 
 
     }

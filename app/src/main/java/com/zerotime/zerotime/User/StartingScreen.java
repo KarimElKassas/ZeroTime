@@ -1,15 +1,15 @@
-package com.zerotime.zerotime.Moderator;
+package com.zerotime.zerotime.User;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zerotime.zerotime.Login;
+import com.zerotime.zerotime.Adapters.SliderAdapter;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivityStartingScreenBinding;
-import com.zerotime.zerotime.Adapters.SliderAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -32,17 +32,9 @@ public class StartingScreen extends AppCompatActivity {
         addDotsIndicator(0);
         binding.viewPager.addOnPageChangeListener(listener);
 
-        binding.nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.viewPager.setCurrentItem(mCurrentPage+1);
-            }
-        }); binding.backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.viewPager.setCurrentItem(mCurrentPage-1);
-            }
-        });
+        binding.nextBtn.setOnClickListener(view12 -> binding.viewPager.setCurrentItem(mCurrentPage+1));
+
+        binding.backBtn.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(mCurrentPage-1));
     }
 
     public void addDotsIndicator(int position) {
@@ -71,6 +63,7 @@ public class StartingScreen extends AppCompatActivity {
 
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onPageSelected(int position) {
             addDotsIndicator(position);
@@ -85,17 +78,14 @@ public class StartingScreen extends AppCompatActivity {
 
             } else if (position == mDots.length - 1) {
                 binding.nextBtn.setEnabled(true);
-                binding.backBtn.setEnabled(true);
-                binding.backBtn.setVisibility(View.VISIBLE);
+                binding.backBtn.setEnabled(false);
+                binding.backBtn.setVisibility(View.INVISIBLE);
 
                 binding.nextBtn.setText("Finish");
-                binding.backBtn.setText("Back");
-                binding.nextBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(StartingScreen.this, Login.class);
-                        startActivity(intent);
-                    }
+                binding.nextBtn.setOnClickListener(view -> {
+                    Intent intent=new Intent(StartingScreen.this, Login.class);
+                    startActivity(intent);
+                    finish();
                 });
 
             }

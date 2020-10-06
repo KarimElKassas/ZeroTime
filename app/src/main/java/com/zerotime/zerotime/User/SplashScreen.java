@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.User;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +13,14 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.zerotime.zerotime.Moderator.StartingScreen;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivitySplashScreenBinding;
 
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
     SharedPreferences prefs;
@@ -26,6 +28,12 @@ public class SplashScreen extends AppCompatActivity {
     private ActivitySplashScreenBinding binding;
     private AlphaAnimation inAnimation = new AlphaAnimation(0f, 2f);
     private AlphaAnimation outAnimation = new AlphaAnimation(2f, 0f);
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +59,7 @@ public class SplashScreen extends AppCompatActivity {
                 Intent i = new Intent(SplashScreen.this, No_Internet_Connection.class);
                 //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("UniqueID","SplashScreen");
+                i.putExtra("UniqueID", "SplashScreen");
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,10 +14,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
-import com.zerotime.zerotime.image_dialog;
 
 import java.util.List;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -29,7 +26,6 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
     public static final int msgTypeLeft = 0;
     public static final int msgTypeRight = 1;
     Context context;
-    image_dialog imageDialog;
     private List<SecretaryChatPojo> secretaryChatPojos;
 
     public SecretaryMessageAdapter(Context context, List<SecretaryChatPojo> secretaryChatPojos) {
@@ -53,7 +49,6 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         SecretaryChatPojo mchat = secretaryChatPojos.get(position);
-        imageDialog = new image_dialog();
         if (mchat.getType().equals("Text")) {
             holder.showMessage.setText(mchat.getMessage());
         } else {

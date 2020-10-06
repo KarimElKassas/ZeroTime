@@ -10,13 +10,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.zerotime.zerotime.Home;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ModeratorActivityAddClerckBinding;
@@ -133,7 +132,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
             }
             //Clerk Vehicle Validation
             if (!binding.radioHave.isChecked() && !binding.radioDonthave.isChecked()) {
-                Toast.makeText(this, "من فضلك اخبرنا إن كنت تمتلك طياره ام لا ", Toast.LENGTH_SHORT).show();
+                Toasty.warning(this, "من فضلك اخبرنا إن كنت تمتلك طياره ام لا ", Toasty.LENGTH_SHORT,true).show();
                 return;
             } else {
                 if (binding.radioHave.isChecked()) hasVehicle = "يمتلك طياره";

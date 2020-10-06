@@ -44,7 +44,7 @@ public class SetNewPassword extends AppCompatActivity {
 
     private void validateData() {
         //password Validation
-        if (TextUtils.isEmpty(binding.newpassword1.getText().toString().trim())) {
+        if (TextUtils.isEmpty(Objects.requireNonNull(binding.newpassword1.getText()).toString().trim())) {
             binding.newpassword1.setError(" من فضلك ادخل كلمه المرور الجديده !");
             binding.newpassword1.requestFocus();
             return;
@@ -74,6 +74,7 @@ public class SetNewPassword extends AppCompatActivity {
         String phone = getIntent().getStringExtra("phoneNo");
         // update data in firebase
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        assert phone != null;
         reference.child(phone).child("UserPassword").setValue(newPassword);
         startActivity(new Intent(getApplicationContext(), forgotPasswordSuccess.class));
         finish();

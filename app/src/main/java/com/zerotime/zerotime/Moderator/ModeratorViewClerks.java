@@ -61,7 +61,6 @@ public class ModeratorViewClerks extends AppCompatActivity implements RecyclerIt
             finish();
         }
         checkInternetConnection();
-        //-----------------------------------
 
         //recycler view initialization
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));

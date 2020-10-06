@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -146,7 +146,7 @@ public class UpdateUserDataFragment extends Fragment {
         String primaryPhone = binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString();
         String secondaryPhone = binding.updateDataFragmentSecondaryPhoneEditTxt.getText().toString();
         if (primaryPhone.equals(secondaryPhone)) {
-            Toast.makeText(getContext(), "من فضلك ادخل رقمين مختلفين !", Toast.LENGTH_SHORT).show();
+            Toasty.warning(getContext(), "من فضلك ادخل رقمين مختلفين !", Toasty.LENGTH_SHORT,true).show();
             return;
         }
         //User Address Validation
@@ -184,7 +184,7 @@ public class UpdateUserDataFragment extends Fragment {
                                     binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
                                     Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                                    Toasty.success(context, "تم تعديل البيانات بنجاح", Toast.LENGTH_SHORT, true).show();
+                                    Toasty.success(context, "تم تعديل البيانات بنجاح", Toasty.LENGTH_SHORT, true).show();
                                 } else {
                                     //clear progress bar
                                     binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);

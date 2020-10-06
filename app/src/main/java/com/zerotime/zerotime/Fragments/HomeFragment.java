@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
     UserFragmentHomeBinding binding;
     Context context;
     View view;
-    private boolean isFirstBackPressed = false;
 
 
     @Override
@@ -153,9 +152,6 @@ public class HomeFragment extends Fragment {
                             Objects.requireNonNull(getActivity()).onBackPressed();
 
 
-                            //((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-                            //Objects.requireNonNull(getActivity()).finish();
 
                             return true;
 
@@ -168,7 +164,6 @@ public class HomeFragment extends Fragment {
 
 
         } catch (Exception e) {
-            Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 

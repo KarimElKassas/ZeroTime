@@ -80,6 +80,7 @@ public class ClerkAdapter extends RecyclerView.Adapter<ClerkAdapter.ClerkViewHol
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + clerks.getPhone1()));
                 context.startActivity(intent);
+
             }
         });
 

@@ -91,18 +91,18 @@
             android:name=".Secretary.SecretaryMessage"
             android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- Users -->
         <activity
-            android:name=".Login"
+            android:name=".User.Login"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".SignUp"
+            android:name=".User.SignUp"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Home"
+            android:name=".User.Home"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Message" />
-        <activity android:name=".Moderator.StartingScreen" />
-        <activity android:name=".History" /> <!-- Global -->
-        <activity android:name=".SplashScreen">
+        <activity android:name=".User.StartingScreen" />
+        <activity android:name=".User.History" /> <!-- Global -->
+        <activity android:name=".User.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

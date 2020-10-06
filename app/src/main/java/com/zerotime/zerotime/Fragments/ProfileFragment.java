@@ -21,7 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.zerotime.zerotime.History;
+import com.zerotime.zerotime.User.History;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -138,7 +138,6 @@ public class ProfileFragment extends Fragment {
 
             }, 1000000);
         }catch (Exception e){
-            Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }

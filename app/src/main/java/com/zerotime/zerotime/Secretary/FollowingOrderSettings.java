@@ -3,6 +3,7 @@ package com.zerotime.zerotime.Secretary;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import es.dmoral.toasty.Toasty;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +14,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Home;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.SecretaryActivityFollowingOrderSettingsBinding;
@@ -134,7 +133,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                 case "لم يتم الاستلام":
                                     binding.FollowingOrderSettingSelectClerk.setEnabled(false);
                                     String[] states = {"تم الإستلام", "جارى التوصيل", "تم التوصيل"};
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(FollowingOrderSettings.this,
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(FollowingOrderSettings.this,
                                             android.R.layout.simple_spinner_item, states);
                                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     binding.FollowingOrderSettingSelectState.setAdapter(adapter);
@@ -164,7 +163,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                 case "تم الاستلام":
                                     binding.FollowingOrderSettingSelectClerk.setEnabled(true);
                                     String[] states2 = {"جارى التوصيل", "تم التوصيل"};
-                                    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(FollowingOrderSettings.this,
+                                    ArrayAdapter<String> adapter2 = new ArrayAdapter<>(FollowingOrderSettings.this,
                                             android.R.layout.simple_spinner_item, states2);
                                     adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     binding.FollowingOrderSettingSelectState.setAdapter(adapter2);
@@ -190,7 +189,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                     break;
                                 case "جارى التوصيل":
                                     String[] states3 = {"تم التوصيل"};
-                                    ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(FollowingOrderSettings.this,
+                                    ArrayAdapter<String> adapter3 = new ArrayAdapter<>(FollowingOrderSettings.this,
                                             android.R.layout.simple_spinner_item, states3);
                                     adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     binding.FollowingOrderSettingSelectState.setAdapter(adapter3);
@@ -217,12 +216,11 @@ public class FollowingOrderSettings extends AppCompatActivity {
                             }
 
                         }
-                        Toast.makeText(FollowingOrderSettings.this, currentOrderState, Toast.LENGTH_SHORT).show();
                     } else
-                        Toast.makeText(getApplicationContext(), "No Children Found", Toast.LENGTH_SHORT).show();
+                        Toasty.warning(getApplicationContext(), "No Children Found", Toasty.LENGTH_SHORT,true).show();
 
                 } else
-                    Toast.makeText(getApplicationContext(), "Snapshot not Found", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "Snapshot not Found", Toasty.LENGTH_SHORT,true).show();
 
             }
 
@@ -269,12 +267,12 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                 orderRef.child(currentOrderUnique).child("OrderState").setValue(currentOrderNewState)
                                         .addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "تم تحديث حالة الاوردر", Toast.LENGTH_SHORT).show();
+                                                Toasty.success(getApplicationContext(), "تم تحديث حالة الاوردر", Toasty.LENGTH_SHORT,true).show();
                                                 Intent intent = new Intent(FollowingOrderSettings.this, FollowingTheOrderState.class);
                                                 startActivity(intent);
                                                 finish();
                                             } else {
-                                                Toast.makeText(getApplicationContext(), "فشل تحديث الاوردر", Toast.LENGTH_SHORT).show();
+                                                Toasty.error(getApplicationContext(), "فشل تحديث الاوردر", Toasty.LENGTH_SHORT,true).show();
                                             }
                                         });
                             } else if (currentOrderNewState.equals("جارى التوصيل")) {
@@ -324,13 +322,11 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                                                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                                                                     userName = dataSnapshot.child("UserName").getValue(String.class);
                                                                     orderCountMap.put("UserName", userName);
-                                                                    Toast.makeText(FollowingOrderSettings.this, ""+userName, Toast.LENGTH_SHORT).show();
                                                                     orderCountMap.put("OrdersCount", deliveredOrdersCount);
                                                                     deliveredOrdersCountRef.child(userPrimaryPhone).setValue(orderCountMap);
                                                                     Intent intent = new Intent(FollowingOrderSettings.this, FollowingTheOrderState.class);
                                                                     startActivity(intent);
                                                                     finish();
-                                                                    Toast.makeText(getApplicationContext(), "Delivered Order Ref Done", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -347,7 +343,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
 
 
                                             } else
-                                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toasty.error(getApplicationContext(), task.getException().getMessage(), Toasty.LENGTH_SHORT,true).show();
                                         }));
                             }
 
@@ -362,7 +358,6 @@ public class FollowingOrderSettings extends AppCompatActivity {
 
 
             } else {
-                Toast.makeText(this, "new state null", Toast.LENGTH_SHORT).show();
             }
         });
     }

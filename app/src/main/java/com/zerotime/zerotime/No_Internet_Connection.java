@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zerotime.zerotime.User.SplashScreen;
 import com.zerotime.zerotime.databinding.ActivityNoInternetConnectionBinding;
 
 import es.dmoral.toasty.Toasty;
@@ -72,11 +73,7 @@ public class No_Internet_Connection extends AppCompatActivity {
         startActivity(intent);
         int pid = android.os.Process.myPid();
         android.os.Process.killProcess(pid);
-        /*android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);*/
-        /*moveTaskToBack(true);
-        finishAffinity();
-        finish();*/
+
 
     }
 

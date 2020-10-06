@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.User;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -25,6 +24,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.ForgotPassword.ForgotPassword;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Room.Data.UserDao;
 import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.Secretary.SecretaryHome;

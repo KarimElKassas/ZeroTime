@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:background="#ecf2fe"
-    tools:context=".SignUp">
+    tools:context=".User.SignUp">
 
     <ScrollView
         android:id="@+id/scroll_layout"

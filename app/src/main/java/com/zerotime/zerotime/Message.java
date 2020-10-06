@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +31,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.zerotime.zerotime.Adapters.MessageAdapter;
 import com.zerotime.zerotime.Interfaces.ApiService;
-import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
 import com.zerotime.zerotime.Notifications.Client;
 import com.zerotime.zerotime.Notifications.Data;
 import com.zerotime.zerotime.Notifications.MyResponse;
@@ -45,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,7 +118,7 @@ public class Message extends AppCompatActivity {
                     }
 
                 } else
-                    Toast.makeText(Message.this, "You Cant't Sent Empty Message!!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Message.this, "You Cant't Sent Empty Message!!", Toasty.LENGTH_SHORT,true).show();
                 binding.secretaryMessageWriteMSGEdt.setText("");
 
             }
@@ -154,7 +154,7 @@ public class Message extends AppCompatActivity {
                             if (response.code() == 200) {
                                 assert response.body() != null;
                                 if (response.body().success != 1) {
-                                    Toast.makeText(Message.this, "Failed !", Toast.LENGTH_SHORT).show();
+                                    Toasty.error(Message.this, "Failed !", Toasty.LENGTH_SHORT,true).show();
                                 }
                             }
                         }

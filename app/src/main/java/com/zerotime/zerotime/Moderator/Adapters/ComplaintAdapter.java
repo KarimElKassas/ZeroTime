@@ -6,16 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.Moderator.Pojos.Complaint_Pojo;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Room.Model.Complaint;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ClerkViewHolder> {
     private List<Complaint_Pojo> complaints = new ArrayList<>();
@@ -25,6 +23,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Cler
         this.complaints = complaintList;
         this.context = context;
     }
+
     @NonNull
     @Override
     public ClerkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

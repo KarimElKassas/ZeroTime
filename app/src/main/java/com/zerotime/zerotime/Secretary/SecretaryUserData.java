@@ -2,7 +2,6 @@ package com.zerotime.zerotime.Secretary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,26 +9,21 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.Pojos.Clerks;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.SecretaryActivityUserDataBinding;
 import com.zerotime.zerotime.MyBroadCast;
 
-import java.util.ArrayList;
 
 public class SecretaryUserData extends AppCompatActivity {
     private SecretaryActivityUserDataBinding binding;
     String phone;
-    private ArrayList<Clerks> UsersList;
     private DatabaseReference UserRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +47,6 @@ public class SecretaryUserData extends AppCompatActivity {
         phone = intent.getStringExtra("UserPhone");
 
         UserRef = FirebaseDatabase.getInstance().getReference("Users");
-        UsersList = new ArrayList<>();
 
         UserRef.child(phone).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,5 +99,4 @@ public class SecretaryUserData extends AppCompatActivity {
         registerReceiver(broadCast,intentFilter);
 
     }
-
 }

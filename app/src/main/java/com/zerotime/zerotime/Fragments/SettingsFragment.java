@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zerotime.zerotime.BuildConfig;
-import com.zerotime.zerotime.Login;
+import com.zerotime.zerotime.User.Login;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -68,12 +68,6 @@ public class SettingsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String unique = bundle.getString("UniqueID", "Not Found");
-            Toast.makeText(context, unique, Toast.LENGTH_SHORT).show();
-        }
-
         //Complaints Button
         binding.SettingsComplainsCard.setOnClickListener(view1 -> {
             FragmentManager fragmentManager = getFragmentManager();
@@ -97,6 +91,8 @@ public class SettingsFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 try {
                     startActivity(intent);
+                    ((Activity) context).finish();
+
                 } catch (Exception e) {
                     Toast.makeText(context, "Unable to open \n"+e.getMessage(), Toast.LENGTH_SHORT).show();                }
             }
@@ -114,8 +110,9 @@ public class SettingsFragment extends Fragment {
                 shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(shareIntent, "choose one"));
+                ((Activity) context).finish();
+
             } catch (Exception e) {
-                //e.toString();
             }
 
 
@@ -127,7 +124,6 @@ public class SettingsFragment extends Fragment {
             SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
             pDialog.
                     setTitleText("هل انت متأكد ؟")
-                    //.setContentText("هل تريد تسجيل الخروج ؟")
                     .setConfirmText("نعم ، متأكد")
 
                     .setConfirmClickListener(sweetAlertDialog -> {
@@ -203,7 +199,6 @@ public class SettingsFragment extends Fragment {
 
             }, 1000000);
         }catch (Exception e){
-            Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }

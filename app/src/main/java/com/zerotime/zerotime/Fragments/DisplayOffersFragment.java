@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,8 +37,7 @@ public class DisplayOffersFragment extends Fragment {
     private DatabaseReference offersRef;
     View view;
     Context context;
-    AlphaAnimation inAnimation;
-    AlphaAnimation outAnimation;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.User;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +10,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
+import es.dmoral.toasty.Toasty;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 
 import java.util.HashMap;
@@ -31,7 +32,6 @@ public class SignUp extends AppCompatActivity {
 
     private DatabaseReference usersRef;
 
-    private String userToken = "";
     private HashMap<String, Object> usersMap;
 
 
@@ -48,7 +48,6 @@ public class SignUp extends AppCompatActivity {
         //Check Internet State
         if (!haveNetworkConnection()) {
             Intent i = new Intent(SignUp.this, No_Internet_Connection.class);
-            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("UniqueID","SignUp");
             startActivity(i);
@@ -165,25 +164,22 @@ public class SignUp extends AppCompatActivity {
         usersMap.put("UserId", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
         usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
-                .setValue(usersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    //clear progress bar
-                    binding.signUpProgressBarHolder.setAnimation(outAnimation);
-                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
+                .setValue(usersMap).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        //clear progress bar
+                        binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                        binding.signUpProgressBarHolder.setVisibility(View.GONE);
 
-                    Toast.makeText(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toast.LENGTH_SHORT).show();
-                    SignUp.this.goToLogin();
-                } else {
-                    //clear progress bar
-                    binding.signUpProgressBarHolder.setAnimation(outAnimation);
-                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
+                        Toasty.success(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toasty.LENGTH_SHORT,true).show();
+                        SignUp.this.goToLogin();
+                    } else {
+                        //clear progress bar
+                        binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                        binding.signUpProgressBarHolder.setVisibility(View.GONE);
 
-                    Toast.makeText(SignUp.this.getApplicationContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                        Toasty.error(SignUp.this.getApplicationContext(), Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Toasty.LENGTH_SHORT,true).show();
+                    }
+                });
 
 
     }
@@ -193,6 +189,7 @@ public class SignUp extends AppCompatActivity {
         boolean haveConnectedMobile = false;
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
         for (NetworkInfo ni : netInfo) {
             if (ni.getTypeName().equalsIgnoreCase("WIFI"))
@@ -268,7 +265,6 @@ public class SignUp extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        finish();
+        this.finish();
     }
 }

@@ -9,15 +9,15 @@ import android.widget.TextView;
 import com.zerotime.zerotime.Moderator.Pojos.Clerk_History;
 import com.zerotime.zerotime.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapter.ClerkViewHolder> {
-    private List<Clerk_History> clerk_histories;
     Context context;
+    private List<Clerk_History> clerk_histories;
+
     public ClerkHistoryAdapter(List<Clerk_History> clerk_histories, Context context) {
         this.clerk_histories = clerk_histories;
         this.context = context;
@@ -48,12 +48,12 @@ public class ClerkHistoryAdapter extends RecyclerView.Adapter<ClerkHistoryAdapte
     }
 
     public void setList(List<Clerk_History> histories) {
-        this.clerk_histories =  histories;
+        this.clerk_histories = histories;
         notifyDataSetChanged();
     }
 
     public static class ClerkViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, description, price,size,ReceiverAddress,ReceiverPhone, date;
+        private TextView name, description, price, size, ReceiverAddress, ReceiverPhone, date;
 
         public ClerkViewHolder(@NonNull View itemView) {
             super(itemView);

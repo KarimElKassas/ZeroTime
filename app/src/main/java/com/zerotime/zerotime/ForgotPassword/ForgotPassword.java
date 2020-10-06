@@ -5,13 +5,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.databinding.ActivityForgotPasswordBinding;
@@ -41,7 +39,6 @@ public class ForgotPassword extends AppCompatActivity {
             validateData();
 
         });
-
 
     }
 
@@ -87,12 +84,8 @@ public class ForgotPassword extends AppCompatActivity {
         binding.forgetProgress.setVisibility(View.VISIBLE);
         phone_number = Objects.requireNonNull(binding.forgotPhoneEdt.getText()).toString();
         phone_number2 = Objects.requireNonNull(binding.forgotPhone2Edt.getText()).toString();
-        Toast.makeText(this, "1"+phone_number2, Toast.LENGTH_SHORT).show();
 
         //check weather user exist or not in DB
-        Query checkUser = FirebaseDatabase.getInstance().getReference("Users").orderByChild("UserPrimaryPhone")
-                .equalTo(phone_number);
-
         DatabaseReference user = FirebaseDatabase.getInstance().getReference("Users");
         user.child(phone_number).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -100,7 +93,6 @@ public class ForgotPassword extends AppCompatActivity {
                 if (snapshot.exists()){
                     if (snapshot.hasChildren()){
                         phone2 = snapshot.child("UserSecondaryPhone").getValue(String.class);
-                        Toast.makeText(getApplicationContext(), "2"+phone2, Toast.LENGTH_SHORT).show();
 
                         assert phone2 != null;
                         if (!phone2.equals(phone_number2)) {

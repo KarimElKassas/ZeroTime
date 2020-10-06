@@ -150,7 +150,6 @@ public class ModeratorAddOffer extends AppCompatActivity {
                     }else {
                         offersRef.child("Offers").child("FirstOffer")
                                 .setValue(Objects.requireNonNull(binding.moderatorAddOfferFirstFixedOfferEditText.getText()).toString());
-                       // binding.moderatorAddOfferFirstFixedOfferEditText.getText().clear();
                     }
                     //Second Offer
                     if (TextUtils.isEmpty(binding.moderatorAddOfferSecondFixedOfferEditText.getText())){
@@ -166,7 +165,6 @@ public class ModeratorAddOffer extends AppCompatActivity {
                     }else {
                         offersRef.child("Offers").child("ThirdOffer")
                                 .setValue(Objects.requireNonNull(binding.moderatorAddOfferThirdFixedOfferEditText.getText()).toString());
-                      //  binding.moderatorAddOfferThirdFixedOfferEditText.getText().clear();
                     }
                     //Fourth Offer
                     if (TextUtils.isEmpty(binding.moderatorAddOfferFourthFixedOfferEditText.getText())){
@@ -174,7 +172,6 @@ public class ModeratorAddOffer extends AppCompatActivity {
                     }else {
                         offersRef.child("Offers").child("FourthOffer")
                                 .setValue(Objects.requireNonNull(binding.moderatorAddOfferFourthFixedOfferEditText.getText()).toString());
-                       // binding.moderatorAddOfferFourthFixedOfferEditText.getText().clear();
                     }
                     //Fifth Offer
                     if (TextUtils.isEmpty(binding.moderatorAddOfferFifthFixedOfferEditText.getText())){
@@ -182,7 +179,6 @@ public class ModeratorAddOffer extends AppCompatActivity {
                     }else {
                         offersRef.child("Offers").child("FifthOffer")
                                 .setValue(Objects.requireNonNull(binding.moderatorAddOfferFifthFixedOfferEditText.getText()).toString());
-                      //  binding.moderatorAddOfferFifthFixedOfferEditText.getText().clear();
                     }
                     //Sixth Offer
                     if (TextUtils.isEmpty(binding.moderatorAddOfferSixthFixedOfferEditText.getText())){
@@ -190,7 +186,6 @@ public class ModeratorAddOffer extends AppCompatActivity {
                     }else {
                         offersRef.child("Offers").child("SixthOffer")
                                 .setValue(Objects.requireNonNull(binding.moderatorAddOfferSixthFixedOfferEditText.getText()).toString());
-                       // binding.moderatorAddOfferSixthFixedOfferEditText.getText().clear();
                     }
                 }
             }
@@ -201,14 +196,7 @@ public class ModeratorAddOffer extends AppCompatActivity {
             }
         });
     }
-    private void clearTools(){
-        Objects.requireNonNull(binding.moderatorAddOfferFirstFixedOfferEditText.getText()).clear();
-        Objects.requireNonNull(binding.moderatorAddOfferSecondFixedOfferEditText.getText()).clear();
-        Objects.requireNonNull(binding.moderatorAddOfferThirdFixedOfferEditText.getText()).clear();
-        Objects.requireNonNull(binding.moderatorAddOfferFourthFixedOfferEditText.getText()).clear();
-        Objects.requireNonNull(binding.moderatorAddOfferFifthFixedOfferEditText.getText()).clear();
-        Objects.requireNonNull(binding.moderatorAddOfferSixthFixedOfferEditText.getText()).clear();
-    }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;

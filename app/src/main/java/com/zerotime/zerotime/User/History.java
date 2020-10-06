@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.Adapters.HistoryAdapter;
-import com.zerotime.zerotime.Moderator.ModeratorViewClerks;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.Pojos.HistoryPojo;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserActivityHistoryBinding;
 
 import java.util.ArrayList;

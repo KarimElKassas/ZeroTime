@@ -110,10 +110,6 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       /* mGoogleMap = googleMap;
-        mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
-        mGoogleMap.addMarker(new MarkerOptions().position(29.9721261, 30.9435154));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(*//*some location*//*, 10));*/
 
         mMap = googleMap;
         LatLng sydney = new LatLng(30.1195601, 31.3677548);

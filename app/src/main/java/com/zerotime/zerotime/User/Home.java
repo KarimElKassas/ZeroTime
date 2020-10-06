@@ -1,4 +1,4 @@
-package com.zerotime.zerotime;
+package com.zerotime.zerotime.User;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +9,7 @@ import com.zerotime.zerotime.Fragments.ContactFragment;
 import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
 import com.zerotime.zerotime.Fragments.SettingsFragment;
+import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
 
 import androidx.appcompat.app.AppCompatActivity;

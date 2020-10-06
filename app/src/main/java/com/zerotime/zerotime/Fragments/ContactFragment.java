@@ -12,13 +12,13 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import es.dmoral.toasty.Toasty;
 
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.zerotime.zerotime.Message;
 import com.zerotime.zerotime.MyBroadCast;
@@ -67,11 +67,15 @@ public class ContactFragment extends Fragment {
             intent.putExtra("UserID", prefs.getString("isLogged", ""));
             intent.putExtra("UniqueID", "ContactFragment");
             startActivity(intent);
+            ((Activity) context).finish();
+
         });
         binding.goToCallCard.setOnClickListener(view1 -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + "01017268676"));
             context.startActivity(intent);
+            ((Activity) context).finish();
+
         });
         binding.goToMailCard.setOnClickListener(view1 -> {
             Intent i = new Intent(Intent.ACTION_SEND);
@@ -82,7 +86,7 @@ public class ContactFragment extends Fragment {
             try {
                 startActivity(Intent.createChooser(i, "Send mail..."));
             } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                Toasty.error(context, "لا يوجد ايميل مسجل علي هذا الهاتف !", Toasty.LENGTH_SHORT,true).show();
             }
         });
     }
@@ -132,8 +136,6 @@ public class ContactFragment extends Fragment {
 
             }, 1000000);
         }catch (Exception e){
-            Toast.makeText(context, "Try Catch", Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 }

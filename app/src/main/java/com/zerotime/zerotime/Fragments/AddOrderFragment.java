@@ -83,8 +83,7 @@ public class AddOrderFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // Getting User Phone
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
-        userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
-
+        userPhone = prefs.getString("isLogged", "No phone defined");
         ordersRef = FirebaseDatabase.getInstance().getReference("PendingOrders");
         deliveredOrdersCountRef = FirebaseDatabase.getInstance().getReference("OrdersCount");
         deliveredOrdersRef = FirebaseDatabase.getInstance().getReference("DeliveredOrders");

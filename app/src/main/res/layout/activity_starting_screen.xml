@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint"
     android:layout_width="match_parent"
-    android:background="#ecf2fe"
+    android:background="#FFF"
+    android:padding="@dimen/_8sdp"
 
     android:layout_height="match_parent"
-    tools:context=".Moderator.StartingScreen">
+    tools:context=".User.StartingScreen">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
+        android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/dotLayout"

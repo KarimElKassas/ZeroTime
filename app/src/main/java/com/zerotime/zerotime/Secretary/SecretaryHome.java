@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Login;
+import com.zerotime.zerotime.User.Login;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
@@ -31,7 +31,6 @@ public class SecretaryHome extends AppCompatActivity {
     private SecretaryActivityHomeBinding binding;
     private DatabaseReference chatRef;
     public int notificationID;
-    NotificationManager notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

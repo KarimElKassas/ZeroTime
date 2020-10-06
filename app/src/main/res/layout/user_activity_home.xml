@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="#ecf2fe"
     android:layoutDirection="ltr"
-    tools:context=".Home">
+    tools:context=".User.Home">
 
     <FrameLayout
         android:id="@+id/Frame_Content"

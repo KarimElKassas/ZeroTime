@@ -42,7 +42,6 @@ public class ModeratorComplaints extends AppCompatActivity {
     private DatabaseReference complaintsRef;
     // Room DB
     UserDao db;
-    int ctr = 0;
     UserDataBase dataBase;
     ComplaintAdapter adapter;
 
