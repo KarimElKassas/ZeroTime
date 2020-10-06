@@ -7,13 +7,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +22,10 @@ import com.zerotime.zerotime.Secretary.SecretaryMessage;
 
 import java.util.List;
 
-import static com.zerotime.zerotime.R.drawable.avatar1;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapter.ViewHolder> {
     private Context context;
@@ -92,6 +90,11 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
 
         lastMessage(user.getUserPrimaryPhone(), holder.lastMsg);
 
+        if (holder.lastMsg.getText().toString().startsWith("https://firebasestorage")){
+            holder.lastMsg.setText("( صورة )");
+            Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
+        }
+
         holder.chatCard.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, SecretaryMessage.class);
@@ -149,7 +152,11 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
                 } else {
                     if (secretaryChatPojo.getType().equals("Text")) {
                         last_msg.setText(theLastMessage);
-                    } else last_msg.setText("Picture");
+
+                    } else last_msg.setText("صورة");
+
+
+
                 }
 
                 theLastMessage = "default";

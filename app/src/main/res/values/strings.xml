@@ -32,4 +32,5 @@
     <string name="profile_update_data_text">تعديل بياناتك</string>
     <string name="profile_previous_orders_text">الطلبات السابقة</string>
     <string name="profile_follow_orders_text">متابعة الطلبات</string>
+    <string name="enterPhoneNumber">ادخل رقم هاتفك</string>
 </resources>

@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.ForgotPassword.ForgotPassword;
 import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.Room.Data.UserDao;
 import com.zerotime.zerotime.Room.UserDataBase;
@@ -81,7 +83,21 @@ public class Login extends AppCompatActivity {
         binding.loginLoginBtn.setOnClickListener(view1 -> checkData());
         //Return To Sign Up
         binding.loginSignUpTextView.setOnClickListener(view12 -> goToSignUp());
+
+    binding.ForgotPassword.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent=new Intent(Login.this, ForgotPassword.class);
+            startActivity(intent);
+        }
+    });
+
+
+
     }
+
+
+
 
     private void checkData() {
         //Moderator Case
@@ -129,7 +145,7 @@ public class Login extends AppCompatActivity {
             return;
         }
         if (Objects.requireNonNull(binding.loginUserPasswordEditTxt.getText()).length() < 8) {
-            binding.loginUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من 8 حروف او ارقام !");
+            binding.loginUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من 7 حروف او ارقام !");
             binding.loginUserPasswordEditTxt.requestFocus();
             return;
         }

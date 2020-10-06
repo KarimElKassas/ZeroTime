@@ -58,6 +58,7 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
             holder.showMessageImageCard.setVisibility(View.VISIBLE);
             Glide.with(context.getApplicationContext())
                     .load(mchat.getMessage())
+                    .placeholder(R.drawable.avatar1)
                     .into(holder.showMessageImage);
 
 

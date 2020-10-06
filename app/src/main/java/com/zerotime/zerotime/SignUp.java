@@ -67,11 +67,11 @@ public class SignUp extends AppCompatActivity {
         animation();
 
         //get user token id
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+        /*FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 userToken = Objects.requireNonNull(task.getResult()).getToken();
             }
-        });
+        });*/
         //Sign In Text
         binding.signUpLoginTextView.setOnClickListener(view1 -> goToLogin());
         //Sign Up Button
@@ -161,7 +161,7 @@ public class SignUp extends AppCompatActivity {
         usersMap.put("UserSecondaryPhone", Objects.requireNonNull(binding.signUpUserSecondaryPhoneEditTxt.getText()).toString());
         usersMap.put("UserPassword", Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).toString());
         usersMap.put("UserAddress", Objects.requireNonNull(binding.signUpUserAddressEditTxt.getText()).toString());
-        usersMap.put("UserToken", userToken);
+        //usersMap.put("UserToken", userToken);
         usersMap.put("UserId", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
         usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())

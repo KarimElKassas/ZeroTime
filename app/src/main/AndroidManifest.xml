@@ -24,17 +24,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-
-        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/newlogo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/newlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".ForgotPassword.forgotPasswordSuccess"></activity>
+        <activity android:name=".ForgotPassword.SetNewPassword" />
         <activity android:name=".ForgotPassword.ForgotPassword" />
-        <activity android:name=".No_Internet_Connection" android:launchMode="singleInstance" />
+        <activity
+            android:name=".No_Internet_Connection"
+            android:launchMode="singleInstance" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -46,19 +49,45 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" /> <!-- Moderator -->
-        <activity android:name=".Moderator.ModeratorAddOffer" android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Moderator.ModeratorNumberOfOrders" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Moderator.ModeratorAddClerk" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Moderator.ModeratorClerksHistory" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Moderator.ModeratorViewClerks" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Moderator.ModeratorHome" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Moderator.ModeratorComplaints" android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- Secretary -->
-        <activity android:name=".Secretary.SecretaryDisplayChats" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Secretary.FollowingTheOrderState" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Secretary.SecretaryUserData" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Secretary.FollowingOrderSettings" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Secretary.SecretaryHome" android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Secretary.SecretaryMessage" android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- Users -->
+        <activity
+            android:name=".Moderator.ModeratorAddOffer"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Moderator.ModeratorNumberOfOrders"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Moderator.ModeratorAddClerk"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Moderator.ModeratorClerksHistory"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Moderator.ModeratorViewClerks"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Moderator.ModeratorHome"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Moderator.ModeratorComplaints"
+            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- Secretary -->
+        <activity
+            android:name=".Secretary.SecretaryDisplayChats"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Secretary.FollowingTheOrderState"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Secretary.SecretaryUserData"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Secretary.FollowingOrderSettings"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Secretary.SecretaryHome"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Secretary.SecretaryMessage"
+            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- Users -->
         <activity
             android:name=".Login"
             android:windowSoftInputMode="stateHidden|adjustResize" />

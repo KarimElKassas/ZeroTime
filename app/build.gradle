@@ -78,10 +78,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.9.7'
+
+
 // auto fit
     implementation 'me.grantland:autofittextview:0.2.1'
 
-
+// otp pin view design
+    implementation'com.chaos.view:pinview:1.4.3'
 
     //expandable text view
     implementation 'com.ms-square:expandableTextView:0.1.4'
