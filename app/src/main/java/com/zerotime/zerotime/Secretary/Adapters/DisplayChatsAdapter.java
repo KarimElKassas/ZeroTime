@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -148,8 +149,12 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
                     last_msg.setText("لا توجد رسائل");
                 } else {
                     if (secretaryChatPojo.getType().equals("Text")) {
+                        if (theLastMessage.startsWith("https://firebasestorage")){
+                            last_msg.setText("صورة");
+                            return;
+                        }
                         last_msg.setText(theLastMessage);
-                    } else last_msg.setText("Picture");
+                    } else last_msg.setText("صورة");
                 }
 
                 theLastMessage = "default";

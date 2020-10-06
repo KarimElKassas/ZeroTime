@@ -25,7 +25,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_first_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -44,14 +44,15 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="16sp"/>
+                        android:fontFamily="@font/changa_medium"
+                        android:textColor="@color/DarkBlue"
+                        android:textSize="@dimen/_12ssp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_second_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/display_offers_fragment_first_card"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,14 +72,15 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="16sp"/>
+                        android:fontFamily="@font/changa_medium"
+                        android:textColor="@color/DarkBlue"
+                        android:textSize="@dimen/_12ssp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_third_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/display_offers_fragment_second_card"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -98,14 +100,15 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="16sp"/>
+                        android:fontFamily="@font/changa_medium"
+                        android:textColor="@color/DarkBlue"
+                        android:textSize="@dimen/_12ssp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_fourth_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/display_offers_fragment_third_card"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -125,14 +128,15 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="16sp"/>
+                        android:fontFamily="@font/changa_medium"
+                        android:textColor="@color/DarkBlue"
+                        android:textSize="@dimen/_12ssp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_fifth_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/display_offers_fragment_fourth_card"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -152,14 +156,15 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="16sp"/>
+                        android:fontFamily="@font/changa_medium"
+                        android:textColor="@color/DarkBlue"
+                        android:textSize="@dimen/_12ssp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_sixth_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_135sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/display_offers_fragment_fifth_card"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -179,20 +184,44 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:textStyle="bold"
-                        android:textColor="#000"
-                        android:textSize="16sp"/>
+                        android:fontFamily="@font/changa_medium"
+                        android:textColor="@color/DarkBlue"
+                        android:textSize="@dimen/_12ssp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <ImageView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/offers_no_result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/noresult"
-        android:visibility="invisible"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible">
+        <ImageView
+            android:id="@+id/offers_no_result_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/noresult"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/offers_no_result_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/DarkBlue"
+            android:textStyle="bold"
+            android:textSize="@dimen/_24ssp"
+            android:text="لا يوجد عروض"
+            android:fontFamily="@font/tajwal"
+            app:layout_constraintTop_toBottomOf="@id/offers_no_result_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ProgressBar
         android:id="@+id/display_offers_fragment_progress"
         style="?android:attr/progressBarStyleLarge"

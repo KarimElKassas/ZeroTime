@@ -75,7 +75,7 @@ public class SettingsFragment extends Fragment {
         }
 
         //Complaints Button
-        binding.SettingsComplainsBtn.setOnClickListener(view1 -> {
+        binding.SettingsComplainsCard.setOnClickListener(view1 -> {
             FragmentManager fragmentManager = getFragmentManager();
             ComplaintsFragment fragment = new ComplaintsFragment();
             assert fragmentManager != null;
@@ -90,7 +90,7 @@ public class SettingsFragment extends Fragment {
 
 
         // Rate app
-        binding.SettingsRateBtn.setOnClickListener(new View.OnClickListener() {
+        binding.SettingsRateCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + context.getPackageName());
@@ -104,7 +104,7 @@ public class SettingsFragment extends Fragment {
 
 
         // share app btn
-        binding.SettingsShareAppBtn.setOnClickListener(view -> {
+        binding.SettingsShareAppCard.setOnClickListener(view -> {
 
             try {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -123,7 +123,7 @@ public class SettingsFragment extends Fragment {
 
 
         //Log Out Button
-        binding.SettingsLogoutBtn.setOnClickListener(view1 -> {
+        binding.SettingsLogoutCard.setOnClickListener(view1 -> {
             SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
             pDialog.
                     setTitleText("هل انت متأكد ؟")

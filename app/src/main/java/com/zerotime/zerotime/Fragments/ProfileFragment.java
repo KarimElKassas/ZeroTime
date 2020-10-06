@@ -58,14 +58,14 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.profileOrdersHistoryBtn.setOnClickListener(view -> {
+        binding.profileOrdersHistoryCard.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), History.class);
             startActivity(intent);
             ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
 
 
-        binding.profileUpdateUserDataBtn.setOnClickListener(view1 -> {
+        binding.profileUpdateUserDataCard.setOnClickListener(view1 -> {
             FragmentManager fragmentManager = getFragmentManager();
             UpdateUserDataFragment fragment = new UpdateUserDataFragment();
             assert fragmentManager != null;
@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment {
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         });
-        binding.profileOrderProgressBtn.setOnClickListener(view1 -> {
+        binding.profileOrderProgressCard.setOnClickListener(view1 -> {
             FragmentManager fragmentManager = getFragmentManager();
             FollowMyOrdersFragment fragment = new FollowMyOrdersFragment();
             assert fragmentManager != null;

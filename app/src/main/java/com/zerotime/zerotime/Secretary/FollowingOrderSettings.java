@@ -198,7 +198,7 @@ public class FollowingOrderSettings extends AppCompatActivity {
                                         @Override
                                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                                             if (position == 0) {
-                                                binding.FollowingOrderSettingSelectClerk.setEnabled(true);
+                                                binding.FollowingOrderSettingSelectClerk.setEnabled(false);
 
                                                 currentOrderNewState = "تم التوصيل";
                                             }

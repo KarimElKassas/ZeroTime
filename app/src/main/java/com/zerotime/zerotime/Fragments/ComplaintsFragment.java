@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +41,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
@@ -56,7 +56,6 @@ public class ComplaintsFragment extends Fragment {
     HashMap<String, String> complaintMap;
     Context context;
     View view;
-    // Room DB
     UserDao userDao;
     String name;
     SharedPreferences preferences;
@@ -65,6 +64,7 @@ public class ComplaintsFragment extends Fragment {
     AlphaAnimation outAnimation;
     private UserFragmentComplaintsBinding binding;
     private DatabaseReference usersRef, complaintsRef;
+    SweetAlertDialog pDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -72,6 +72,14 @@ public class ComplaintsFragment extends Fragment {
         binding = UserFragmentComplaintsBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
         context = container.getContext();
+
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         // Check Internet State
         if (!haveNetworkConnection()) {
@@ -85,10 +93,11 @@ public class ComplaintsFragment extends Fragment {
         //-----------------------------------
 
         //Room DB
-        userDao = Room.databaseBuilder(context, UserDataBase.class, "Complaint").allowMainThreadQueries().addMigrations(MIGRATION_1_2)
+        userDao = Room.databaseBuilder(context, UserDataBase.class, "Complaint")
+                .allowMainThreadQueries().addMigrations(MIGRATION_1_2)
                 .build().getUserDao();
 
-
+        //Firebase
         preferences = context.getSharedPreferences("UserState", MODE_PRIVATE);
         userPhone = preferences.getString("isLogged", "");
 
@@ -100,16 +109,13 @@ public class ComplaintsFragment extends Fragment {
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
 
-
-        return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onResume() {
+        super.onResume();
 
-
-
+        //Send Complaint Button
         binding.complaintsFragmentSendComplaintBtn.setOnClickListener(view1 -> {
 
             if (TextUtils.isEmpty(binding.complaintsFragmentComplaintEditText.getText())) {
@@ -117,115 +123,97 @@ public class ComplaintsFragment extends Fragment {
                 binding.complaintsFragmentComplaintEditText.requestFocus();
 
             } else {
-                //Progress Bar
-                binding.complaintProgressBarHolder.setAnimation(inAnimation);
-                binding.complaintProgressBarHolder.setVisibility(View.VISIBLE);
-                ((Activity) context).getWindow().setFlags(
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
-                String currentTime = df.format(Calendar.getInstance().getTime());
+                pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+                pDialog.setTitleText("هل انت متأكد ؟")
+                        .setConfirmText("نعم")
+                        .setConfirmClickListener(view5 -> {
+                            pDialog.cancel();
+                            //Progress Bar
+                            binding.complaintProgressBarHolder.setAnimation(inAnimation);
+                            binding.complaintProgressBarHolder.setVisibility(View.VISIBLE);
+                            ((Activity) context).getWindow().setFlags(
+                                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                usersRef.child(userPhone).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        name = snapshot.child("UserName").getValue(String.class);
-                        complaintMap.put("UserName", name);
-                        complaintMap.put("UserPhone", userPhone);
-                        complaintMap.put("ComplaintDate", currentTime);
-                        complaintMap.put("Complaint", Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString());
+                            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
+                            String currentTime = df.format(Calendar.getInstance().getTime());
 
-                        complaintsRef.child(currentTime).setValue(complaintMap)
-                                .addOnSuccessListener(aVoid -> {
-                                    //clear progress bar
-                                    binding.complaintProgressBarHolder.setAnimation(outAnimation);
-                                    binding.complaintProgressBarHolder.setVisibility(View.GONE);
-                                    ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            usersRef.child(userPhone).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    name = snapshot.child("UserName").getValue(String.class);
+                                    complaintMap.put("UserName", name);
+                                    complaintMap.put("UserPhone", userPhone);
+                                    complaintMap.put("ComplaintDate", currentTime);
+                                    complaintMap.put("Complaint", Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString());
 
-                                    Toasty.success(context,
-                                            "تم ارسال الشكوى بنجاح سوف نرد عليك قريباً",
-                                            Toasty.LENGTH_LONG,
-                                            true).show();
-                                    binding.complaintsFragmentComplaintEditText.setText("");
+                                    complaintsRef.child(currentTime).setValue(complaintMap)
+                                            .addOnSuccessListener(aVoid -> {
+                                                //clear progress bar
+                                                binding.complaintProgressBarHolder.setAnimation(outAnimation);
+                                                binding.complaintProgressBarHolder.setVisibility(View.GONE);
+                                                ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                                }).addOnFailureListener(e -> {
-                            //clear progress bar
-                            binding.complaintProgressBarHolder.setAnimation(outAnimation);
-                            binding.complaintProgressBarHolder.setVisibility(View.GONE);
-                            ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                                Toasty.success(context,
+                                                        "تم ارسال الشكوى بنجاح سوف نرد عليك قريباً",
+                                                        Toasty.LENGTH_LONG,
+                                                        true).show();
+                                                binding.complaintsFragmentComplaintEditText.setText("");
 
-                            Toasty.error(context,
-                                    "لقد حدث خطأ ما برجاء المحاولة لاحقاً",
-                                    Toasty.LENGTH_SHORT,
-                                    true).show();
-                        });
+                                            }).addOnFailureListener(e -> {
+                                        //clear progress bar
+                                        binding.complaintProgressBarHolder.setAnimation(outAnimation);
+                                        binding.complaintProgressBarHolder.setVisibility(View.GONE);
+                                        ((Activity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                        userComplaint = Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString();
-                        Complaint complaint = new Complaint(userPhone, userComplaint, currentTime, name);
-                        userDao.insertComplaint(complaint).subscribeOn(Schedulers.computation())
-                                .subscribe(new CompletableObserver() {
-                                    @Override
-                                    public void onSubscribe(Disposable d) {
+                                        Toasty.error(context,
+                                                "لقد حدث خطأ ما برجاء المحاولة لاحقاً",
+                                                Toasty.LENGTH_SHORT,
+                                                true).show();
+                                    });
 
-                                    }
+                                    userComplaint = Objects.requireNonNull(binding.complaintsFragmentComplaintEditText.getText()).toString();
+                                    Complaint complaint = new Complaint(userPhone, userComplaint, currentTime, name);
+                                    userDao.insertComplaint(complaint).subscribeOn(Schedulers.computation())
+                                            .subscribe(new CompletableObserver() {
+                                                @Override
+                                                public void onSubscribe(Disposable d) {
 
-                                    @Override
-                                    public void onComplete() {
+                                                }
 
-                                    }
+                                                @Override
+                                                public void onComplete() {
 
-                                    @Override
-                                    public void onError(Throwable e) {
+                                                }
 
-                                    }
-                                });
+                                                @Override
+                                                public void onError(Throwable e) {
+
+                                                }
+                                            });
 
 
-                    }
+                                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                                }
+                            });
 
+                        })
+                        .setCancelText("التراجع")
+                        .setCancelClickListener(view5 -> pDialog.cancel());
+
+
+                pDialog.setCancelable(false);
+                pDialog.setCanceledOnTouchOutside(false);
+                pDialog.show();
 
             }
         });
 
-        Bundle bundle = new Bundle();
-        bundle.putString("UniqueID", "ComplaintsFragment");
-        SettingsFragment fragment = new SettingsFragment();
-        fragment.setArguments(bundle);
-
-    }
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
-    }
-    private void checkInternetConnection() {
-        MyBroadCast broadCast = new MyBroadCast();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        context.registerReceiver(broadCast, intentFilter);
-
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
@@ -245,12 +233,28 @@ public class ComplaintsFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Bundle bundle = new Bundle();
-        bundle.putString("UniqueID", "ComplaintsFragment");
-        SettingsFragment fragment = new SettingsFragment();
-        fragment.setArguments(bundle);
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        context.registerReceiver(broadCast, intentFilter);
+
     }
 }

@@ -13,70 +13,165 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <ScrollView
+            android:id="@+id/scroll_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="#ecf2fe"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            android:scrollbars="none"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <ScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_8sdp"
+                    android:padding="@dimen/_8sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <Button
-                        android:id="@+id/profile_update_user_data_btn"
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:layout_margin="@dimen/_16sdp"
-                        android:background="@drawable/btn_back_red"
-                        android:fontFamily="@font/tajwal"
-                        android:text="@string/profile_update_data_text"
-                        android:textColor="#FFF"
-                        android:textSize="@dimen/_18ssp"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/profile_update_user_data_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/_8sdp"
+                        android:theme="@style/Theme.MaterialComponents.Light"
+                        app:cardCornerRadius="@dimen/_12sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <Button
-                        android:id="@+id/profile_orders_history_btn"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#F2CA0B">
 
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:layout_margin="@dimen/_16sdp"
-                        android:background="@drawable/btn_back_red"
-                        android:fontFamily="@font/tajwal"
-                        android:text="@string/profile_previous_orders_text"
-                        android:textColor="#FFF"
-                        android:textSize="@dimen/_18ssp"
+                            <TextView
+                                android:id="@+id/card1_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginEnd="@dimen/_12sdp"
+                                android:fontFamily="@font/tajwal"
+                                android:text="تعديل بياناتك"
+                                android:textColor="#000"
+                                android:textSize="@dimen/_20ssp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_8sdp"
+                                android:src="@drawable/delivery_man_add_order"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/profile_order_progress_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/_8sdp"
+                        android:theme="@style/Theme.MaterialComponents.Light"
+                        app:cardCornerRadius="@dimen/_12sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_update_user_data_btn" />
+                        app:layout_constraintTop_toBottomOf="@id/profile_update_user_data_card">
 
-                    <Button
-                        android:id="@+id/profile_order_progress_btn"
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:layout_margin="@dimen/_16sdp"
-                        android:background="@drawable/btn_back_red"
-                        android:fontFamily="@font/tajwal"
-                        android:text="@string/profile_follow_orders_text"
-                        android:textColor="#FFF"
-                        android:textSize="@dimen/_18ssp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#242424">
+
+                            <TextView
+                                android:id="@+id/card2_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_12sdp"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:fontFamily="@font/tajwal"
+                                android:text="متابعة الطلبات"
+                                android:textColor="#FFF"
+                                android:textSize="@dimen/_20ssp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_8sdp"
+                                android:src="@drawable/delivery_man_add_order"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/profile_orders_history_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/_8sdp"
+                        android:theme="@style/Theme.MaterialComponents.Light"
+                        app:cardCornerRadius="@dimen/_12sdp"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_orders_history_btn" />
+                        app:layout_constraintTop_toBottomOf="@id/profile_order_progress_card">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#4354AE">
+
+                            <TextView
+                                android:id="@+id/card3_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:layout_marginEnd="@dimen/_12sdp"
+                                android:fontFamily="@font/tajwal"
+                                android:text="الطلبات السابقة"
+                                android:textColor="#FFF"
+                                android:textSize="@dimen/_20ssp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/_8sdp"
+                                android:src="@drawable/delivery_man_add_order"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
