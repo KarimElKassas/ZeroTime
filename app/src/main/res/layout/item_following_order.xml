@@ -113,7 +113,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_address"
+                            android:src="@drawable/ic_outline_location_on_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -175,7 +175,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_baseline_call_24"
+                            android:src="@drawable/ic_phone_icon"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -237,7 +237,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_address"
+                            android:src="@drawable/ic_outline_info_blue"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -299,7 +299,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_address"
+                            android:src="@drawable/currency_ic"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

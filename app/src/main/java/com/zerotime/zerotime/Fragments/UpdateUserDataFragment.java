@@ -8,11 +8,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,19 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -41,6 +34,9 @@ import com.zerotime.zerotime.databinding.UserFragmentUpdateUserDataBinding;
 import java.util.HashMap;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import es.dmoral.toasty.Toasty;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -48,15 +44,16 @@ public class UpdateUserDataFragment extends Fragment {
 
     UserFragmentUpdateUserDataBinding binding;
     DatabaseReference usersRef;
-    HashMap<String,Object> usersMap;
+    HashMap<String, Object> usersMap;
 
     String userPhone;
-    String userToken;
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
     View view;
     Context context;
+    SweetAlertDialog pDialog;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,43 +62,11 @@ public class UpdateUserDataFragment extends Fragment {
         view = binding.getRoot();
         context = container.getContext();
 
-        // Check Internet State
-        if (!haveNetworkConnection()) {
-            Intent i = new Intent(context, No_Internet_Connection.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            ((Activity) context).finish();
-        }
-        checkInternetConnection();
-        //-----------------------------------
-
-        usersMap = new HashMap<>();
-        binding.updateDataFragmentPrimaryPhoneEditTxt.setEnabled(false);
-        //animation
-        inAnimation = new AlphaAnimation(0f,2f);
-        outAnimation = new AlphaAnimation(2f,0f);
-
-
-        usersRef = FirebaseDatabase.getInstance().getReference("Users");
-        SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
-        userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
-
-        //get Token ID
-        //get user token id
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if (task.isSuccessful()){
-                    userToken = Objects.requireNonNull(task.getResult()).getToken();
-                }
-            }
-        });
-
 
 
         return view;
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -118,6 +83,7 @@ public class UpdateUserDataFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -194,37 +160,49 @@ public class UpdateUserDataFragment extends Fragment {
     }
 
     private void updateData() {
-        //Progress Bar
-        binding.updateDataFragmentProgressBarHolder.setAnimation(inAnimation);
-        binding.updateDataFragmentProgressBarHolder.setVisibility(View.VISIBLE);
-        Objects.requireNonNull(getActivity()).getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-        usersRef.child(userPhone).child("UserName").setValue(Objects.requireNonNull(binding.updateDataFragmentNameEditTxt.getText()).toString());
-        usersRef.child(userPhone).child("UserPassword").setValue(Objects.requireNonNull(binding.updateDataFragmentPasswordEditTxt.getText()).toString());
-        usersRef.child(userPhone).child("UserSecondaryPhone").setValue(Objects.requireNonNull(binding.updateDataFragmentSecondaryPhoneEditTxt.getText()).toString());
-        usersRef.child(userPhone).child("UserAddress").setValue(Objects.requireNonNull(binding.updateDataFragmentAddressEditTxt.getText()).toString())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            //clear progress bar
-                            binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
-                            binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
-                            Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        pDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+        pDialog.setTitleText("هل تريد تعديل البيانات ؟")
+                .setConfirmText("نعم")
+                .setConfirmClickListener(view -> {
+                    pDialog.cancel();
+                    //Progress Bar
+                    binding.updateDataFragmentProgressBarHolder.setAnimation(inAnimation);
+                    binding.updateDataFragmentProgressBarHolder.setVisibility(View.VISIBLE);
+                    Objects.requireNonNull(getActivity()).getWindow().setFlags(
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                            Toast.makeText(getContext(), "تم تعديل البيانات بنجاح", Toast.LENGTH_SHORT).show();
-                        }else {
-                            //clear progress bar
-                            binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
-                            binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
-                            Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    usersRef.child(userPhone).child("UserName").setValue(Objects.requireNonNull(binding.updateDataFragmentNameEditTxt.getText()).toString());
+                    usersRef.child(userPhone).child("UserPassword").setValue(Objects.requireNonNull(binding.updateDataFragmentPasswordEditTxt.getText()).toString());
+                    usersRef.child(userPhone).child("UserSecondaryPhone").setValue(Objects.requireNonNull(binding.updateDataFragmentSecondaryPhoneEditTxt.getText()).toString());
+                    usersRef.child(userPhone).child("UserAddress").setValue(Objects.requireNonNull(binding.updateDataFragmentAddressEditTxt.getText()).toString())
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    //clear progress bar
+                                    binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
+                                    binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
+                                    Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                            Toast.makeText(getContext(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                                    Toasty.success(context, "تم تعديل البيانات بنجاح", Toast.LENGTH_SHORT, true).show();
+                                } else {
+                                    //clear progress bar
+                                    binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
+                                    binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
+                                    Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                                    Toasty.error(context, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Toasty.LENGTH_SHORT, true).show();
+                                }
+                            });
+
+                })
+                .setCancelText("التراجع")
+                .setCancelClickListener(view -> pDialog.cancel());
+
+
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
 
 
     }
@@ -232,6 +210,42 @@ public class UpdateUserDataFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(context, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity) context).finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
+
+        usersMap = new HashMap<>();
+        binding.updateDataFragmentPrimaryPhoneEditTxt.setEnabled(false);
+        //animation
+        inAnimation = new AlphaAnimation(0f, 2f);
+        outAnimation = new AlphaAnimation(2f, 0f);
+
+
+        usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
+        userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
+
+        //Progress Bar
+        binding.updateDataFragmentProgressBarHolder.setAnimation(inAnimation);
+        binding.updateDataFragmentProgressBarHolder.setVisibility(View.VISIBLE);
+        Objects.requireNonNull(getActivity()).getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         usersRef.child(Objects.requireNonNull(userPhone)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -251,6 +265,10 @@ public class UpdateUserDataFragment extends Fragment {
                         binding.updateDataFragmentAddressEditTxt
                                 .setText(snapshot.child("UserAddress").getValue(String.class));
 
+                        //clear progress bar
+                        binding.updateDataFragmentProgressBarHolder.setAnimation(outAnimation);
+                        binding.updateDataFragmentProgressBarHolder.setVisibility(View.GONE);
+                        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     }
 
                 }
@@ -262,14 +280,8 @@ public class UpdateUserDataFragment extends Fragment {
             }
         });
 
-        binding.updateDataFragmentUpdateBtn.setOnClickListener(view1 -> {
-            checkData();
-        });
-    }
+        binding.updateDataFragmentUpdateBtn.setOnClickListener(view1 -> checkData());
 
-    @Override
-    public void onResume() {
-        super.onResume();
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {

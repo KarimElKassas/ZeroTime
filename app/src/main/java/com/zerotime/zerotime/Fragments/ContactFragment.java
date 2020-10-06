@@ -62,18 +62,18 @@ public class ContactFragment extends Fragment {
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
 
 
-        binding.goToChatBTn.setOnClickListener(view1 -> {
+        binding.goToChatCard.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), Message.class);
             intent.putExtra("UserID", prefs.getString("isLogged", ""));
             intent.putExtra("UniqueID", "ContactFragment");
             startActivity(intent);
         });
-        binding.goToCallBTn.setOnClickListener(view1 -> {
+        binding.goToCallCard.setOnClickListener(view1 -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + "01017268676"));
             context.startActivity(intent);
         });
-        binding.goToMailBTn.setOnClickListener(view1 -> {
+        binding.goToMailCard.setOnClickListener(view1 -> {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"zerotime336@example.com"});

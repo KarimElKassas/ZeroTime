@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import com.zerotime.zerotime.image_dialog;
@@ -56,11 +59,11 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
         } else {
             holder.showMessage.setVisibility(View.GONE);
             holder.showMessageImageCard.setVisibility(View.VISIBLE);
+
             Glide.with(context.getApplicationContext())
                     .load(mchat.getMessage())
-                    .placeholder(R.drawable.avatar1)
+                    .apply(new RequestOptions())
                     .into(holder.showMessageImage);
-
 
             holder.showMessageImage.setOnClickListener(view -> {
 
@@ -73,7 +76,14 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
 
                 ImageView image = dialoglayout.findViewById(R.id.dialog_chat_image_imageView);
                 try {
-                    Objects.requireNonNull(image).setImageDrawable(holder.showMessageImage.getDrawable());
+                    Glide.with(context.getApplicationContext()).load(mchat.getMessage())
+                            .apply(new RequestOptions()
+                                    .fitCenter()
+                                    .format(DecodeFormat.PREFER_ARGB_8888)
+                                    .override(Target.SIZE_ORIGINAL))
+                            .placeholder(R.drawable.avatar1)
+                            .into(image);
+                    //Objects.requireNonNull(image).setImageDrawable(holder.showMessageImage.getDrawable());
 
                 } catch (Exception e) {
                     Toast.makeText(context, "catch\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -112,7 +122,7 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
 
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder {
+    public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView showMessage, seen;
         ImageView showMessageImage;
         CardView showMessageImageCard;

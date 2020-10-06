@@ -62,10 +62,10 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Our Products Button
-        binding.homeFragmentOurProductsBtn.setOnClickListener(view1 -> Toasty.warning(context, "قريباً", Toasty.LENGTH_SHORT, true).show());
+        binding.homeFragmentOurProductsCard.setOnClickListener(view1 -> Toasty.warning(context, "قريباً", Toasty.LENGTH_SHORT, true).show());
 
         //Month Offers Button
-        binding.homeFragmentMonthOffersBtn.setOnClickListener(view1 -> {
+        binding.homeFragmentMonthOffersCard.setOnClickListener(view1 -> {
             FragmentManager fragmentManager = getFragmentManager();
             DisplayOffersFragment fragment = new DisplayOffersFragment();
             assert fragmentManager != null;
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
 
         });
         //Add Order Button
-        binding.homeFragmentAddOrderBtn.setOnClickListener(view1 -> {
+        binding.homeFragmentAddOrderCard.setOnClickListener(view1 -> {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getFragmentManager();
             AddOrderFragment fragment = new AddOrderFragment();
@@ -92,8 +92,10 @@ public class HomeFragment extends Fragment {
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         });
+
+
         //About Us Button
-        binding.homeFragmentAboutUsBtn.setOnClickListener(view1 -> {
+        binding.homeFragmentAboutUsCard.setOnClickListener(view1 -> {
 
             // Create new fragment and transaction
             FragmentManager fragmentManager = getFragmentManager();
