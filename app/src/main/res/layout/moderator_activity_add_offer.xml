@@ -236,4 +236,26 @@
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <FrameLayout
+        android:id="@+id/addOffer_progressBarHolder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.4"
+        android:animateLayoutChanges="true"
+        android:background="#000000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+
+            android:indeterminate="true" />
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

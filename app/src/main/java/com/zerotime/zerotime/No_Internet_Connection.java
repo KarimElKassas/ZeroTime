@@ -47,6 +47,7 @@ public class No_Internet_Connection extends AppCompatActivity {
                     Toasty.success(getApplicationContext(), "اونلاين مجدداً", Toasty.LENGTH_SHORT, true).show();
                     Intent splash_intent = new Intent(No_Internet_Connection.this, SplashScreen.class);
                     splash_intent.putExtra("UniqueID", "NoInternetConnection");
+                    splash_intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
                     startActivity(splash_intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     finish();

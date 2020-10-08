@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint"
     android:layout_width="match_parent"
-    android:background="#FFF"
-    android:padding="@dimen/_8sdp"
-
     android:layout_height="match_parent"
+    android:background="#ecf2fe"
+
+    android:padding="@dimen/_8sdp"
     tools:context=".User.StartingScreen">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:background="#FFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ecf2fe"
         app:layout_constraintBottom_toTopOf="@+id/dotLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,13 +48,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/nextBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/float_transparent"
         android:text="Next"
         android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

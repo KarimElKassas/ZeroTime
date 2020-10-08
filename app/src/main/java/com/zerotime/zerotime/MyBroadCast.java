@@ -32,9 +32,9 @@ public class MyBroadCast extends BroadcastReceiver {
             } else {
                 // TODO Disconnected. Do your stuff!
                 Intent i = new Intent(context, No_Internet_Connection.class);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
+
             }
 
             sLastType = currentType;

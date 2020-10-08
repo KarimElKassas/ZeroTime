@@ -36,7 +36,7 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:textStyle="bold"
-            android:textColor="@color/Red"
+            android:textColor="@color/DarkBlue"
             android:fontFamily="@font/tajwal"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/btn_back_red"
+        android:background="@drawable/btn_back"
         android:textColor="#FFF"
         android:text="اعادة المحاولة"
         android:textStyle="bold"

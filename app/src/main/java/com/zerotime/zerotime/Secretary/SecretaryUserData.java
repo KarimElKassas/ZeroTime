@@ -51,6 +51,8 @@ public class SecretaryUserData extends AppCompatActivity {
         UserRef.child(phone).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                binding.secretaryUserDataProgress.setVisibility(View.GONE);
+                binding.secretaryUserDataConstraint.setVisibility(View.VISIBLE);
                 String userAddress = dataSnapshot.child("UserAddress").getValue(String.class);
                 String userPrimaryPhone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
                 String userSecondaryPhone = dataSnapshot.child("UserSecondaryPhone").getValue(String.class);

@@ -100,6 +100,13 @@ public class ModeratorHome extends AppCompatActivity {
         ModeratorViewClerks moderatorViewClerks=new ModeratorViewClerks();*/
 
 
+        /*ModeratorAddClerk moderatorAddClerk = new ModeratorAddClerk();
+        ModeratorAddOffer moderatorAddOffer = new ModeratorAddOffer();
+        ModeratorComplaints moderatorComplaints = new ModeratorComplaints();
+        ModeratorNumberOfOrders moderatorNumberOfOrders = new ModeratorNumberOfOrders();
+        ModeratorViewClerks moderatorViewClerks = new ModeratorViewClerks();
+        FollowingTheOrderState followingTheOrderState = new FollowingTheOrderState();*/
+
         //go back to login activity
         Intent i = new Intent(ModeratorHome.this, Login.class);
         startActivity(i);
@@ -110,6 +117,12 @@ public class ModeratorHome extends AppCompatActivity {
         moderatorClerksHistory.finish();
         moderatorNumberOfOrders.finish();*/
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        /*moderatorAddClerk.finish();
+        moderatorAddOffer.finish();
+        moderatorComplaints.finish();
+        moderatorNumberOfOrders.finish();
+        moderatorViewClerks.finish();
+        followingTheOrderState.finish();*/
         finish();
     }
     private boolean haveNetworkConnection() {
