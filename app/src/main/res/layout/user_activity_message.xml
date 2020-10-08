@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/secretary_message_writeMSG_edt"
+            android:id="@+id/message_writeMSG_edt"
             android:layout_width="0dp"
             android:layout_height="@dimen/_42sdp"
             android:layout_marginStart="@dimen/_6sdp"

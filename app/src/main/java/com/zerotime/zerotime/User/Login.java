@@ -14,7 +14,6 @@ import android.view.animation.AlphaAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,24 +26,20 @@ import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Room.Data.UserDao;
-import com.zerotime.zerotime.Room.UserDataBase;
 import com.zerotime.zerotime.Secretary.SecretaryHome;
 import com.zerotime.zerotime.databinding.ActivityLoginBinding;
 
 import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 public class Login extends AppCompatActivity {
 
     SharedPreferences.Editor editor;
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
-    // Room DB
-    UserDao db;
-    UserDataBase dataBase;
     private ActivityLoginBinding binding;
     private DatabaseReference usersRef;
-    private String userToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,51 +50,17 @@ public class Login extends AppCompatActivity {
 
         // Check Internet State
         if (!haveNetworkConnection()) {
-            Intent i = new Intent(Login.this, No_Internet_Connection.class);
-            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("UniqueID","Login");
-            startActivity(i);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
+            goToNoConnection();
         }
         checkInternetConnection();
         //-----------------------------------
-        // Room DB
-        dataBase = Room.databaseBuilder(this, UserDataBase.class, "User")
-                .allowMainThreadQueries().build();
-        db = dataBase.getUserDao();
-
 
         //animation
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
         animation();
-        // Initialize User State
-        usersRef = FirebaseDatabase.getInstance().getReference("Users");
-        editor = getSharedPreferences("UserState", MODE_PRIVATE).edit();
-        editor.putString("isLogged", "null");
-        editor.apply();
-
-        //Login With User
-        binding.loginLoginBtn.setOnClickListener(view1 -> checkData());
-        //Return To Sign Up
-        binding.loginSignUpTextView.setOnClickListener(view12 -> goToSignUp());
-
-    binding.ForgotPassword.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent=new Intent(Login.this, ForgotPassword.class);
-            startActivity(intent);
-        }
-    });
-
-
 
     }
-
-
-
 
     private void checkData() {
         //Moderator Case
@@ -154,9 +115,12 @@ public class Login extends AppCompatActivity {
 
         signIn();
     }
-
-
     private void signIn() {
+        //Check Internet
+        if (!haveNetworkConnection()){
+            Toasty.error(this,"انت لست متصلاً",Toasty.LENGTH_SHORT,true).show();
+            return;
+        }
         //Progress Bar
         editor.putString("UserType", "User");
         editor.apply();
@@ -212,13 +176,27 @@ public class Login extends AppCompatActivity {
 
     public void goToHome() {
         Intent intent = new Intent(Login.this, Home.class);
+        intent.putExtra("UniqueID", "Login");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         this.finish();
     }
-
+    public void goToNoConnection() {
+        Intent i = new Intent(Login.this, No_Internet_Connection.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("UniqueID", "Login");
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
+    }
     public void goToSignUp() {
         Intent intent = new Intent(Login.this, SignUp.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        this.finish();
+    }
+    public void goToForgotPassword() {
+        Intent intent = new Intent(Login.this, ForgotPassword.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         this.finish();
@@ -260,6 +238,7 @@ public class Login extends AppCompatActivity {
         //---------------------------------------------------------------------
     }
 
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -283,6 +262,28 @@ public class Login extends AppCompatActivity {
         registerReceiver(broadCast, intentFilter);
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Initialize User State
+        usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        editor = getSharedPreferences("UserState", MODE_PRIVATE).edit();
+        editor.putString("isLogged", "null");
+        editor.apply();
+
+        //Login With User
+        binding.loginLoginBtn.setOnClickListener(view1 -> checkData());
+
+        //Return To Sign Up
+        binding.loginSignUpTextView.setOnClickListener(view12 -> goToSignUp());
+
+        //Forgot Password
+        binding.ForgotPassword.setOnClickListener(view -> goToForgotPassword());
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

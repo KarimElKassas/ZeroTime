@@ -61,7 +61,10 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Our Products Button
-        binding.homeFragmentOurProductsCard.setOnClickListener(view1 -> Toasty.warning(context, "قريباً", Toasty.LENGTH_SHORT, true).show());
+        binding.homeFragmentOurProductsCard.setOnClickListener(view1 -> Toasty.warning(context,
+                "قريباً",
+                Toasty.LENGTH_SHORT,
+                true).show());
 
         //Month Offers Button
         binding.homeFragmentMonthOffersCard.setOnClickListener(view1 -> {
@@ -71,9 +74,9 @@ public class HomeFragment extends Fragment {
             fragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
                             R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .replace(R.id.Frame_Content, fragment)
                     .addToBackStack("HomeFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
 
         });
@@ -141,25 +144,20 @@ public class HomeFragment extends Fragment {
         super.onResume();
 
         try {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    view.setFocusableInTouchMode(true);
-                    view.requestFocus();
-                    view.setOnKeyListener((v, keyCode, event) -> {
+            new Handler().postDelayed(() -> {
+                view.setFocusableInTouchMode(true);
+                view.requestFocus();
+                view.setOnKeyListener((v, keyCode, event) -> {
 
-                        if (keyCode == KeyEvent.KEYCODE_BACK) {
-                            Objects.requireNonNull(getActivity()).onBackPressed();
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        Objects.requireNonNull(getActivity()).onBackPressed();
+                        Toast.makeText(context.getApplicationContext(), "Home Fragment Back", Toast.LENGTH_SHORT).show();
+                        return true;
 
+                    }
 
-
-                            return true;
-
-                        }
-
-                        return false;
-                    });
-                }
+                    return false;
+                });
             }, 50000);
 
 

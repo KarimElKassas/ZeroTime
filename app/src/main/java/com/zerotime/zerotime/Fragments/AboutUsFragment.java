@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -32,32 +33,20 @@ import java.util.Objects;
 
 public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
     private UserFragmentAboutUsBinding binding;
-    private GoogleMap mMap;
     ExpandableTextView expandableTextView;
     String longText = "شركه زيرو تايم للنقل والشحن السريع , تأسست عام 2016 , لو عندك بيزنس اونلاين بتحتاج شركه شحن تحافظ على مستوى البراند وتوصل شحناتك بأمان وسرعه وثقه من غير اي حيره زيرو تايم هي راحتك وراحه عميلك , زيرو تايم شركه مرخصه بريدياً ولديها سجل تجاري وبطاقه ضريبيه , زيرو تايم بتوصل لأغلب محافظات مصر  ولسه هنكمل لمحافظات مصر كلها ," +
             "زيرو تايم بتستلم وتسلم الشحنات من الباب للباب وده بيكون من خلال مندوبنا المتدربين , زيرو تايم بتوصلك تحصيلك باكثر من طريقه وفي الميعاد الى بتحدده وانت اختار الى يناسبك , زيرو تايم بتساعدك  تريح عميلك من خلال خدمات اختياريه زي خدمه طرد مقابل طرد او خدمه فتح الشحنات وده بيكون بناءا على اختيارك انت , زيرو تايم بتسلم مرتجعاتك وده بيكون على مدار ثلاثه ايام في الأسبوع. \n" +
             " خدمة عملاء متاحه لمساعدتك في الرد على جميع الاستفسارات وحل جميع المشاكل الي بتواجهها ";
     Context context;
+    View view;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = UserFragmentAboutUsBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
+        view = binding.getRoot();
         context = container.getContext();
 
-        // Check Internet State
-        if (!haveNetworkConnection()) {
-            Intent i = new Intent(context, No_Internet_Connection.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
-            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            ((Activity) context).finish();
-        }
-        checkInternetConnection();
-        //-----------------------------------
-        expandableTextView = view.findViewById(R.id.expand_text_view);
-        expandableTextView.setText(longText);
         binding.aboutUsMap.onCreate(savedInstanceState);
         binding.aboutUsMap.getMapAsync(this);
 
@@ -89,18 +78,28 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onResume() {
-
         super.onResume();
+        // Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(context, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            ((Activity) context).finish();
+        }
+        checkInternetConnection();
+        //-----------------------------------
+        expandableTextView = view.findViewById(R.id.expand_text_view);
+        expandableTextView.setText(longText);
 
-        Objects.requireNonNull(getView()).setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener((v, keyCode, event) -> {
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
 
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 return true;
             }
 
@@ -111,13 +110,12 @@ public class AboutUsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        mMap = googleMap;
         LatLng sydney = new LatLng(30.1195601, 31.3677548);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("شارع المدينة المنورة"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.1195601, 31.3677548), 10));
-        mMap.getMaxZoomLevel();
+        googleMap.addMarker(new MarkerOptions().position(sydney).title("شارع المدينة المنورة"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.1195601, 31.3677548), 10));
+        googleMap.getMaxZoomLevel();
         binding.aboutUsMap.onResume();
     }
 }

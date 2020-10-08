@@ -6,7 +6,8 @@
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
-    -->    <uses-permission android:name="android.permission.INTERNET" />
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -34,9 +35,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".ForgotPassword.forgotPasswordSuccess"></activity>
-        <activity android:name=".ForgotPassword.SetNewPassword" />
-        <activity android:name=".ForgotPassword.ForgotPassword" />
+        <activity
+            android:name=".ForgotPassword.ForgotPasswordSuccess"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ForgotPassword.SetNewPassword"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ForgotPassword.ForgotPassword"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".No_Internet_Connection"
             android:launchMode="singleInstance" />
@@ -109,23 +116,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".Notifications.MyFirebaseMessaging"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".Notifications.MyFirebaseIdService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
 
         <receiver android:name=".MyBroadCast">
             <intent-filter>

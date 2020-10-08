@@ -55,7 +55,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#F2CA0B">
+                            android:background="#FDE94A">
 
                             <TextView
                                 android:id="@+id/card1_txt"
@@ -75,7 +75,7 @@
                                 android:layout_width="@dimen/_100sdp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:src="@drawable/delivery_man_add_order"
+                                android:src="@drawable/complaint"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -119,7 +119,7 @@
                                 android:layout_width="@dimen/_100sdp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:src="@drawable/delivery_man_add_order"
+                                android:src="@drawable/rate"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -144,7 +144,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#4354AE">
+                            android:background="#FDE94A">
 
                             <TextView
                                 android:id="@+id/card3_txt"
@@ -154,7 +154,7 @@
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
                                 android:text="مشاركة التطبيق"
-                                android:textColor="#FFF"
+                                android:textColor="#000"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +164,7 @@
                                 android:layout_width="@dimen/_100sdp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:src="@drawable/delivery_man_add_order"
+                                android:src="@drawable/share"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -188,7 +188,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#F2544C">
+                            android:background="#242424">
 
                             <TextView
                                 android:id="@+id/card4_txt"
@@ -208,7 +208,7 @@
                                 android:layout_width="@dimen/_100sdp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:src="@drawable/delivery_man_add_order"
+                                android:src="@drawable/logout"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />

@@ -13,6 +13,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -20,20 +22,11 @@ import com.zerotime.zerotime.databinding.ActivitySplashScreenBinding;
 
 import java.util.Objects;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class SplashScreen extends AppCompatActivity {
     SharedPreferences prefs;
-    SharedPreferences.Editor editor;
     private ActivitySplashScreenBinding binding;
     private AlphaAnimation inAnimation = new AlphaAnimation(0f, 2f);
     private AlphaAnimation outAnimation = new AlphaAnimation(2f, 0f);
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +36,22 @@ public class SplashScreen extends AppCompatActivity {
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        prefs = getSharedPreferences("UserState", MODE_PRIVATE);
-        prefs.getString("isLogged", "");
 
-
-        //-------------------------------------------------------------------------------
         //Animation
         animation();
-        //-------------------------------------------------------------------------------
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        prefs = getSharedPreferences("UserState", MODE_PRIVATE);
+        prefs.getString("isLogged", "");
 
         int splashTimeOut = 3000;
         new Handler().postDelayed(() -> {
             if (!haveNetworkConnection()) {
-                Intent i = new Intent(SplashScreen.this, No_Internet_Connection.class);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("UniqueID", "SplashScreen");
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                goToNoConnection();
             } else {
                 checkInternetConnection();
 
@@ -70,12 +59,7 @@ public class SplashScreen extends AppCompatActivity {
 
                     prefs.edit().putBoolean("my_first_time", false).apply();
 
-                    //the app is being launched for first time, do something
-                    Intent intent = new Intent(SplashScreen.this, StartingScreen.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
-                    // record the fact that the app has been started at least once
+                    goToStarting();
                     return;
                 }
 
@@ -85,15 +69,19 @@ public class SplashScreen extends AppCompatActivity {
                     checkInternetConnection();
                     goToHome();
                 } else {
-
-
                     goToLogin();
-
                 }
             }
 
 
         }, splashTimeOut);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 
     private boolean haveNetworkConnection() {
@@ -113,6 +101,14 @@ public class SplashScreen extends AppCompatActivity {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadCast, intentFilter);
+
+    }
+
     private void animation() {
         binding.splashImg.setTranslationY(-100f);
         binding.splashImg.setAlpha(0f);
@@ -120,7 +116,7 @@ public class SplashScreen extends AppCompatActivity {
         inAnimation.setDuration(200);
         outAnimation.setDuration(200);
         Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.stb2);
-        binding.splashScreenWelcomeText.setAnimation(myAnimation);
+        binding.splashImgText.setAnimation(myAnimation);
     }
 
     private void goToLogin() {
@@ -130,19 +126,29 @@ public class SplashScreen extends AppCompatActivity {
         finish();
     }
 
-    private void goToHome() {
-        Intent i = new Intent(SplashScreen.this, Home.class);
+    private void goToStarting() {
+        Intent i = new Intent(SplashScreen.this, StartingScreen.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
 
-    private void checkInternetConnection() {
-        MyBroadCast broadCast = new MyBroadCast();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast, intentFilter);
+    private void goToHome() {
+        Intent i = new Intent(SplashScreen.this, Home.class);
+        i.putExtra("UniqueID", "SplashScreen");
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
+    }
 
+    private void goToNoConnection() {
+        Intent i = new Intent(SplashScreen.this, No_Internet_Connection.class);
+        //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("UniqueID", "SplashScreen");
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
 

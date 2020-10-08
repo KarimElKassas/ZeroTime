@@ -3,7 +3,13 @@ package com.zerotime.zerotime.User;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.zerotime.zerotime.Fragments.ContactFragment;
 import com.zerotime.zerotime.Fragments.HomeFragment;
@@ -12,29 +18,44 @@ import com.zerotime.zerotime.Fragments.SettingsFragment;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserActivityHomeBinding;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 public class Home extends AppCompatActivity {
-    private UserActivityHomeBinding binding;
     String userId;
+    private UserActivityHomeBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = UserActivityHomeBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        binding.bottomNav.setCurrentActiveItem(3);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.Frame_Content, new HomeFragment()).commit();
+
+
+    }
 
     @Override
     public void onBackPressed() {
-       super.onBackPressed();
+        super.onBackPressed();
 
         if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
-
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            Toast.makeText(getApplicationContext(), "Home  Back", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             int pid = android.os.Process.myPid();
             android.os.Process.killProcess(pid);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                /*new Handler().postDelayed(() -> {
+                    int pid = android.os.Process.myPid();
+                    android.os.Process.killProcess(pid);
+                }, 500);*/
+                return;
+            }
 
-        }
         if (binding.bottomNav.getCurrentActiveItemPosition() == 2) {
 
             binding.bottomNav.setCurrentActiveItem(3);
@@ -50,17 +71,10 @@ public class Home extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = UserActivityHomeBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-
+    protected void onStart() {
+        super.onStart();
         SharedPreferences prefs = getSharedPreferences("UserState", MODE_PRIVATE);
         userId = prefs.getString("isLogged", "");
-
-        // Default Fragment To Open
-        getSupportFragmentManager().beginTransaction().replace(R.id.Frame_Content, new HomeFragment()).commit();
 
         //Attach Listener To Bottom Nav
         binding.bottomNav.setCurrentActiveItem(3);
@@ -70,11 +84,11 @@ public class Home extends AppCompatActivity {
 
             switch (position) {
                 case 3:
-                    Fragment newFragment = new HomeFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.Frame_Content, newFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    Fragment fragment1 = new HomeFragment();
+                    FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+                    transaction1.replace(R.id.Frame_Content, fragment1);
+                    transaction1.addToBackStack(null);
+                    transaction1.commit();
                     break;
 
                 case 2:

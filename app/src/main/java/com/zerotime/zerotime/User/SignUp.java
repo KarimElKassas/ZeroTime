@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-import es.dmoral.toasty.Toasty;
-
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,17 +23,15 @@ import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 import java.util.HashMap;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class SignUp extends AppCompatActivity {
-
-    private ActivitySignUpBinding binding;
-
-    private DatabaseReference usersRef;
-
-    private HashMap<String, Object> usersMap;
-
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
+    private ActivitySignUpBinding binding;
+    private DatabaseReference usersRef;
+    private HashMap<String, Object> usersMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,36 +40,10 @@ public class SignUp extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //Check Internet State
-        if (!haveNetworkConnection()) {
-            Intent i = new Intent(SignUp.this, No_Internet_Connection.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("UniqueID","SignUp");
-            startActivity(i);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
-        }
-        checkInternetConnection();
-        //---------------------------------------
-
-        usersRef = FirebaseDatabase.getInstance().getReference("Users");
-        usersMap = new HashMap<>();
-
         //animation
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
         animation();
-
-        //get user token id
-        /*FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                userToken = Objects.requireNonNull(task.getResult()).getToken();
-            }
-        });*/
-        //Sign In Text
-        binding.signUpLoginTextView.setOnClickListener(view1 -> goToLogin());
-        //Sign Up Button
-        binding.signUpSignUpBtn.setOnClickListener(view12 -> checkData());
 
     }
 
@@ -93,7 +62,7 @@ public class SignUp extends AppCompatActivity {
             return;
         }
         if (Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).length() < 8) {
-            binding.signUpUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من او تساوي 8 حروف او ارقام !");
+            binding.signUpUserPasswordEditTxt.setError("كلمة السر يجب ان تكون اكثر من او تساوي 7 حروف او ارقام !");
             binding.signUpUserPasswordEditTxt.requestFocus();
             return;
         }
@@ -108,8 +77,12 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
         }
-        if (!binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("01")) {
-            binding.signUpUserPrimaryPhoneEditTxt.setError("رقم الهاتف يجب ان يبدأ بـ 01 !");
+        if (!binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010")
+                || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("011")
+                || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("012")
+                || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("015")) {
+
+            binding.signUpUserPrimaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
         }
@@ -124,11 +97,16 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
-        if (!binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("01")) {
-            binding.signUpUserSecondaryPhoneEditTxt.setError("رقم الهاتف يجب ان يبدأ بـ 01 !");
+        if (!binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010")
+                || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("011")
+                || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("012")
+                || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("015")) {
+
+            binding.signUpUserSecondaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
+        //different numbers validation
         String primaryPhone = binding.signUpUserPrimaryPhoneEditTxt.getText().toString();
         String secondaryPhone = binding.signUpUserSecondaryPhoneEditTxt.getText().toString();
         if (primaryPhone.equals(secondaryPhone)) {
@@ -147,7 +125,11 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void createNewUser() {
-
+        //check internet
+        if (!haveNetworkConnection()) {
+            Toasty.error(this, "انت لست متصلاً", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         //Progress Bar
         binding.signUpProgressBarHolder.setAnimation(inAnimation);
         binding.signUpProgressBarHolder.setVisibility(View.VISIBLE);
@@ -160,26 +142,32 @@ public class SignUp extends AppCompatActivity {
         usersMap.put("UserSecondaryPhone", Objects.requireNonNull(binding.signUpUserSecondaryPhoneEditTxt.getText()).toString());
         usersMap.put("UserPassword", Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).toString());
         usersMap.put("UserAddress", Objects.requireNonNull(binding.signUpUserAddressEditTxt.getText()).toString());
-        //usersMap.put("UserToken", userToken);
         usersMap.put("UserId", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
         usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
                 .setValue(usersMap).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        //clear progress bar
-                        binding.signUpProgressBarHolder.setAnimation(outAnimation);
-                        binding.signUpProgressBarHolder.setVisibility(View.GONE);
+            if (task.isSuccessful()) {
+                //clear progress bar
+                binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                binding.signUpProgressBarHolder.setVisibility(View.GONE);
 
-                        Toasty.success(SignUp.this.getApplicationContext(), "Sign Up Successfully", Toasty.LENGTH_SHORT,true).show();
-                        SignUp.this.goToLogin();
-                    } else {
-                        //clear progress bar
-                        binding.signUpProgressBarHolder.setAnimation(outAnimation);
-                        binding.signUpProgressBarHolder.setVisibility(View.GONE);
+                Toasty.success(SignUp.this.getApplicationContext(),
+                        "تم تسجيل الحساب بنجاح",
+                        Toasty.LENGTH_SHORT,
+                        true).show();
 
-                        Toasty.error(SignUp.this.getApplicationContext(), Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Toasty.LENGTH_SHORT,true).show();
-                    }
-                });
+                goToLogin();
+            } else {
+                //clear progress bar
+                binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
+                Toasty.error(SignUp.this.getApplicationContext(),
+                        Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()),
+                        Toasty.LENGTH_SHORT,
+                        true).show();
+            }
+        });
 
 
     }
@@ -201,6 +189,7 @@ public class SignUp extends AppCompatActivity {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -208,6 +197,7 @@ public class SignUp extends AppCompatActivity {
         registerReceiver(broadCast, intentFilter);
 
     }
+
     private void goToLogin() {
         Intent intent = new Intent(SignUp.this, Login.class);
         startActivity(intent);
@@ -259,6 +249,32 @@ public class SignUp extends AppCompatActivity {
         binding.signUpLoginTextView.setAlpha(0f);
         binding.signUpLoginTextView.animate().translationX(0f).alpha(1f).setDuration(2000).setStartDelay(500).start();
         //---------------------------------------------------------------------
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //Check Internet State
+        if (!haveNetworkConnection()) {
+            Intent i = new Intent(SignUp.this, No_Internet_Connection.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("UniqueID", "SignUp");
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
+        checkInternetConnection();
+        //---------------------------------------
+
+        usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        usersMap = new HashMap<>();
+
+        //Sign In Text
+        binding.signUpLoginTextView.setOnClickListener(view1 -> goToLogin());
+        //Sign Up Button
+        binding.signUpSignUpBtn.setOnClickListener(view12 -> checkData());
 
     }
 

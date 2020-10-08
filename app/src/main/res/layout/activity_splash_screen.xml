@@ -11,7 +11,7 @@
     android:id="@+id/splashImg"
     android:layout_width="@dimen/_180sdp"
     android:layout_height="@dimen/_180sdp"
-    app:layout_constraintBottom_toTopOf="@+id/splash_screen_welcome_text"
+    app:layout_constraintBottom_toTopOf="@+id/splashImgText"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:src="@drawable/pnglogo"
@@ -27,8 +27,20 @@
         android:textSize="36sp"
         android:textStyle="bold"
         android:letterSpacing="0.1"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/splashImgText"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/zero_time_txt2"
+        android:layout_marginTop="@dimen/_4sdp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

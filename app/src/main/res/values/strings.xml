@@ -33,4 +33,7 @@
     <string name="profile_previous_orders_text">الطلبات السابقة</string>
     <string name="profile_follow_orders_text">متابعة الطلبات</string>
     <string name="enterPhoneNumber">ادخل رقم هاتفك</string>
+    <string name="forgot_password_text">هل نسيت كلمة السر ؟</string>
+    <string name="next">التالى</string>
+    <string name="type_new_password">لقد تم تأكيد هويتك \n من فضلك ادخل كلمه المرور الجديده</string>
 </resources>

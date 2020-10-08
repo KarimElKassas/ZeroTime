@@ -1,36 +1,24 @@
 package com.zerotime.zerotime.Secretary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.User.Login;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
+import com.zerotime.zerotime.User.Login;
 import com.zerotime.zerotime.databinding.SecretaryActivityHomeBinding;
-import com.zerotime.zerotime.MyBroadCast;
 
 public class SecretaryHome extends AppCompatActivity {
     private SecretaryActivityHomeBinding binding;
-    private DatabaseReference chatRef;
-    public int notificationID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,84 +37,23 @@ public class SecretaryHome extends AppCompatActivity {
         checkInternetConnection();
         //-----------------------------------
 
-
-        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
-        chatRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int unread = 0;
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    SecretaryChatPojo chat = ds.getValue(SecretaryChatPojo.class);
-                    if (chat.getReceiver().equals("Zero Time") && !chat.isSeen()) {
-                        unread++;
-                    }
-                }
-                if (unread != 0) {
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
-                        String CHANNEL_ID = "my_channel_01";
-                        CharSequence name = "my_channel";
-                        String Description = "This is my channel";
-                        int importance = NotificationManager.IMPORTANCE_HIGH;
-                        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-                        mChannel.setDescription(Description);
-                        mChannel.enableLights(true);
-                        mChannel.setLightColor(Color.RED);
-                        mChannel.enableVibration(true);
-                        mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                        mChannel.setShowBadge(false);
-                        notificationManager.createNotificationChannel(mChannel);
-                    }
-                    notificationID = (int) System.currentTimeMillis();
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(SecretaryHome.this,"my_channel_01")
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setVibrate(new long[]{1000, 1000})
-                            .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setContentTitle("لديك رسالة جديدة")
-                            .setContentText("لديك رسالة جديدة من احد العملاء");
-
-
-                    notificationManager.notify(notificationID, builder.build());
-
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        binding.secretaryHomeOrdersBtn.setOnClickListener(view1 -> {
-            Intent intent = new Intent(SecretaryHome.this,FollowingTheOrderState.class);
-           intent.putExtra("from","S");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
-
-        });
-        binding.secretaryHomeChatsBtn.setOnClickListener(view1 -> {
-            Intent intent = new Intent(SecretaryHome.this, SecretaryDisplayChats.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
-
-        });
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i=new Intent(SecretaryHome.this, Login.class);
+        SecretaryMessage secretaryMessage = new SecretaryMessage();
+        SecretaryDisplayChats secretaryDisplayChats = new SecretaryDisplayChats();
+        FollowingTheOrderState followingTheOrderState = new FollowingTheOrderState();
+        Intent i = new Intent(SecretaryHome.this, Login.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        secretaryMessage.finish();
+        secretaryDisplayChats.finish();
+        followingTheOrderState.finish();
         finish();
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -143,10 +70,31 @@ public class SecretaryHome extends AppCompatActivity {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
-    private void checkInternetConnection(){
-        MyBroadCast broadCast=new MyBroadCast();
-        IntentFilter intentFilter=new IntentFilter();
+
+    private void checkInternetConnection() {
+        MyBroadCast broadCast = new MyBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(broadCast,intentFilter);
+        registerReceiver(broadCast, intentFilter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.secretaryHomeOrdersBtn.setOnClickListener(view1 -> {
+            Intent intent = new Intent(SecretaryHome.this, FollowingTheOrderState.class);
+            intent.putExtra("from", "S");
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+
+        });
+        binding.secretaryHomeChatsBtn.setOnClickListener(view1 -> {
+            Intent intent = new Intent(SecretaryHome.this, SecretaryDisplayChats.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+
+        });
     }
 }

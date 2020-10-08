@@ -6,9 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.zerotime.zerotime.Pojos.ChatPojo;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
@@ -16,6 +20,7 @@ import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,14 +60,41 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.showMessageImageCard.setVisibility(View.VISIBLE);
             Glide.with(context.getApplicationContext())
                     .load(mchat.getMessage())
+                    .apply(new RequestOptions())
                     .into(holder.showMessageImage);
         }
+        holder.showMessageImage.setOnClickListener(view -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View dialoglayout = inflater.inflate(R.layout.dialog_chat_image, null);
+
+            builder.setView(dialoglayout);
+
+            ImageView image = dialoglayout.findViewById(R.id.dialog_chat_image_imageView);
+            try {
+                Glide.with(context.getApplicationContext()).load(mchat.getMessage())
+                        .apply(new RequestOptions()
+                                .fitCenter()
+                                .format(DecodeFormat.PREFER_ARGB_8888)
+                                .override(Target.SIZE_ORIGINAL))
+                        .placeholder(R.drawable.avatar1)
+                        .into(image);
+
+            } catch (Exception e) {
+                Toast.makeText(context, "catch\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            builder.show();
+
+
+        });
 
         if (position == ChatPojos.size() - 1){
 
             if (mchat.isSeen()){
-                holder.seen.setText("Seen");
-            }else holder.seen.setText("Delivered");
+                holder.seen.setText("تم العرض");
+            }else holder.seen.setText("تم الارسال");
 
         }else holder.seen.setVisibility(View.GONE);
 
@@ -78,7 +110,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         notifyDataSetChanged();
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder {
+    public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView showMessage,seen;
         ImageView showMessageImage;
         CardView showMessageImageCard;

@@ -16,18 +16,15 @@ import androidx.viewpager.widget.ViewPager;
 
 public class StartingScreen extends AppCompatActivity {
     private ActivityStartingScreenBinding binding;
-    private SliderAdapter adapter;
 
     private TextView[] mDots;
     private int mCurrentPage;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityStartingScreenBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-        adapter = new SliderAdapter(this);
+    protected void onStart() {
+        super.onStart();
+
+        SliderAdapter adapter = new SliderAdapter(this);
         binding.viewPager.setAdapter(adapter);
         addDotsIndicator(0);
         binding.viewPager.addOnPageChangeListener(listener);
@@ -35,6 +32,17 @@ public class StartingScreen extends AppCompatActivity {
         binding.nextBtn.setOnClickListener(view12 -> binding.viewPager.setCurrentItem(mCurrentPage+1));
 
         binding.backBtn.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(mCurrentPage-1));
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = ActivityStartingScreenBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
     }
 
     public void addDotsIndicator(int position) {
@@ -82,11 +90,7 @@ public class StartingScreen extends AppCompatActivity {
                 binding.backBtn.setVisibility(View.INVISIBLE);
 
                 binding.nextBtn.setText("Finish");
-                binding.nextBtn.setOnClickListener(view -> {
-                    Intent intent=new Intent(StartingScreen.this, Login.class);
-                    startActivity(intent);
-                    finish();
-                });
+                binding.nextBtn.setOnClickListener(view -> goToLogin());
 
             }
 
@@ -110,7 +114,14 @@ public class StartingScreen extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         moveTaskToBack(true);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
 
+    }
+    private void goToLogin(){
+        Intent intent=new Intent(StartingScreen.this, Login.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 }

@@ -20,7 +20,7 @@
             android:id="@+id/display_offers_fragment_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E3E3E3"
+            android:background="#ecf2fe"
             android:padding="@dimen/_8sdp">
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/display_offers_fragment_first_card"

@@ -1,6 +1,8 @@
 package com.zerotime.zerotime.Secretary.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Picasso;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Pojos.SecretaryChatPojo;
 
@@ -71,14 +74,17 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
 
                 ImageView image = dialoglayout.findViewById(R.id.dialog_chat_image_imageView);
                 try {
+
+
                     Glide.with(context.getApplicationContext()).load(mchat.getMessage())
                             .apply(new RequestOptions()
                                     .fitCenter()
                                     .format(DecodeFormat.PREFER_ARGB_8888)
-                                    .override(Target.SIZE_ORIGINAL))
+                                    .override(1000,1000))
+                            .fitCenter()
                             .placeholder(R.drawable.avatar1)
+                            .error(R.drawable.avatar11)
                             .into(image);
-                    //Objects.requireNonNull(image).setImageDrawable(holder.showMessageImage.getDrawable());
 
                 } catch (Exception e) {
                     Toast.makeText(context, "catch\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -93,8 +99,8 @@ public class SecretaryMessageAdapter extends RecyclerView.Adapter<SecretaryMessa
         if (position == secretaryChatPojos.size() - 1) {
 
             if (mchat.isSeen()) {
-                holder.seen.setText("Seen");
-            } else holder.seen.setText("Delivered");
+                holder.seen.setText("تم العرض");
+            } else holder.seen.setText("تم الارسال");
 
         } else holder.seen.setVisibility(View.GONE);
     }

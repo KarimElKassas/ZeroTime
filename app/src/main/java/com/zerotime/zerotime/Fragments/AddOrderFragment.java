@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -286,6 +287,7 @@ public class AddOrderFragment extends Fragment {
 
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
+                Toast.makeText(context.getApplicationContext(), "Add Order Back", Toast.LENGTH_SHORT).show();
                 return true;
             }
 

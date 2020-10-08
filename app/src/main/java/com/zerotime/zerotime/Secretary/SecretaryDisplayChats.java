@@ -1,9 +1,5 @@
 package com.zerotime.zerotime.Secretary;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,35 +8,35 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
-import com.zerotime.zerotime.Notifications.Token;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.Secretary.Adapters.DisplayChatsAdapter;
 import com.zerotime.zerotime.Secretary.Pojos.ChatList;
 import com.zerotime.zerotime.Secretary.Pojos.Users;
 import com.zerotime.zerotime.databinding.SecretaryActivityDisplayChatsBinding;
-import com.zerotime.zerotime.MyBroadCast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class SecretaryDisplayChats extends AppCompatActivity {
+    String userToken;
+    Random random;
     private SecretaryActivityDisplayChatsBinding binding;
-
     private DisplayChatsAdapter userAdapter;
     private List<Users> mUsers;
     private List<ChatList> userList;
     private DatabaseReference chatListRef1, chatListRef2;
-    String userToken;
-    Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,21 +89,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
 
             }
         });
-        //Update User Token ID
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                userToken = Objects.requireNonNull(task.getResult()).getToken();
-                refreshToken(userToken);
-            }
-        });
-
-
-    }
-
-    private void refreshToken(String token) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1 = new Token(token);
-        reference.child("Zero Time").setValue(token1);
+       
     }
 
     private void chatList() {
@@ -116,19 +98,19 @@ public class SecretaryDisplayChats extends AppCompatActivity {
         chatListRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()){
+                if (!snapshot.exists()) {
                     binding.secretaryChatsProgress.setVisibility(View.GONE);
                     binding.secretaryDisplayChatsRecycler.setVisibility(View.GONE);
                     binding.secretaryChatsNoResult.setVisibility(View.VISIBLE);
                 }
-                if (snapshot.exists()){
-                    if (!snapshot.hasChildren()){
+                if (snapshot.exists()) {
+                    if (!snapshot.hasChildren()) {
 
                         binding.secretaryChatsProgress.setVisibility(View.GONE);
                         binding.secretaryDisplayChatsRecycler.setVisibility(View.GONE);
                         binding.secretaryChatsNoResult.setVisibility(View.VISIBLE);
 
-                    }else {
+                    } else {
                         binding.secretaryChatsProgress.setVisibility(View.GONE);
                         binding.secretaryDisplayChatsRecycler.setVisibility(View.VISIBLE);
                         binding.secretaryChatsNoResult.setVisibility(View.GONE);
@@ -197,6 +179,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
             }
         });
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -213,6 +196,7 @@ public class SecretaryDisplayChats extends AppCompatActivity {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();

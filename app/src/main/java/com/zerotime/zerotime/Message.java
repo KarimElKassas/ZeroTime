@@ -1,42 +1,39 @@
 package com.zerotime.zerotime;
 
-import android.app.NotificationManager;
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.zerotime.zerotime.Adapters.MessageAdapter;
-import com.zerotime.zerotime.Interfaces.ApiService;
-import com.zerotime.zerotime.Notifications.Client;
-import com.zerotime.zerotime.Notifications.Data;
-import com.zerotime.zerotime.Notifications.MyResponse;
-import com.zerotime.zerotime.Notifications.Sender;
-import com.zerotime.zerotime.Notifications.Token;
 import com.zerotime.zerotime.Pojos.ChatPojo;
+import com.zerotime.zerotime.User.Home;
 import com.zerotime.zerotime.databinding.UserActivityMessageBinding;
 
 import java.util.ArrayList;
@@ -44,23 +41,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Message extends AppCompatActivity {
-    private UserActivityMessageBinding binding;
     private static final int GALLERY_PICK = 0;
-    ApiService apiService;
-
     SharedPreferences prefs;
     MessageAdapter adapter;
     List<ChatPojo> chatPojos;
-    DatabaseReference chatRef, userRef;
+    DatabaseReference chatRef;
     ValueEventListener seenListener;
-    String userId, intentFrom, userName;
-    boolean notify = false;
+    String userId, intentFrom;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    private UserActivityMessageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +73,9 @@ public class Message extends AppCompatActivity {
         }
         checkInternetConnection();
         //-----------------------------------
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(ApiService.class);
 
         binding.messageRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -92,86 +87,95 @@ public class Message extends AppCompatActivity {
                 userId = getIntent().getStringExtra("UserID");
                 intentFrom = "ContactFragment";
 
-            } else if (Objects.requireNonNull(getIntent().getStringExtra("UniqueID")).equals("Notification")) {
-                userId = getIntent().getStringExtra("UserID");
-                intentFrom = "Notification";
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.cancelAll();
-                notificationManager.cancel(0);
             }
         }
 
         prefs = getSharedPreferences("UserState", MODE_PRIVATE);
 
-        binding.messageSendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                notify = true;
-                String msg = Objects.requireNonNull(binding.secretaryMessageWriteMSGEdt.getText()).toString();
+        if (user == null) {
+            signInAnonymously();
+        } else {
+            binding.messageSendBtn.setOnClickListener(view12 -> {
+
+                String msg = Objects.requireNonNull(binding.messageWriteMSGEdt.getText()).toString();
                 if (!msg.equals("")) {
                     if (intentFrom != null) {
                         if (intentFrom.equals("ContactFragment") || intentFrom.equals("Notification")) {
-                            sendMessage(userId
-                                    , "Zero Time", msg);
+                            sendMessage(userId, msg);
 
                         }
                     }
 
                 } else
-                    Toasty.error(Message.this, "You Cant't Sent Empty Message!!", Toasty.LENGTH_SHORT,true).show();
-                binding.secretaryMessageWriteMSGEdt.setText("");
+                    Toasty.error(Message.this, "لا يمكنك ارسال رسالة فارغة !", Toasty.LENGTH_SHORT, true).show();
+                binding.messageWriteMSGEdt.setText("");
 
-            }
-        });
-        binding.messageSendImage.setOnClickListener(view1 -> {
-            Intent galleryIntent = new Intent();
-            galleryIntent.setType("image/*");
-            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
-        });
+            });
+            binding.messageSendImage.setOnClickListener(view1 -> {
+                if (!haveNetworkConnection()) {
+                    Toasty.error(this, "انت لست متصلاً", Toasty.LENGTH_SHORT, true).show();
+                    return;
+                }
+
+                if (checkPermission()) {
+                    Intent galleryIntent = new Intent();
+                    galleryIntent.setType("image/*");
+                    galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
+
+                } else {
+                    requestPermission();
+                }
+
+            });
+        }
+
         ReadMessages();
 
         seenMessage(userId);
 
     }
 
-    private void sendNotification(final String userName, String message) {
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo("Zero Time");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Token token = dataSnapshot.getValue(Token.class);
+    private void signInAnonymously() {
+        try {
+            mAuth.signInAnonymously().addOnSuccessListener(this, authResult -> {
 
-                    Data data = new Data(userId, userName + ": " + message, "لديك رسالة جديدة", userId, R.mipmap.ic_launcher_round);
+                binding.messageSendBtn.setOnClickListener(view -> {
 
-                    assert token != null;
-                    Sender sender = new Sender(data, token.getToken());
-                    apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
-                        @Override
-                        public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                            if (response.code() == 200) {
-                                assert response.body() != null;
-                                if (response.body().success != 1) {
-                                    Toasty.error(Message.this, "Failed !", Toasty.LENGTH_SHORT,true).show();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<MyResponse> call, Throwable t) {
+                    String msg = Objects.requireNonNull(binding.messageWriteMSGEdt.getText()).toString();
+                    if (!msg.equals("")) {
+                        if (intentFrom != null) {
+                            sendMessage(userId, msg);
 
                         }
-                    });
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    } else
+                        Toasty.error(Message.this, "لا يمكنك ارسال رسالة فارغة !", Toasty.LENGTH_SHORT, true).show();
+                    binding.messageWriteMSGEdt.setText("");
 
-            }
-        });
+                });
+                binding.messageSendImage.setOnClickListener(view1 -> {
+                    if (!haveNetworkConnection()) {
+                        Toasty.error(this, "انت لست متصلاً", Toasty.LENGTH_SHORT, true).show();
+                        return;
+                    }
+
+                    if (checkPermission()) {
+                        Intent galleryIntent = new Intent();
+                        galleryIntent.setType("image/*");
+                        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
+
+                    } else {
+                        requestPermission();
+                    }
+
+                });
+            });
+
+        } catch (Exception e) {
+            Toasty.info(this, "Catch sign anonymously\n" + e.getMessage(), Toasty.LENGTH_LONG,true).show();
+        }
     }
 
     private void seenMessage(final String userid) {
@@ -197,37 +201,16 @@ public class Message extends AppCompatActivity {
         });
     }
 
-    private void sendMessage(String Sender, String Receiver, String Message) {
+    private void sendMessage(String Sender, String Message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("Sender", Sender);
-        hashMap.put("Receiver", Receiver);
+        hashMap.put("Receiver", "Zero Time");
         hashMap.put("Message", Message);
         hashMap.put("isSeen", false);
         hashMap.put("Type", "Text");
         reference.child("Chats").push().setValue(hashMap);
 
-        final String msg = Objects.requireNonNull(binding.secretaryMessageWriteMSGEdt.getText()).toString();
-        userRef = FirebaseDatabase.getInstance().getReference("Users");
-        userRef.child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.hasChildren()) {
-                        userName = snapshot.child("UserName").getValue(String.class);
-                        if (notify) {
-                            sendNotification(userName, msg);
-                        }
-                        notify = false;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void ReadMessages() {
@@ -245,6 +228,7 @@ public class Message extends AppCompatActivity {
                     }
                     adapter = new MessageAdapter(Message.this, chatPojos);
                     binding.messageRecycler.setAdapter(adapter);
+                    binding.messageRecycler.smoothScrollToPosition(chatPojos.size() - 1);
                 }
 
 
@@ -283,28 +267,33 @@ public class Message extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
-            Uri imageUri = data.getData();
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == GALLERY_PICK && resultCode == RESULT_OK && data != null) {
 
-            final String currentUserRef = "messages/" + userId + "/" + "Zero Time";
-            final String chatUserRef = "messages/" + "Zero Time" + "/" + userId;
+                Uri imageUri = data.getData();
+                try {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+                    pDialog.setTitleText("جارى رفع الصورة ...");
 
-            DatabaseReference userMessagePush = FirebaseDatabase.getInstance()
-                    .getReference("Messages").child(userId).child("Zero Time").push();
-            final String pushID = userMessagePush.getKey();
+                    pDialog.setCancelable(false);
+                    pDialog.setCanceledOnTouchOutside(false);
+                    pDialog.show();
 
-            StorageReference filePath = FirebaseStorage.getInstance().getReference("Messages")
-                    .child("MessageImages").child(pushID + ".jpg");
-            assert imageUri != null;
-            filePath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        FirebaseStorage.getInstance().getReference("Messages")
-                                .child("MessageImages").child(pushID + ".jpg")
-                                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                    DatabaseReference userMessagePush = FirebaseDatabase.getInstance()
+                            .getReference("Messages").child(userId).child("Zero Time").push();
+                    final String pushID = userMessagePush.getKey();
+
+                    StorageReference filePath = FirebaseStorage.getInstance().getReference("Messages")
+                            .child("MessageImages").child(pushID + ".jpg");
+
+                    assert imageUri != null;
+
+                    filePath.putFile(imageUri).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseStorage.getInstance().getReference("Messages")
+                                    .child("MessageImages").child(pushID + ".jpg")
+                                    .getDownloadUrl().addOnSuccessListener(uri -> {
+
                                 String downloadUrl = uri.toString();
                                 HashMap<String, Object> hashMap = new HashMap<>();
                                 hashMap.put("Sender", userId);
@@ -312,13 +301,24 @@ public class Message extends AppCompatActivity {
                                 hashMap.put("Message", downloadUrl);
                                 hashMap.put("isSeen", false);
                                 hashMap.put("Type", "Image");
-                                chatRef.push().setValue(hashMap);
+                                chatRef.push().setValue(hashMap).addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        pDialog.cancel();
+                                        Toasty.success(getApplicationContext(), "تم رفع الصورة بنجاح", Toasty.LENGTH_SHORT, true).show();
+                                        binding.messageRecycler.smoothScrollToPosition(chatPojos.size() - 1);
+                                    } else {
+                                        pDialog.cancel();
+                                        Toasty.error(getApplicationContext(), "لقد حدث خطأ ما", Toasty.LENGTH_SHORT, true).show();
+                                    }
+                                });
 
-                            }
-                        });
-                    }
+                            });
+                        }
+                    });
+                } catch (Exception e) {
+                    Toasty.info(this, "first on activity result catch\n" + e.getMessage(), Toasty.LENGTH_LONG,true).show();
                 }
-            });
+            }
         }
     }
 
@@ -344,6 +344,7 @@ public class Message extends AppCompatActivity {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -351,9 +352,58 @@ public class Message extends AppCompatActivity {
         registerReceiver(broadCast, intentFilter);
 
     }
+
+    private boolean checkPermission() {
+        // Permission is not granted
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA},
+                200);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 200) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK);
+
+            } else {
+                Toasty.info(getApplicationContext(), "Permission Denied", Toasty.LENGTH_SHORT,true).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        showMessageOKCancel(
+                                (dialog, which) -> requestPermission());
+                    }
+                }
+            }
+        }
+    }
+
+    private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(Message.this)
+                .setMessage("يجب ان تعطينا اذن الوصول للصور !")
+                .setPositiveButton("سماح", okListener)
+                .setNegativeButton("رفض", null)
+                .create()
+                .show();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        this.finish();
+        Intent intent = new Intent(Message.this, Home.class);
+        intent.putExtra("UniqueID","Message");
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 }
