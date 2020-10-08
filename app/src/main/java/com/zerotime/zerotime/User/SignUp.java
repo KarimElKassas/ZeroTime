@@ -11,10 +11,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -23,12 +24,15 @@ import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 import java.util.HashMap;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
 public class SignUp extends AppCompatActivity {
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
+    String phone;
     private ActivitySignUpBinding binding;
     private DatabaseReference usersRef;
     private HashMap<String, Object> usersMap;
@@ -77,7 +81,7 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
         }
-        if (!binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010")
+       /* if (!binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010")
                 || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("011")
                 || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("012")
                 || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("015")) {
@@ -85,7 +89,7 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserPrimaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
-        }
+        }*/
         //Secondary Phone Validation
         if (TextUtils.isEmpty(binding.signUpUserSecondaryPhoneEditTxt.getText())) {
             binding.signUpUserSecondaryPhoneEditTxt.setError("ادخل رقم الهاتف الثانى من فضلك !");
@@ -97,7 +101,7 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
-        if (!binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010")
+       /* if (!binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010")
                 || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("011")
                 || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("012")
                 || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("015")) {
@@ -105,7 +109,7 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserSecondaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
-        }
+        }*/
         //different numbers validation
         String primaryPhone = binding.signUpUserPrimaryPhoneEditTxt.getText().toString();
         String secondaryPhone = binding.signUpUserSecondaryPhoneEditTxt.getText().toString();
@@ -137,35 +141,63 @@ public class SignUp extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-        usersMap.put("UserName", Objects.requireNonNull(binding.signUpUserNameEditTxt.getText()).toString());
-        usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
-        usersMap.put("UserSecondaryPhone", Objects.requireNonNull(binding.signUpUserSecondaryPhoneEditTxt.getText()).toString());
-        usersMap.put("UserPassword", Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).toString());
-        usersMap.put("UserAddress", Objects.requireNonNull(binding.signUpUserAddressEditTxt.getText()).toString());
-        usersMap.put("UserId", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
 
-        usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
-                .setValue(usersMap).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                //clear progress bar
-                binding.signUpProgressBarHolder.setAnimation(outAnimation);
-                binding.signUpProgressBarHolder.setVisibility(View.GONE);
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
 
-                Toasty.success(SignUp.this.getApplicationContext(),
-                        "تم تسجيل الحساب بنجاح",
-                        Toasty.LENGTH_SHORT,
-                        true).show();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        phone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
+                        assert phone != null;
+                        if (phone.equals(Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString())) {
+                            binding.signUpUserPrimaryPhoneEditTxt.setError("عذرا لقد تم التسجيل بهذا الهاتف من قبل..");
+                            binding.signUpProgressBarHolder.setVisibility(View.INVISIBLE);
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            return;
+                        }
 
-                goToLogin();
-            } else {
-                //clear progress bar
-                binding.signUpProgressBarHolder.setAnimation(outAnimation);
-                binding.signUpProgressBarHolder.setVisibility(View.GONE);
 
-                Toasty.error(SignUp.this.getApplicationContext(),
-                        Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()),
-                        Toasty.LENGTH_SHORT,
-                        true).show();
+                    }
+                    usersMap.put("UserName", Objects.requireNonNull(binding.signUpUserNameEditTxt.getText()).toString());
+                    usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
+                    usersMap.put("UserSecondaryPhone", Objects.requireNonNull(binding.signUpUserSecondaryPhoneEditTxt.getText()).toString());
+                    usersMap.put("UserPassword", Objects.requireNonNull(binding.signUpUserPasswordEditTxt.getText()).toString());
+                    usersMap.put("UserAddress", Objects.requireNonNull(binding.signUpUserAddressEditTxt.getText()).toString());
+                    usersMap.put("UserId", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
+
+                    usersRef.child(binding.signUpUserPrimaryPhoneEditTxt.getText().toString())
+                            .setValue(usersMap).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            //clear progress bar
+                            binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                            binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
+                            Toasty.success(SignUp.this.getApplicationContext(),
+                                    "تم تسجيل الحساب بنجاح",
+                                    Toasty.LENGTH_SHORT,
+                                    true).show();
+
+                            goToLogin();
+                        } else {
+                            //clear progress bar
+                            binding.signUpProgressBarHolder.setAnimation(outAnimation);
+                            binding.signUpProgressBarHolder.setVisibility(View.GONE);
+
+                            Toasty.error(SignUp.this.getApplicationContext(),
+                                    Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()),
+                                    Toasty.LENGTH_SHORT,
+                                    true).show();
+                        }
+                    });
+
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -269,6 +301,7 @@ public class SignUp extends AppCompatActivity {
         //---------------------------------------
 
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
+
         usersMap = new HashMap<>();
 
         //Sign In Text

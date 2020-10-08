@@ -428,7 +428,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/_4sdp"
-                                android:text=" يمتلك وسيله تنقل ؟ :"
+                                android:text=" يمتلك وسيله تنقل ؟ : "
                                 android:textColor="#005b96"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/changa_medium"                                app:layout_constraintBottom_toBottomOf="parent"

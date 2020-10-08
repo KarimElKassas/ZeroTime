@@ -92,10 +92,23 @@ public class ModeratorHome extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    /*    ModeratorAddClerk moderatorAddClerk=new ModeratorAddClerk();
+        ModeratorAddOffer moderatorAddOffer=new ModeratorAddOffer();
+        ModeratorClerksHistory moderatorClerksHistory=new ModeratorClerksHistory();
+        ModeratorComplaints moderatorComplaints=new ModeratorComplaints();
+        ModeratorNumberOfOrders moderatorNumberOfOrders=new ModeratorNumberOfOrders();
+        ModeratorViewClerks moderatorViewClerks=new ModeratorViewClerks();*/
+
 
         //go back to login activity
         Intent i = new Intent(ModeratorHome.this, Login.class);
         startActivity(i);
+     /*   moderatorAddClerk.finish();
+        moderatorAddOffer.finish();
+        moderatorComplaints.finish();
+        moderatorViewClerks.finish();
+        moderatorClerksHistory.finish();
+        moderatorNumberOfOrders.finish();*/
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }

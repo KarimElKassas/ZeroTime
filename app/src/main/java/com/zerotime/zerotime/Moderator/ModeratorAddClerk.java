@@ -6,34 +6,38 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.ModeratorActivityAddClerckBinding;
-import com.zerotime.zerotime.MyBroadCast;
 
 import java.util.HashMap;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
 public class ModeratorAddClerk extends AppCompatActivity {
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
-
+    String phone;
+    boolean temp;
     private ModeratorActivityAddClerckBinding binding;
     private DatabaseReference clerksRef;
     private HashMap<String, String> clerksMap;
-
     private String hasVehicle;
 
     @Override
@@ -72,6 +76,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
 
     public void addClerk() {
         try {
+            temp=false;
             //Clerk Name Validation
             if (TextUtils.isEmpty(binding.ModeratorAddClerkNameEdt.getText())) {
                 binding.ModeratorAddClerkNameEdt.setError("من فضلك قم بادخال اسم المندوب !");
@@ -132,7 +137,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
             }
             //Clerk Vehicle Validation
             if (!binding.radioHave.isChecked() && !binding.radioDonthave.isChecked()) {
-                Toasty.warning(this, "من فضلك اخبرنا إن كنت تمتلك طياره ام لا ", Toasty.LENGTH_SHORT,true).show();
+                Toasty.warning(this, "من فضلك اخبرنا إن كنت تمتلك طياره ام لا ", Toasty.LENGTH_SHORT, true).show();
                 return;
             } else {
                 if (binding.radioHave.isChecked()) hasVehicle = "يمتلك طياره";
@@ -147,51 +152,110 @@ public class ModeratorAddClerk extends AppCompatActivity {
             int age = Integer.parseInt(Objects.requireNonNull(binding.ModeratorAddClerkAgeEdt.getText()).toString());
             String address = Objects.requireNonNull(binding.ModeratorAddClerkAddressEdt.getText()).toString();
 
-            //Progress Bar
-            binding.addClerkProgressBarHolder.setAnimation(inAnimation);
-            binding.addClerkProgressBarHolder.setVisibility(View.VISIBLE);
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            clerksRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            // full the map
-            clerksMap.put("ClerkName", name);
-            clerksMap.put("ClerkPhone1", phone1);
-            clerksMap.put("ClerkPhone2", phone2);
-            clerksMap.put("ClerkAge", String.valueOf(age));
-            clerksMap.put("ClerkAddress", address);
-            clerksMap.put("hasVehicle", hasVehicle);
+                    if (snapshot.exists()) {
 
-            //send data to firebase
-            clerksRef.child(phone1)
-                    .setValue(clerksMap).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    //clear progress bar
-                    binding.addClerkProgressBarHolder.setAnimation(outAnimation);
-                    binding.addClerkProgressBarHolder.setVisibility(View.GONE);
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    Toasty.success(getApplicationContext(),
-                            "تمت الإضافه بنجاح ",
-                            Toasty.LENGTH_SHORT,
-                            true)
-                            .show();
+                            phone = dataSnapshot.child("ClerkPhone1").getValue(String.class);
+                            assert phone != null;
 
-                    //Clear Texts from edit text
-                    clearTools();
-                } else {
-                    //clear progress bar
-                    binding.addClerkProgressBarHolder.setAnimation(outAnimation);
-                    binding.addClerkProgressBarHolder.setVisibility(View.GONE);
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            if (phone.equals(Objects.requireNonNull(binding.ModeratorAddClerkPhone1Edt.getText()).toString())) {
+                                binding.ModeratorAddClerkPhone1Edt.setError("عذرا لقد تم التسجيل بهذا الهاتف من قبل..");
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                temp = true;
+                                return;
+                            }
 
-                    Toasty.error(getApplicationContext(),
-                            Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()),
-                            Toasty.LENGTH_SHORT,
-                            true)
-                            .show();
+
+                        }
+
+                    }
+
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+
+
             });
+
+
+           new Handler().postDelayed(new Runnable() {
+               @Override
+               public void run() {
+
+
+                   if (!temp) {
+                       binding.ModeratorAddClerkPhone1Edt.setError(null);
+
+                       //Progress Bar
+                       binding.addClerkProgressBarHolder.setAnimation(inAnimation);
+                       binding.addClerkProgressBarHolder.setVisibility(View.VISIBLE);
+                       getWindow().setFlags(
+                               WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                               WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                       // full the map
+                       clerksMap.put("ClerkName", name);
+                       clerksMap.put("ClerkPhone1", phone1);
+                       clerksMap.put("ClerkPhone2", phone2);
+                       clerksMap.put("ClerkAge", String.valueOf(age));
+                       clerksMap.put("ClerkAddress", address);
+                       clerksMap.put("hasVehicle", hasVehicle);
+
+
+                       //send data to firebase
+                       clerksRef.child(phone1)
+                               .setValue(clerksMap).addOnCompleteListener(task -> {
+
+                           if (task.isSuccessful()) {
+
+                               //clear progress bar
+                               binding.addClerkProgressBarHolder.setAnimation(outAnimation);
+                               binding.addClerkProgressBarHolder.setVisibility(View.GONE);
+                               getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                               Toasty.success(getApplicationContext(),
+                                       "تمت الإضافه بنجاح ",
+                                       Toasty.LENGTH_SHORT,
+                                       true)
+                                       .show();
+                               clearTools();
+                               Intent intent = new Intent(ModeratorAddClerk.this, ModeratorHome.class);
+                               startActivity(intent);
+                               overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                               finish();
+
+                               //Clear Texts from edit text
+                           } else {
+                               //clear progress bar
+                               binding.addClerkProgressBarHolder.setAnimation(outAnimation);
+                               binding.addClerkProgressBarHolder.setVisibility(View.GONE);
+                               getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                               Toasty.error(getApplicationContext(),
+                                       Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()),
+                                       Toasty.LENGTH_SHORT,
+                                       true)
+                                       .show();
+                           }
+                       });
+
+
+                   }
+
+
+
+               }
+           },2000);
+
+
         } catch (Exception e) {
             Toasty.error(getApplicationContext(),
                     Objects.requireNonNull(e.getMessage()),
@@ -234,6 +298,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();

@@ -79,6 +79,7 @@ public class ModeratorAddOffer extends AppCompatActivity {
 
         binding.moderatorAddOfferSixthUpdateBtn.setOnClickListener(view1 -> {
             addOffer();
+
         });
     }
     @Override
