@@ -15,7 +15,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.Moderator.ModeratorAddClerk;
+import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -142,23 +145,21 @@ public class SignUp extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
-        usersRef.addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("Users").orderByChild("UserPrimaryPhone").equalTo(binding.signUpUserPrimaryPhoneEditTxt.getText().toString());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
 
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        phone = dataSnapshot.child("UserPrimaryPhone").getValue(String.class);
-                        assert phone != null;
-                        if (phone.equals(Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString())) {
-                            binding.signUpUserPrimaryPhoneEditTxt.setError("عذرا لقد تم التسجيل بهذا الهاتف من قبل..");
-                            binding.signUpProgressBarHolder.setVisibility(View.INVISIBLE);
-                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            return;
-                        }
+                    binding.signUpUserPrimaryPhoneEditTxt.setError("عذرا لقد تم التسجيل بهذا الهاتف من قبل..");
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    binding.signUpProgressBarHolder.setVisibility(View.GONE);
 
+                }
+                else {
 
-                    }
                     usersMap.put("UserName", Objects.requireNonNull(binding.signUpUserNameEditTxt.getText()).toString());
                     usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
                     usersMap.put("UserSecondaryPhone", Objects.requireNonNull(binding.signUpUserSecondaryPhoneEditTxt.getText()).toString());
@@ -191,12 +192,13 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
 
+
+
                 }
             }
 
-
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
