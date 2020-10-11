@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,8 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.zerotime.zerotime.Moderator.ModeratorAddClerk;
-import com.zerotime.zerotime.Moderator.ModeratorHome;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
@@ -84,15 +83,20 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
         }
-       /* if (!binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010")
-                || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("011")
-                || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("012")
-                || !binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("015")) {
 
+
+        if(binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010") ||
+                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("011")||
+                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("012")||
+                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("015")){
+
+        }
+        else {
             binding.signUpUserPrimaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
-        }*/
+        }
+
         //Secondary Phone Validation
         if (TextUtils.isEmpty(binding.signUpUserSecondaryPhoneEditTxt.getText())) {
             binding.signUpUserSecondaryPhoneEditTxt.setError("ادخل رقم الهاتف الثانى من فضلك !");
@@ -104,15 +108,23 @@ public class SignUp extends AppCompatActivity {
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
-       /* if (!binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010")
-                || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("011")
-                || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("012")
-                || !binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("015")) {
 
+
+
+        if(binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010") ||
+                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("011")||
+                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("012")||
+                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("015")){
+
+        }
+        else {
             binding.signUpUserSecondaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
-        }*/
+        }
+
+
+
         //different numbers validation
         String primaryPhone = binding.signUpUserPrimaryPhoneEditTxt.getText().toString();
         String secondaryPhone = binding.signUpUserSecondaryPhoneEditTxt.getText().toString();
@@ -145,7 +157,6 @@ public class SignUp extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("Users").orderByChild("UserPrimaryPhone").equalTo(binding.signUpUserPrimaryPhoneEditTxt.getText().toString());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -157,8 +168,7 @@ public class SignUp extends AppCompatActivity {
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     binding.signUpProgressBarHolder.setVisibility(View.GONE);
 
-                }
-                else {
+                } else {
 
                     usersMap.put("UserName", Objects.requireNonNull(binding.signUpUserNameEditTxt.getText()).toString());
                     usersMap.put("UserPrimaryPhone", Objects.requireNonNull(binding.signUpUserPrimaryPhoneEditTxt.getText()).toString());
@@ -191,7 +201,6 @@ public class SignUp extends AppCompatActivity {
                                     true).show();
                         }
                     });
-
 
 
                 }

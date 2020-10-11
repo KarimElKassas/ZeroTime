@@ -96,8 +96,22 @@ public class ModeratorAddClerk extends AppCompatActivity {
                 return;
             }
 
+
+
             if (!binding.ModeratorAddClerkPhone1Edt.getText().toString().startsWith("01")) {
                 binding.ModeratorAddClerkPhone1Edt.setError("رقم الهاتف يجب ان يبدأ بـ 01 !");
+                binding.ModeratorAddClerkPhone1Edt.requestFocus();
+                return;
+            }
+
+            if(binding.ModeratorAddClerkPhone1Edt.getText().toString().startsWith("010") ||
+                    binding.ModeratorAddClerkPhone1Edt.getText().toString().startsWith("011")||
+                    binding.ModeratorAddClerkPhone1Edt.getText().toString().startsWith("012")||
+                    binding.ModeratorAddClerkPhone1Edt.getText().toString().startsWith("015")){
+
+            }
+            else {
+                binding.ModeratorAddClerkPhone1Edt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
                 binding.ModeratorAddClerkPhone1Edt.requestFocus();
                 return;
             }
@@ -120,6 +134,20 @@ public class ModeratorAddClerk extends AppCompatActivity {
                 binding.ModeratorAddClerkPhone2Edt.requestFocus();
                 return;
             }
+
+
+            if(binding.ModeratorAddClerkPhone2Edt.getText().toString().startsWith("010") ||
+                    binding.ModeratorAddClerkPhone2Edt.getText().toString().startsWith("011")||
+                    binding.ModeratorAddClerkPhone2Edt.getText().toString().startsWith("012")||
+                    binding.ModeratorAddClerkPhone2Edt.getText().toString().startsWith("015")){
+
+            }
+            else {
+                binding.ModeratorAddClerkPhone2Edt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
+                binding.ModeratorAddClerkPhone2Edt.requestFocus();
+                return;
+            }
+
 
             //Primary Phone and Secondary Phone difference Validation
             String primaryPhone = binding.ModeratorAddClerkPhone1Edt.getText().toString();
