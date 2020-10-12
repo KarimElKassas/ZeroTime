@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import java.util.Objects;
 import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.MODE_PRIVATE;
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 
 public class AddOrderFragment extends Fragment {
@@ -52,6 +54,7 @@ public class AddOrderFragment extends Fragment {
     HashMap<String, String> ordersMap = new HashMap<>();
     Context context;
     View view;
+    private static final String TAG ="addOrder";
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
@@ -129,6 +132,13 @@ public class AddOrderFragment extends Fragment {
             binding.addOrderReceiverPrimaryPhoneEditText.requestFocus();
             return;
         }
+
+        if (binding.addOrderReceiverPrimaryPhoneEditText.getText().toString().equals(userPhone)) {
+            binding.addOrderReceiverPrimaryPhoneEditText.setError("لا يمكن إرسال طلب إلي نفسك");
+            binding.addOrderReceiverPrimaryPhoneEditText.requestFocus();
+            return;
+        }
+
         //Secondary Phone Validation
         if (TextUtils.isEmpty(binding.addOrderReceiverSecondaryPhoneEditText.getText())) {
             binding.addOrderReceiverSecondaryPhoneEditText.setError("ادخل رقم الهاتف الثانى للمستلم من فضلك !");
@@ -267,16 +277,19 @@ public class AddOrderFragment extends Fragment {
         context.registerReceiver(broadCast, intentFilter);
 
     }
-    @Override
-    public void onResume() {
 
-        super.onResume();
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
 
             if( keyCode == KeyEvent.KEYCODE_BACK )
             {
+                Toast.makeText(context, "aaa", Toast.LENGTH_LONG).show();
                 binding.addOrderOrderDescriptionEditText.clearFocus();
                 binding.addOrderReceiverNameEditText.clearFocus();
                 binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
@@ -287,7 +300,63 @@ public class AddOrderFragment extends Fragment {
 
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
-                Toast.makeText(context.getApplicationContext(), "Add Order Back", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+
+            if( keyCode == KeyEvent.KEYCODE_BACK )
+            {
+                Toast.makeText(context, "aaa", Toast.LENGTH_LONG).show();
+                binding.addOrderOrderDescriptionEditText.clearFocus();
+                binding.addOrderReceiverNameEditText.clearFocus();
+                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
+                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
+                binding.addOrderReceiverAddressEditText.clearFocus();
+                binding.addOrderOrderPriceEditText.clearFocus();
+                binding.addOrderArrivalDateNotesEditText.clearFocus();
+
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
+                return true;
+            }
+
+            return false;
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+
+            if( keyCode == KeyEvent.KEYCODE_BACK )
+            {
+                Toast.makeText(context, "aaa", Toast.LENGTH_LONG).show();
+                binding.addOrderOrderDescriptionEditText.clearFocus();
+                binding.addOrderReceiverNameEditText.clearFocus();
+                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
+                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
+                binding.addOrderReceiverAddressEditText.clearFocus();
+                binding.addOrderOrderPriceEditText.clearFocus();
+                binding.addOrderArrivalDateNotesEditText.clearFocus();
+
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
                 return true;
             }
 

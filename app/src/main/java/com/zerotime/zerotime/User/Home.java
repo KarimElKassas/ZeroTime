@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.zerotime.zerotime.Fragments.AddOrderFragment;
 import com.zerotime.zerotime.Fragments.ContactFragment;
 import com.zerotime.zerotime.Fragments.HomeFragment;
 import com.zerotime.zerotime.Fragments.ProfileFragment;
@@ -40,6 +41,8 @@ public class Home extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+
+
         if (binding.bottomNav.getCurrentActiveItemPosition() == 3) {
             Toast.makeText(getApplicationContext(), "Home  Back", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -49,10 +52,7 @@ public class Home extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             int pid = android.os.Process.myPid();
             android.os.Process.killProcess(pid);
-                /*new Handler().postDelayed(() -> {
-                    int pid = android.os.Process.myPid();
-                    android.os.Process.killProcess(pid);
-                }, 500);*/
+
                 return;
             }
 
