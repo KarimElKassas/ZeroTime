@@ -53,7 +53,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#F2544C">
+                            android:background="#FDE94A">
 
                             <TextView
                                 android:id="@+id/card1_txt"
@@ -63,7 +63,7 @@
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
                                 android:text="@string/update_data_txt"
-                                android:textColor="#FFF"
+                                android:textColor="#000"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +144,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#FDE94A">
+                            android:background="#4354AE">
 
                             <TextView
                                 android:id="@+id/card3_txt"
@@ -154,17 +154,17 @@
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
                                 android:text="@string/history_txt"
-                                android:textColor="#000"
+                                android:textColor="#FFF"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <ImageView
-                                android:layout_width="@dimen/_100sdp"
+                                android:layout_width="@dimen/_74sdp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="@dimen/_8sdp"
-                                android:src="@drawable/history_png"
+                                android:src="@drawable/ic_history_timer_white"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
