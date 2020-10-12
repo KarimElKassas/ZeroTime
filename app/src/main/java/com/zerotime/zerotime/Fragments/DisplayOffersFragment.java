@@ -7,36 +7,33 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentDisplayOffersBinding;
-import com.zerotime.zerotime.MyBroadCast;
 
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 
 public class DisplayOffersFragment extends Fragment {
-    private UserFragmentDisplayOffersBinding binding;
-
-    private DatabaseReference offersRef;
     View view;
     Context context;
+    private UserFragmentDisplayOffersBinding binding;
+    private DatabaseReference offersRef;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,6 +42,7 @@ public class DisplayOffersFragment extends Fragment {
         binding = UserFragmentDisplayOffersBinding.inflate(getLayoutInflater());
         view = binding.getRoot();
         context = container.getContext();
+
 
         // Check Internet State
         if (!haveNetworkConnection()) {
@@ -68,74 +66,75 @@ public class DisplayOffersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         gettingOffers();
 
+
     }
 
-    private void gettingOffers(){
+    private void gettingOffers() {
         binding.displayOffersFragmentProgress.setVisibility(View.VISIBLE);
         offersRef.child("Offers").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
+                if (!dataSnapshot.exists()) {
                     binding.displayOffersFragmentProgress.setVisibility(View.GONE);
                     binding.scrollLayout.setVisibility(View.GONE);
                     binding.offersNoResult.setVisibility(View.VISIBLE);
                 }
-                if (dataSnapshot.exists()){
-                    if (!dataSnapshot.hasChildren()){
+                if (dataSnapshot.exists()) {
+                    if (!dataSnapshot.hasChildren()) {
                         binding.displayOffersFragmentProgress.setVisibility(View.GONE);
                         binding.scrollLayout.setVisibility(View.GONE);
                         binding.offersNoResult.setVisibility(View.VISIBLE);
                     }
 
 
-                    if (dataSnapshot.hasChildren()){
+                    if (dataSnapshot.hasChildren()) {
                         binding.offersNoResult.setVisibility(View.GONE);
                         binding.displayOffersFragmentProgress.setVisibility(View.GONE);
                         binding.scrollLayout.setVisibility(View.VISIBLE);
 
-                            String firstOffer = dataSnapshot.child("FirstOffer").getValue(String.class);
-                            String secondOffer = dataSnapshot.child("SecondOffer").getValue(String.class);
-                            String thirdOffer = dataSnapshot.child("ThirdOffer").getValue(String.class);
-                            String fourthOffer = dataSnapshot.child("FourthOffer").getValue(String.class);
-                            String fifthOffer = dataSnapshot.child("FifthOffer").getValue(String.class);
-                            String sixthOffer = dataSnapshot.child("SixthOffer").getValue(String.class);
+                        String firstOffer = dataSnapshot.child("FirstOffer").getValue(String.class);
+                        String secondOffer = dataSnapshot.child("SecondOffer").getValue(String.class);
+                        String thirdOffer = dataSnapshot.child("ThirdOffer").getValue(String.class);
+                        String fourthOffer = dataSnapshot.child("FourthOffer").getValue(String.class);
+                        String fifthOffer = dataSnapshot.child("FifthOffer").getValue(String.class);
+                        String sixthOffer = dataSnapshot.child("SixthOffer").getValue(String.class);
 
-                            if (Objects.requireNonNull(firstOffer).equals("لا يوجد")){
-                                binding.displayOffersFragmentFirstCard.setVisibility(View.GONE);
-                            }else {
-                                binding.displayOffersFragmentFirstOfferTextView.setText(firstOffer);
+                        if (Objects.requireNonNull(firstOffer).equals("لا يوجد")) {
+                            binding.displayOffersFragmentFirstCard.setVisibility(View.GONE);
+                        } else {
+                            binding.displayOffersFragmentFirstOfferTextView.setText(firstOffer);
 
-                            }
-                            if (Objects.requireNonNull(secondOffer).equals("لا يوجد")){
-                                binding.displayOffersFragmentSecondCard.setVisibility(View.GONE);
-                            }else {
-                                binding.displayOffersFragmentSecondOfferTextView.setText(secondOffer);
+                        }
+                        if (Objects.requireNonNull(secondOffer).equals("لا يوجد")) {
+                            binding.displayOffersFragmentSecondCard.setVisibility(View.GONE);
+                        } else {
+                            binding.displayOffersFragmentSecondOfferTextView.setText(secondOffer);
 
-                            }
-                            if (Objects.requireNonNull(thirdOffer).equals("لا يوجد")){
-                                binding.displayOffersFragmentThirdCard.setVisibility(View.GONE);
-                            }else {
-                                binding.displayOffersFragmentThirdOfferTextView.setText(thirdOffer);
+                        }
+                        if (Objects.requireNonNull(thirdOffer).equals("لا يوجد")) {
+                            binding.displayOffersFragmentThirdCard.setVisibility(View.GONE);
+                        } else {
+                            binding.displayOffersFragmentThirdOfferTextView.setText(thirdOffer);
 
-                            }
-                            if (Objects.requireNonNull(fourthOffer).equals("لا يوجد")){
-                                binding.displayOffersFragmentFourthCard.setVisibility(View.GONE);
-                            }else {
-                                binding.displayOffersFragmentFourthOfferTextView.setText(fourthOffer);
+                        }
+                        if (Objects.requireNonNull(fourthOffer).equals("لا يوجد")) {
+                            binding.displayOffersFragmentFourthCard.setVisibility(View.GONE);
+                        } else {
+                            binding.displayOffersFragmentFourthOfferTextView.setText(fourthOffer);
 
-                            }
-                            if (Objects.requireNonNull(fifthOffer).equals("لا يوجد")){
-                                binding.displayOffersFragmentFifthCard.setVisibility(View.GONE);
-                            }else {
-                                binding.displayOffersFragmentFifthOfferTextView.setText(fifthOffer);
+                        }
+                        if (Objects.requireNonNull(fifthOffer).equals("لا يوجد")) {
+                            binding.displayOffersFragmentFifthCard.setVisibility(View.GONE);
+                        } else {
+                            binding.displayOffersFragmentFifthOfferTextView.setText(fifthOffer);
 
-                            }
-                            if (Objects.requireNonNull(sixthOffer).equals("لا يوجد")){
-                                binding.displayOffersFragmentSixthCard.setVisibility(View.GONE);
-                            }else {
-                                binding.displayOffersFragmentSixthOfferTextView.setText(sixthOffer);
+                        }
+                        if (Objects.requireNonNull(sixthOffer).equals("لا يوجد")) {
+                            binding.displayOffersFragmentSixthCard.setVisibility(View.GONE);
+                        } else {
+                            binding.displayOffersFragmentSixthOfferTextView.setText(sixthOffer);
 
-                            }
+                        }
 
                     }
                 }
@@ -147,6 +146,7 @@ public class DisplayOffersFragment extends Fragment {
             }
         });
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -163,6 +163,7 @@ public class DisplayOffersFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -170,6 +171,7 @@ public class DisplayOffersFragment extends Fragment {
         context.registerReceiver(broadCast, intentFilter);
 
     }
+
     @Override
     public void onResume() {
 
@@ -178,8 +180,7 @@ public class DisplayOffersFragment extends Fragment {
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
 
-            if( keyCode == KeyEvent.KEYCODE_BACK )
-            {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
 
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();

@@ -88,15 +88,7 @@ public class ForgotPassword extends AppCompatActivity {
             return;
         }
 
-        /*if (!binding.forgotPhoneEdt.getText().toString().startsWith("010")
-                || !binding.forgotPhoneEdt.getText().toString().startsWith("011")
-                || !binding.forgotPhoneEdt.getText().toString().startsWith("012")
-                || !binding.forgotPhoneEdt.getText().toString().startsWith("015")) {
 
-            binding.forgotPhoneEdt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
-            binding.forgotPhoneEdt.requestFocus();
-            return;
-        }*/
         //Secondary Phone Validation
         if (TextUtils.isEmpty(binding.forgotPhone2Edt.getText())) {
             binding.forgotPhone2Edt.setError("ادخل رقم الهاتف الثانى من فضلك !");
@@ -108,15 +100,7 @@ public class ForgotPassword extends AppCompatActivity {
             binding.forgotPhone2Edt.requestFocus();
             return;
         }
-        /*if (!binding.forgotPhone2Edt.getText().toString().startsWith("010")
-                || !binding.forgotPhone2Edt.getText().toString().startsWith("011")
-                || !binding.forgotPhone2Edt.getText().toString().startsWith("012")
-                || !binding.forgotPhone2Edt.getText().toString().startsWith("015")) {
 
-            binding.forgotPhone2Edt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
-            binding.forgotPhone2Edt.requestFocus();
-            return;
-        }*/
         //different numbers validation
         String primaryPhone = binding.forgotPhoneEdt.getText().toString();
         String secondaryPhone = binding.forgotPhone2Edt.getText().toString();
@@ -241,24 +225,30 @@ public class ForgotPassword extends AppCompatActivity {
         outAnimation.setDuration(200);
 
         // forgot lock image animation
-        binding.fogotPasswordLockImg.setTranslationX(400f);
+        binding.imgforgot.setTranslationX(400f);
+        binding.imgforgot.setAlpha(0f);
+        binding.imgforgot.animate().translationX(0f).alpha(1f).setDuration(600).setStartDelay(500).start();
+
+
+        // forgot lock image animation
+        binding.fogotPasswordLockImg.setTranslationX(600f);
         binding.fogotPasswordLockImg.setAlpha(0f);
-        binding.fogotPasswordLockImg.animate().translationX(0f).alpha(1f).setDuration(600).setStartDelay(500).start();
+        binding.fogotPasswordLockImg.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(500).start();
         //---------------------------------------------------------------------
         // primary phone animation
-        binding.forgotPhoneEdt.setTranslationX(600f);
+        binding.forgotPhoneEdt.setTranslationX(800f);
         binding.forgotPhoneEdt.setAlpha(0f);
-        binding.forgotPhoneEdt.animate().translationX(0f).alpha(1f).setDuration(800).setStartDelay(500).start();
+        binding.forgotPhoneEdt.animate().translationX(0f).alpha(1f).setDuration(1000).setStartDelay(500).start();
         //---------------------------------------------------------------------
         // secondary phone animation
-        binding.forgotPhone2Edt.setTranslationX(800f);
+        binding.forgotPhone2Edt.setTranslationX(1000f);
         binding.forgotPhone2Edt.setAlpha(0f);
-        binding.forgotPhone2Edt.animate().translationX(0f).alpha(1f).setDuration(1000).setStartDelay(500).start();
+        binding.forgotPhone2Edt.animate().translationX(0f).alpha(1f).setDuration(1200).setStartDelay(500).start();
         //---------------------------------------------------------------------
         // forgot password btn animation
-        binding.forgotNextBtn.setTranslationX(1000f);
+        binding.forgotNextBtn.setTranslationX(1200f);
         binding.forgotNextBtn.setAlpha(0f);
-        binding.forgotNextBtn.animate().translationX(0f).alpha(1f).setDuration(1200).setStartDelay(500).start();
+        binding.forgotNextBtn.animate().translationX(0f).alpha(1f).setDuration(1400).setStartDelay(500).start();
         //---------------------------------------------------------------------
 
     }

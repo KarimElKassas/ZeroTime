@@ -142,6 +142,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
                     binding.ModeratorAddClerkPhone2Edt.getText().toString().startsWith("015")){
 
             }
+
             else {
                 binding.ModeratorAddClerkPhone2Edt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
                 binding.ModeratorAddClerkPhone2Edt.requestFocus();

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.anstrontechnologies.corehelper.AnstronCoreHelper;
@@ -53,7 +54,7 @@ import java.util.Objects;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
-public class SecretaryMessage extends AppCompatActivity {
+public class SecretaryMessage extends AppCompatActivity  {
     private static final int GALLERY_PICK = 0;
     SharedPreferences prefs;
     SecretaryMessageAdapter adapter;
@@ -101,13 +102,15 @@ public class SecretaryMessage extends AppCompatActivity {
 
         anstronCoreHelper = new AnstronCoreHelper(this);
 
-
         binding.nestedScroll.fullScroll(View.FOCUS_DOWN);
         binding.secretaryMessageRecycler.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         linearLayoutManager.setStackFromEnd(true);
         binding.secretaryMessageRecycler.setLayoutManager(linearLayoutManager);
+        binding.secretaryMessageRecycler.setFocusable(false);
         binding.secretaryMessageRecycler.setNestedScrollingEnabled(false);
+        binding.nestedScroll.requestFocus();
+
 
         if (getIntent().getStringExtra("UniqueID") != null) {
             if (Objects.requireNonNull(getIntent().getStringExtra("UniqueID")).equals("DisplayChatsAdapter")) {
