@@ -115,6 +115,28 @@ public class ComplaintsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        binding.complaintsFragmentComplaintEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.complaintsFragmentComplaintEditText.clearFocus();
+            }
+            return false;
+        });
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
+
+                return true;
+            }
+
+            return false;
+        });
         //Send Complaint Button
         binding.complaintsFragmentSendComplaintBtn.setOnClickListener(view1 -> {
 
@@ -212,24 +234,6 @@ public class ComplaintsFragment extends Fragment {
                 pDialog.show();
 
             }
-        });
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener((v, keyCode, event) -> {
-
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                Bundle bundle = new Bundle();
-                bundle.putString("UniqueID", "ComplaintsFragment");
-                SettingsFragment fragment = new SettingsFragment();
-                fragment.setArguments(bundle);
-                assert getFragmentManager() != null;
-                getFragmentManager().popBackStackImmediate();
-
-                return true;
-            }
-
-            return false;
         });
     }
 

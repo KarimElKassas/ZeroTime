@@ -10,7 +10,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,15 +28,12 @@ import com.zerotime.zerotime.databinding.ActivitySignUpBinding;
 import java.util.HashMap;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
 public class SignUp extends AppCompatActivity {
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
-    String phone;
     private ActivitySignUpBinding binding;
     private DatabaseReference usersRef;
     private HashMap<String, Object> usersMap;
@@ -85,13 +84,12 @@ public class SignUp extends AppCompatActivity {
         }
 
 
-        if(binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010") ||
-                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("011")||
-                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("012")||
-                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("015")){
+        if (binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("010") ||
+                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("011") ||
+                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("012") ||
+                binding.signUpUserPrimaryPhoneEditTxt.getText().toString().startsWith("015")) {
 
-        }
-        else {
+        } else {
             binding.signUpUserPrimaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserPrimaryPhoneEditTxt.requestFocus();
             return;
@@ -110,19 +108,16 @@ public class SignUp extends AppCompatActivity {
         }
 
 
+        if (binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010") ||
+                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("011") ||
+                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("012") ||
+                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("015")) {
 
-        if(binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("010") ||
-                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("011")||
-                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("012")||
-                binding.signUpUserSecondaryPhoneEditTxt.getText().toString().startsWith("015")){
-
-        }
-        else {
+        } else {
             binding.signUpUserSecondaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
             binding.signUpUserSecondaryPhoneEditTxt.requestFocus();
             return;
         }
-
 
 
         //different numbers validation

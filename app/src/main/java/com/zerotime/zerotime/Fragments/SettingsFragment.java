@@ -16,20 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.zerotime.zerotime.BuildConfig;
-import com.zerotime.zerotime.User.Login;
-import com.zerotime.zerotime.MyBroadCast;
-import com.zerotime.zerotime.No_Internet_Connection;
-import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.UserFragmentSettingsBinding;
-
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.zerotime.zerotime.BuildConfig;
+import com.zerotime.zerotime.MyBroadCast;
+import com.zerotime.zerotime.No_Internet_Connection;
+import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.User.Login;
+import com.zerotime.zerotime.databinding.UserFragmentSettingsBinding;
+
+import java.util.Objects;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -94,7 +95,8 @@ public class SettingsFragment extends Fragment {
                     ((Activity) context).finish();
 
                 } catch (Exception e) {
-                    Toast.makeText(context, "Unable to open \n"+e.getMessage(), Toast.LENGTH_SHORT).show();                }
+                    Toast.makeText(context, "Unable to open \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -150,6 +152,7 @@ public class SettingsFragment extends Fragment {
 
         });
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -166,6 +169,7 @@ public class SettingsFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -173,6 +177,7 @@ public class SettingsFragment extends Fragment {
         context.registerReceiver(broadCast, intentFilter);
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -186,10 +191,9 @@ public class SettingsFragment extends Fragment {
                 view.requestFocus();
                 view.setOnKeyListener((v, keyCode, event) -> {
 
-                    if( keyCode == KeyEvent.KEYCODE_BACK )
-                    {
-                        Objects.requireNonNull(getActivity()).onBackPressed();
-
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        assert getFragmentManager() != null;
+                        getFragmentManager().popBackStackImmediate();
 
                         return true;
                     }
@@ -198,8 +202,8 @@ public class SettingsFragment extends Fragment {
                 });
 
             }, 1000000);
-        }catch (Exception e){
-            Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

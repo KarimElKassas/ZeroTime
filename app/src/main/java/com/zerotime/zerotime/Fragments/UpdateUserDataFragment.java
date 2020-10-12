@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,7 +61,6 @@ public class UpdateUserDataFragment extends Fragment {
         binding = UserFragmentUpdateUserDataBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         context = container.getContext();
-
 
 
         return view;
@@ -127,6 +126,15 @@ public class UpdateUserDataFragment extends Fragment {
             binding.updateDataFragmentPrimaryPhoneEditTxt.requestFocus();
             return;
         }
+        if (!binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString().startsWith("010") &&
+                !binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString().startsWith("011") &&
+                !binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString().startsWith("012") &&
+                !binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString().startsWith("015")) {
+            binding.updateDataFragmentPrimaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
+            binding.updateDataFragmentPrimaryPhoneEditTxt.requestFocus();
+            return;
+        }
+
         //Secondary Phone Validation
         if (TextUtils.isEmpty(binding.updateDataFragmentSecondaryPhoneEditTxt.getText())) {
             binding.updateDataFragmentSecondaryPhoneEditTxt.setError("ادخل رقم الهاتف الثانى من فضلك !");
@@ -143,10 +151,19 @@ public class UpdateUserDataFragment extends Fragment {
             binding.updateDataFragmentSecondaryPhoneEditTxt.requestFocus();
             return;
         }
+        if (!binding.updateDataFragmentSecondaryPhoneEditTxt.getText().toString().startsWith("010") &&
+                !binding.updateDataFragmentSecondaryPhoneEditTxt.getText().toString().startsWith("011") &&
+                !binding.updateDataFragmentSecondaryPhoneEditTxt.getText().toString().startsWith("012") &&
+                !binding.updateDataFragmentSecondaryPhoneEditTxt.getText().toString().startsWith("015")) {
+            binding.updateDataFragmentSecondaryPhoneEditTxt.setError("رقم الهاتف يجب ان يكون تابع لاحدى شركات المحمول المصرية !");
+            binding.updateDataFragmentSecondaryPhoneEditTxt.requestFocus();
+            return;
+        }
+
         String primaryPhone = binding.updateDataFragmentPrimaryPhoneEditTxt.getText().toString();
         String secondaryPhone = binding.updateDataFragmentSecondaryPhoneEditTxt.getText().toString();
         if (primaryPhone.equals(secondaryPhone)) {
-            Toasty.warning(getContext(), "من فضلك ادخل رقمين مختلفين !", Toasty.LENGTH_SHORT,true).show();
+            Toasty.warning(context.getApplicationContext(), "من فضلك ادخل رقمين مختلفين !", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         //User Address Validation
@@ -204,7 +221,6 @@ public class UpdateUserDataFragment extends Fragment {
         pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
-
     }
 
     @Override
@@ -228,7 +244,6 @@ public class UpdateUserDataFragment extends Fragment {
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
 
-
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         SharedPreferences prefs = Objects.requireNonNull(getContext()).getSharedPreferences("UserState", MODE_PRIVATE);
         userPhone = prefs.getString("isLogged", "No phone defined");//"No name defined" is the default value.
@@ -246,6 +261,51 @@ public class UpdateUserDataFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        binding.updateDataFragmentNameEditTxt.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.updateDataFragmentNameEditTxt.clearFocus();
+            }
+            return false;
+        });
+        binding.updateDataFragmentPasswordEditTxt.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.updateDataFragmentPasswordEditTxt.clearFocus();
+            }
+            return false;
+        });
+        binding.updateDataFragmentPrimaryPhoneEditTxt.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.updateDataFragmentPrimaryPhoneEditTxt.clearFocus();
+            }
+            return false;
+        });
+        binding.updateDataFragmentSecondaryPhoneEditTxt.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.updateDataFragmentSecondaryPhoneEditTxt.clearFocus();
+            }
+            return false;
+        });
+        binding.updateDataFragmentAddressEditTxt.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.updateDataFragmentAddressEditTxt.clearFocus();
+            }
+            return false;
+        });
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+
+            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                assert getFragmentManager() != null;
+                getFragmentManager().popBackStackImmediate();
+                Toast.makeText(context.getApplicationContext(), "Update Data Back", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            return false;
+        });
         usersRef.child(Objects.requireNonNull(userPhone)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -282,17 +342,7 @@ public class UpdateUserDataFragment extends Fragment {
 
         binding.updateDataFragmentUpdateBtn.setOnClickListener(view1 -> checkData());
 
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener((v, keyCode, event) -> {
 
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                assert getFragmentManager() != null;
-                getFragmentManager().popBackStackImmediate();
-                return true;
-            }
-
-            return false;
-        });
     }
+
 }

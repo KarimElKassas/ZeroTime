@@ -58,9 +58,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }else {
             holder.showMessage.setVisibility(View.GONE);
             holder.showMessageImageCard.setVisibility(View.VISIBLE);
-            Glide.with(context.getApplicationContext())
-                    .load(mchat.getMessage())
-                    .apply(new RequestOptions())
+            Glide.with(context.getApplicationContext()).load(mchat.getMessage())
+                    .apply(new RequestOptions()
+                            .fitCenter()
+                            .format(DecodeFormat.PREFER_ARGB_8888)
+                            .override(1000,1000))
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_dots)
+                    .error(R.drawable.ic_warning)
                     .into(holder.showMessageImage);
         }
         holder.showMessageImage.setOnClickListener(view -> {

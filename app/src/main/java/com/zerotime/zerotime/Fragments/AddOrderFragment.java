@@ -9,11 +9,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,16 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
 import com.zerotime.zerotime.databinding.UserFragmentAddOrderBinding;
-import com.zerotime.zerotime.MyBroadCast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,11 +53,12 @@ public class AddOrderFragment extends Fragment {
 
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = UserFragmentAddOrderBinding.inflate(inflater,container,false);
+        binding = UserFragmentAddOrderBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         context = container.getContext();
         // Check Internet State
@@ -148,7 +147,7 @@ public class AddOrderFragment extends Fragment {
         String primaryPhone = binding.addOrderReceiverPrimaryPhoneEditText.getText().toString();
         String secondaryPhone = binding.addOrderReceiverSecondaryPhoneEditText.getText().toString();
         if (primaryPhone.equals(secondaryPhone)) {
-            Toasty.error(context,"من فضلك ادخل رقمين مختلفين !",Toasty.LENGTH_SHORT,true).show();
+            Toasty.error(context, "من فضلك ادخل رقمين مختلفين !", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         //User Address Validation
@@ -159,23 +158,25 @@ public class AddOrderFragment extends Fragment {
         }
 
         //Order Size Validation
-        if (!binding.addOrderBigOrderRadioBtn.isChecked() && !binding.addOrderMediumOrderRadioBtn.isChecked() && !binding.addOrderSmallOrderRadioBtn.isChecked()){
-            Toasty.error(context,"من فضلك قم باختيار حجم الطلب !",Toasty.LENGTH_SHORT,true).show();
+        if (!binding.addOrderBigOrderRadioBtn.isChecked() && !binding.addOrderMediumOrderRadioBtn.isChecked() && !binding.addOrderSmallOrderRadioBtn.isChecked()) {
+            Toasty.error(context, "من فضلك قم باختيار حجم الطلب !", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         getOrderSize();
         requestOrder();
     }
-    private void getOrderSize(){
-        if (binding.addOrderBigOrderRadioBtn.isChecked()){
-            ordersMap.put("OrderSize","كبير");
-        }else if (binding.addOrderMediumOrderRadioBtn.isChecked()){
-            ordersMap.put("OrderSize","متوسط");
-        }else if (binding.addOrderSmallOrderRadioBtn.isChecked()){
-            ordersMap.put("OrderSize","صغير");
+
+    private void getOrderSize() {
+        if (binding.addOrderBigOrderRadioBtn.isChecked()) {
+            ordersMap.put("OrderSize", "كبير");
+        } else if (binding.addOrderMediumOrderRadioBtn.isChecked()) {
+            ordersMap.put("OrderSize", "متوسط");
+        } else if (binding.addOrderSmallOrderRadioBtn.isChecked()) {
+            ordersMap.put("OrderSize", "صغير");
         }
 
     }
+
     private void requestOrder() {
         @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
         String currentTime = df.format(Calendar.getInstance().getTime());
@@ -183,7 +184,7 @@ public class AddOrderFragment extends Fragment {
         //Progress Bar
         binding.addOrderProgressBarHolder.setAnimation(inAnimation);
         binding.addOrderProgressBarHolder.setVisibility(View.VISIBLE);
-        ((Activity)context).getWindow().setFlags(
+        ((Activity) context).getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
@@ -210,20 +211,20 @@ public class AddOrderFragment extends Fragment {
                     //clear progress bar
                     binding.addOrderProgressBarHolder.setAnimation(outAnimation);
                     binding.addOrderProgressBarHolder.setVisibility(View.GONE);
-                    ((Activity)context).getWindow()
+                    ((Activity) context).getWindow()
                             .clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                    Toasty.success(context,"تم ارسال الطلب بنجاح",Toasty.LENGTH_SHORT,true).show();
+                    Toasty.success(context, "تم ارسال الطلب بنجاح", Toasty.LENGTH_SHORT, true).show();
                     clearTools();
-                }else {
+                } else {
                     //clear progress bar
                     binding.addOrderProgressBarHolder.setAnimation(outAnimation);
                     binding.addOrderProgressBarHolder.setVisibility(View.GONE);
-                    ((Activity)context).getWindow()
+                    ((Activity) context).getWindow()
                             .clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                     Toasty.error(context,
                             Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage())
-                            ,Toasty.LENGTH_SHORT,true).show();
+                            , Toasty.LENGTH_SHORT, true).show();
                 }
             }
         });
@@ -244,6 +245,7 @@ public class AddOrderFragment extends Fragment {
         binding.addOrderMediumOrderRadioBtn.setChecked(false);
         binding.addOrderBigOrderRadioBtn.setChecked(false);
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -260,6 +262,7 @@ public class AddOrderFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -267,27 +270,62 @@ public class AddOrderFragment extends Fragment {
         context.registerReceiver(broadCast, intentFilter);
 
     }
+
     @Override
     public void onResume() {
-
         super.onResume();
+        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        binding.addOrderOrderDescriptionEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderOrderDescriptionEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderOrderPriceEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderOrderPriceEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverAddressEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverAddressEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverNameEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverNameEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverPrimaryPhoneEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverSecondaryPhoneEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderArrivalDateNotesEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderArrivalDateNotesEditText.clearFocus();
+            }
+            return false;
+        });
+
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
 
-            if( keyCode == KeyEvent.KEYCODE_BACK )
-            {
-                binding.addOrderOrderDescriptionEditText.clearFocus();
-                binding.addOrderReceiverNameEditText.clearFocus();
-                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverAddressEditText.clearFocus();
-                binding.addOrderOrderPriceEditText.clearFocus();
-                binding.addOrderArrivalDateNotesEditText.clearFocus();
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
 
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
-                Toast.makeText(context.getApplicationContext(), "Add Order Back", Toast.LENGTH_SHORT).show();
                 return true;
             }
 

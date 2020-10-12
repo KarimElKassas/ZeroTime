@@ -7,13 +7,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,10 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.zerotime.zerotime.User.History;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
+import com.zerotime.zerotime.User.History;
 import com.zerotime.zerotime.databinding.UserFragmentProfileBinding;
 
 import java.util.Objects;
@@ -34,6 +33,7 @@ public class ProfileFragment extends Fragment {
     UserFragmentProfileBinding binding;
     View view;
     Context context;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
         binding.profileOrdersHistoryCard.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), History.class);
             startActivity(intent);
-            ((Activity)context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         });
 
 
@@ -70,9 +70,9 @@ public class ProfileFragment extends Fragment {
             UpdateUserDataFragment fragment = new UpdateUserDataFragment();
             assert fragmentManager != null;
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
-                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
-                    .replace(R.id.Frame_Content,fragment)
+                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content, fragment)
                     .addToBackStack("ProfileFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
@@ -82,15 +82,16 @@ public class ProfileFragment extends Fragment {
             FollowMyOrdersFragment fragment = new FollowMyOrdersFragment();
             assert fragmentManager != null;
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left,
-                            R.anim.enter_left_to_right,R.anim.exit_left_to_right)
-                    .replace(R.id.Frame_Content,fragment)
+                    .setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left,
+                            R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                    .replace(R.id.Frame_Content, fragment)
                     .addToBackStack("ProfileFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         });
 
     }
+
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -107,6 +108,7 @@ public class ProfileFragment extends Fragment {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
+
     private void checkInternetConnection() {
         MyBroadCast broadCast = new MyBroadCast();
         IntentFilter intentFilter = new IntentFilter();
@@ -114,6 +116,7 @@ public class ProfileFragment extends Fragment {
         context.registerReceiver(broadCast, intentFilter);
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -125,10 +128,9 @@ public class ProfileFragment extends Fragment {
                 view.requestFocus();
                 view.setOnKeyListener((v, keyCode, event) -> {
 
-                    if( keyCode == KeyEvent.KEYCODE_BACK )
-                    {
-                        Objects.requireNonNull(getActivity()).onBackPressed();
-
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        assert getFragmentManager() != null;
+                        getFragmentManager().popBackStackImmediate();
 
                         return true;
                     }
@@ -137,8 +139,8 @@ public class ProfileFragment extends Fragment {
                 });
 
             }, 1000000);
-        }catch (Exception e){
-            Toast.makeText(context, e.getMessage(),Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

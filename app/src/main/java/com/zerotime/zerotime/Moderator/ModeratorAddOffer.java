@@ -57,6 +57,8 @@ public class ModeratorAddOffer extends AppCompatActivity {
         inAnimation = new AlphaAnimation(0f, 2f);
         outAnimation = new AlphaAnimation(2f, 0f);
 
+        binding.addOfferProgressBarHolder.setVisibility(View.VISIBLE);
+
         offersRef = FirebaseDatabase.getInstance().getReference("Offers");
 
         offersRef.child("Offers").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -76,6 +78,8 @@ public class ModeratorAddOffer extends AppCompatActivity {
                         binding.moderatorAddOfferFourthFixedOfferEditText.setText(fourthOffer);
                         binding.moderatorAddOfferFifthFixedOfferEditText.setText(fifthOffer);
                         binding.moderatorAddOfferSixthFixedOfferEditText.setText(sixthOffer);
+
+                        binding.addOfferProgressBarHolder.setVisibility(View.GONE);
                     }
                 }
             }
