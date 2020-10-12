@@ -288,42 +288,55 @@ public class AddOrderFragment extends Fragment {
         binding.addOrderOrderDescriptionEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderOrderDescriptionEditText.clearFocus();
+                view.requestFocus();
             }
             return false;
         });
         binding.addOrderOrderPriceEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderOrderPriceEditText.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.addOrderReceiverAddressEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderReceiverAddressEditText.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.addOrderReceiverNameEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderReceiverNameEditText.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.addOrderReceiverPrimaryPhoneEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.addOrderReceiverSecondaryPhoneEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.addOrderArrivalDateNotesEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.addOrderArrivalDateNotesEditText.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });

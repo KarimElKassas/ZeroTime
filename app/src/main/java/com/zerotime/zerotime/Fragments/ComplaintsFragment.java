@@ -119,6 +119,7 @@ public class ComplaintsFragment extends Fragment {
         binding.complaintsFragmentComplaintEditText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.complaintsFragmentComplaintEditText.clearFocus();
+                view.requestFocus();
             }
             return false;
         });
@@ -131,7 +132,6 @@ public class ComplaintsFragment extends Fragment {
 
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
-
                 return true;
             }
 

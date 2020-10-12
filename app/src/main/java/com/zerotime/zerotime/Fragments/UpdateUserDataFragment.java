@@ -265,30 +265,40 @@ public class UpdateUserDataFragment extends Fragment {
         binding.updateDataFragmentNameEditTxt.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.updateDataFragmentNameEditTxt.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.updateDataFragmentPasswordEditTxt.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.updateDataFragmentPasswordEditTxt.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.updateDataFragmentPrimaryPhoneEditTxt.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.updateDataFragmentPrimaryPhoneEditTxt.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.updateDataFragmentSecondaryPhoneEditTxt.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.updateDataFragmentSecondaryPhoneEditTxt.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });
         binding.updateDataFragmentAddressEditTxt.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 binding.updateDataFragmentAddressEditTxt.clearFocus();
+                view.requestFocus();
+
             }
             return false;
         });

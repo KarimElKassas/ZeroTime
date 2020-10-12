@@ -72,7 +72,7 @@ public class ContactFragment extends Fragment {
         });
         binding.goToCallCard.setOnClickListener(view1 -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + "01017268676"));
+            intent.setData(Uri.parse("tel:" + "01061165518"));
             context.startActivity(intent);
             ((Activity) context).finish();
 
