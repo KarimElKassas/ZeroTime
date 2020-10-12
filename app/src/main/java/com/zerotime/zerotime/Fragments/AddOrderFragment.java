@@ -279,67 +279,54 @@ public class AddOrderFragment extends Fragment {
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener((v, keyCode, event) -> {
 
-            if( keyCode == KeyEvent.KEYCODE_BACK )
-            {
-                Toast.makeText(context, "aaa", Toast.LENGTH_LONG).show();
-                binding.addOrderOrderDescriptionEditText.clearFocus();
-                binding.addOrderReceiverNameEditText.clearFocus();
-                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverAddressEditText.clearFocus();
-                binding.addOrderOrderPriceEditText.clearFocus();
-                binding.addOrderArrivalDateNotesEditText.clearFocus();
-
-                assert getFragmentManager() != null;
-                getFragmentManager().popBackStackImmediate();
-                return true;
-            }
-
-            return false;
-        });
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener((v, keyCode, event) -> {
-
-            if( keyCode == KeyEvent.KEYCODE_BACK )
-            {
-                Toast.makeText(context, "aaa", Toast.LENGTH_LONG).show();
-                binding.addOrderOrderDescriptionEditText.clearFocus();
-                binding.addOrderReceiverNameEditText.clearFocus();
-                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverAddressEditText.clearFocus();
-                binding.addOrderOrderPriceEditText.clearFocus();
-                binding.addOrderArrivalDateNotesEditText.clearFocus();
-
-                assert getFragmentManager() != null;
-                getFragmentManager().popBackStackImmediate();
-                return true;
-            }
-
-            return false;
-        });
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
+        Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        binding.addOrderOrderDescriptionEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderOrderDescriptionEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderOrderPriceEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderOrderPriceEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverAddressEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverAddressEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverNameEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverNameEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverPrimaryPhoneEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderReceiverSecondaryPhoneEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
+            }
+            return false;
+        });
+        binding.addOrderArrivalDateNotesEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                binding.addOrderArrivalDateNotesEditText.clearFocus();
+            }
+            return false;
+        });
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
