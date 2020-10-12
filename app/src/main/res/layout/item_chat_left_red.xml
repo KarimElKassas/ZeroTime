@@ -5,6 +5,7 @@
     android:layout_width="@dimen/_300sdp"
     android:layout_height="wrap_content"
     android:padding="@dimen/_8sdp"
+    android:layoutDirection="ltr"
     >
     <androidx.cardview.widget.CardView
         android:id="@+id/showMessageImageCard"
@@ -36,7 +37,7 @@
         android:padding="@dimen/_8sdp"
         android:text="Hello"
         android:textColor="#FFF"
-        android:textSize="@dimen/_18sdp"
+        android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />

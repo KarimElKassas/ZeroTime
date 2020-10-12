@@ -73,7 +73,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="اسم المستلم : "
                             android:textColor="#005b96"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_name_line"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -85,7 +85,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="كريم القصاص"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_name_text"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -137,7 +137,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="عنوان المستلم : "
                             android:textColor="#005b96"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_address_line"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -149,7 +149,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="كريم القصاص"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_address_text"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -180,7 +180,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_phone_icon"
+                            android:src="@drawable/ic_call_blue"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -201,7 +201,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="هاتف المستلم : "
                             android:textColor="#005b96"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_primary_phone_line"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -213,7 +213,7 @@
                             android:letterSpacing="0.15"
                             android:text="01017268676"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_primary_phone_text"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -244,7 +244,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_phone_icon"
+                            android:src="@drawable/ic_call_blue"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -265,7 +265,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="هاتف المستلم : "
                             android:textColor="#005b96"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_secondary_phone_line"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -277,7 +277,7 @@
                             android:letterSpacing="0.15"
                             android:text="01125299561"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_secondary_phone_text"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -329,7 +329,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="وصف الطلب : "
                             android:textColor="#005b96"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_description_line"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -341,7 +341,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="كريم القصاص"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_description_text"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -393,7 +393,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="سعر الطلب : "
                             android:textColor="#005b96"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_price_line"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -405,7 +405,7 @@
                             android:letterSpacing="0.1"
                             android:text="500"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_price_text"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -418,7 +418,7 @@
                             android:fontFamily="@font/changa_medium"
                             android:text="جنيه مصرى"
                             android:textColor="#428bca"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/_12ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/History_price_value"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -441,12 +441,11 @@
                         android:id="@+id/History_order_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/changa_medium"
+                        android:fontFamily="@font/tajwal"
                         android:padding="@dimen/_4sdp"
                         android:text="Sat, 19 Sep 2020, 12:15:00"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"
-
+                        android:textSize="@dimen/_11ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -454,75 +453,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/History_expandableView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/History_cards_constraint">
-
-                <com.anton46.stepsview.StepsView
-                    android:id="@+id/History_stepsView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:background="@drawable/card"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/History_stepsView">
-
-                    <TextView
-                        android:id="@+id/History_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_4sdp"
-                        android:text="Sat, 19 Sep 2020, 12:15:00"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <ImageView
-                    android:id="@+id/History_UserData"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:src="@drawable/ic_baseline_person_pin_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/History_stepsView" />
-
-                <ImageView
-                    android:id="@+id/History_Settings"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:src="@drawable/ic_baseline_settings_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/History_UserData"
-                    app:layout_constraintTop_toBottomOf="@id/History_stepsView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

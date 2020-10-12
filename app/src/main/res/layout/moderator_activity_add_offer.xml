@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#595a5b"
+    android:layoutDirection="ltr"
     tools:context=".Moderator.ModeratorAddOffer">
 
     <ScrollView
@@ -20,15 +21,15 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:fontFamily="@font/changa_medium"
                 android:id="@+id/moderator_add_offer_first_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="العرض الاول :"
+                android:fontFamily="@font/changa_medium"
+                android:text="@string/first_offer_txt"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,31 +38,29 @@
                 android:id="@+id/moderator_add_offer_first_fixed_offer_edit_text"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_120sdp"
-                android:fontFamily="@font/tajwal"
-
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
+                android:fontFamily="@font/tajwal"
                 android:gravity="top"
-                android:hint="اكتب  العرض الاول هنا ..."
+                android:hint="@string/first_offer_hint"
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_fixed_offer_text_view" />
 
 
             <TextView
-                android:fontFamily="@font/changa_medium"
-
                 android:id="@+id/moderator_add_offer_second_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="العرض الثانى :"
+                android:fontFamily="@font/changa_medium"
+                android:text="@string/second_offer_txt"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_first_fixed_offer_edit_text" />
@@ -73,29 +72,26 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
-                android:gravity="top"
-
-                android:hint="اكتب  العرض الثانى هنا ..."
-                android:padding="@dimen/_12sdp"
                 android:fontFamily="@font/tajwal"
-
+                android:gravity="top"
+                android:hint="@string/second_offer_hint"
+                android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_fixed_offer_text_view" />
 
 
             <TextView
-                android:fontFamily="@font/changa_medium"
-
                 android:id="@+id/moderator_add_offer_third_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="العرض الثالث :"
+                android:fontFamily="@font/changa_medium"
+                android:text="@string/third_offer_txt"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_second_fixed_offer_edit_text" />
@@ -107,29 +103,26 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
-                android:gravity="top"
                 android:fontFamily="@font/tajwal"
-
-                android:hint="اكتب  العرض الثالث هنا ..."
+                android:gravity="top"
+                android:hint="@string/third_offer_hint"
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_text_view" />
 
 
             <TextView
-
                 android:id="@+id/moderator_add_offer_fourth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="العرض الرابع :"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
                 android:fontFamily="@font/changa_medium"
-
+                android:text="@string/fourth_offer_txt"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_third_fixed_offer_edit_text" />
@@ -141,28 +134,26 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
-                android:gravity="top"
                 android:fontFamily="@font/tajwal"
-
-                android:hint="اكتب  العرض الرابع هنا ..."
+                android:gravity="top"
+                android:hint="@string/fourth_offer_hint"
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_fixed_offer_text_view" />
 
 
             <TextView
-                android:fontFamily="@font/changa_medium"
-
                 android:id="@+id/moderator_add_offer_fifth_fixed_offer_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="العرض الخامس :"
+                android:fontFamily="@font/changa_medium"
+                android:text="@string/fifth_offer_txt"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fourth_fixed_offer_edit_text" />
@@ -174,13 +165,12 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
-                android:gravity="top"
                 android:fontFamily="@font/tajwal"
-
-                android:hint="اكتب  العرض الخامس هنا ..."
+                android:gravity="top"
+                android:hint="@string/fifth_offer_hint"
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_fixed_offer_text_view" />
 
@@ -191,11 +181,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:text="العرض السادس :"
-                android:textColor="#FFFFFF"
                 android:fontFamily="@font/changa_medium"
-
-                android:textSize="18sp"
+                android:text="@string/sixth_offer_txt"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_fifth_fixed_offer_edit_text" />
@@ -207,28 +196,27 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:background="@drawable/edit_text_back_corner_less"
-                android:gravity="top"
                 android:fontFamily="@font/tajwal"
-
-                android:hint="اكتب  العرض السادس هنا ..."
+                android:gravity="top"
+                android:hint="@string/sixth_offer_hint"
                 android:padding="@dimen/_12sdp"
                 android:textColorHint="#535353"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_text_view" />
 
             <Button
                 android:id="@+id/moderator_add_offer_sixth_update_btn"
                 android:layout_width="@dimen/_250sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:padding="@dimen/_4sdp"
                 android:background="@drawable/edit_text_back_corner_less"
-                android:text="تحديث"
                 android:fontFamily="@font/changa_medium"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/update_hint"
                 android:textColor="#595a5b"
-                android:textSize="20sp"
+                android:textSize="@dimen/_18ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text"
@@ -236,6 +224,7 @@
                 app:layout_constraintTop_toBottomOf="@id/moderator_add_offer_sixth_fixed_offer_edit_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <FrameLayout
         android:id="@+id/addOffer_progressBarHolder"
         android:layout_width="0dp"
@@ -254,7 +243,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-
             android:indeterminate="true" />
     </FrameLayout>
 

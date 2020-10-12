@@ -252,7 +252,7 @@ public class SecretaryMessage extends AppCompatActivity {
 
                 adapter = new SecretaryMessageAdapter(SecretaryMessage.this, secretaryChatPojoList);
                 binding.secretaryMessageRecycler.setAdapter(adapter);
-                binding.secretaryMessageRecycler.smoothScrollToPosition(secretaryChatPojoList.size() - 1);
+                //binding.secretaryMessageRecycler.smoothScrollToPosition(secretaryChatPojoList.size() - 1);
 
             }
 

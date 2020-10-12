@@ -10,7 +10,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,13 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.zerotime.zerotime.MyBroadCast;
 import com.zerotime.zerotime.No_Internet_Connection;
 import com.zerotime.zerotime.R;
-import com.zerotime.zerotime.databinding.ModeratorActivityAddClerckBinding;
+import com.zerotime.zerotime.databinding.ModeratorActivityAddClerkBinding;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 
 public class ModeratorAddClerk extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
     String phone;
     boolean temp;
     int tmp;
-    private ModeratorActivityAddClerckBinding binding;
+    private ModeratorActivityAddClerkBinding binding;
     private DatabaseReference clerksRef;
     private HashMap<String, String> clerksMap;
     private String hasVehicle;
@@ -46,7 +46,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //view binding
-        binding = ModeratorActivityAddClerckBinding.inflate(getLayoutInflater());
+        binding = ModeratorActivityAddClerkBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
@@ -199,8 +199,7 @@ public class ModeratorAddClerk extends AppCompatActivity {
                         binding.ModeratorAddClerkPhone1Edt.setError("عذرا لقد تم التسجيل بهذا الهاتف من قبل..");
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                    }
-                    else {
+                    } else {
 
                         binding.addClerkProgressBarHolder.setAnimation(inAnimation);
                         binding.addClerkProgressBarHolder.setVisibility(View.VISIBLE);
@@ -262,8 +261,6 @@ public class ModeratorAddClerk extends AppCompatActivity {
 
                 }
             });
-
-
 
 
         } catch (Exception e) {

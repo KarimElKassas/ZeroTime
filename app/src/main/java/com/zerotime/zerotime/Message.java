@@ -228,7 +228,7 @@ public class Message extends AppCompatActivity {
                     }
                     adapter = new MessageAdapter(Message.this, chatPojos);
                     binding.messageRecycler.setAdapter(adapter);
-                    binding.messageRecycler.smoothScrollToPosition(chatPojos.size() - 1);
+                    //binding.messageRecycler.smoothScrollToPosition(chatPojos.size() - 1);
                 }
 
 

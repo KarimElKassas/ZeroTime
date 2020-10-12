@@ -102,7 +102,7 @@ public class ModeratorAddOffer extends AppCompatActivity {
     }
 
     private void addOffer() {
-        if (!haveNetworkConnection()){
+        if (haveNetworkConnection()){
             //Progress Bar
             binding.addOfferProgressBarHolder.setAnimation(inAnimation);
             binding.addOfferProgressBarHolder.setVisibility(View.VISIBLE);

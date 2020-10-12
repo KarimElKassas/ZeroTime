@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ecf2fe"
-    tools:context=".Fragments.DisplayOffersFragment">
+    tools:context=".Fragments.DisplayOffersFragment"
+    android:layoutDirection="ltr">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -207,7 +208,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/noresult"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/offers_no_result_text"
             android:layout_width="wrap_content"
@@ -215,7 +217,7 @@
             android:textColor="@color/DarkBlue"
             android:textStyle="bold"
             android:textSize="@dimen/_24ssp"
-            android:text="لا يوجد عروض"
+            android:text="@string/no_orders_found_txt"
             android:fontFamily="@font/tajwal"
             app:layout_constraintTop_toBottomOf="@id/offers_no_result_img"
             app:layout_constraintStart_toStartOf="parent"

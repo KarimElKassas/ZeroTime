@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="ltr">
 
     <ImageView
         android:id="@+id/dialog_chat_image_imageView"

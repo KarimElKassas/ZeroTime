@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:layoutDirection="ltr"
     android:background="#ecf2fe"
     android:padding="@dimen/_4sdp">
 
@@ -14,10 +13,10 @@
         android:layout_height="match_parent"
         android:elevation="@dimen/_11sdp"
         app:cardCornerRadius="@dimen/_12sdp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,9 +30,8 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:fontFamily="@font/changa_medium"
-                android:text="اسلام اسامه"
                 android:textColor="@color/DarkBlue"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,25 +44,23 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:gravity="center"
                 android:padding="@dimen/_4sdp"
-                android:text="11"
                 android:textColor="#FFFFFF"
                 android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/numberOrders_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="01122388139"
                 android:textColor="@color/DarkBlue"
-                android:textSize="16sp"
+                android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/numberOrders_name"
                 app:layout_constraintStart_toEndOf="@+id/numberOrders_number"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

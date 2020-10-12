@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecf2fe"
-    tools:context=".User.SplashScreen">
+    tools:context=".User.SplashScreen"
+    android:layoutDirection="ltr">
 <ImageView
     android:id="@+id/splashImg"
     android:layout_width="@dimen/_180sdp"

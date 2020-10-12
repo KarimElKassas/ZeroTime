@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
     android:background="#ecf2fe"
-
+    android:layoutDirection="ltr"
     tools:context=".Moderator.ModeratorAddClerk">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,9 +35,9 @@
                     android:layout_marginTop="@dimen/_22sdp"
                     android:fontFamily="@font/changa_medium"
                     android:gravity="center"
-                    android:text="إضافه مندوب"
+                    android:text="@string/add_clerk_hint"
                     android:textColor="@color/DarkBlue"
-                    android:textSize="@dimen/_22sdp"
+                    android:textSize="@dimen/_20ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -45,21 +45,19 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Moderator_AddClerk_Name_edt"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_50sdp"
-                    android:background="@drawable/edit_text_back"
+                    android:background="@drawable/add_order_edit_text_back"
                     android:fontFamily="@font/tajwal"
-                    android:hint="اسم المندوب"
-
-                    android:maxLines="1"
+                    android:hint="@string/clerk_name_hint"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingRight="@dimen/_8sdp"
                     android:textColor="#005b96"
                     android:textColorHint="#005b96"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -67,21 +65,22 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Moderator_AddClerk_phone1_edt"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@drawable/edit_text_back"
+                    android:background="@drawable/add_order_edit_text_back"
                     android:fontFamily="@font/tajwal"
-                    android:hint="رقم الهاتف الاول"
+                    android:hint="@string/signup_primary_phone_hint"
                     android:inputType="number"
-                    android:maxLines="1"
+                    android:letterSpacing="0.15"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingRight="@dimen/_8sdp"
+                    android:textAlignment="viewEnd"
                     android:textColor="#005b96"
                     android:textColorHint="#005b96"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,21 +88,22 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Moderator_AddClerk_phone2_edt"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@drawable/edit_text_back"
+                    android:background="@drawable/add_order_edit_text_back"
                     android:fontFamily="@font/tajwal"
-                    android:hint="رقم الهاتف الثاني"
+                    android:hint="@string/signup_secondary_phone_hint"
                     android:inputType="number"
-                    android:maxLines="1"
+                    android:letterSpacing="0.15"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingRight="@dimen/_8sdp"
+                    android:textAlignment="viewEnd"
                     android:textColor="#005b96"
                     android:textColorHint="#005b96"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -111,20 +111,20 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Moderator_AddClerk_address_edt"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@drawable/edit_text_back"
+                    android:background="@drawable/add_order_edit_text_back"
                     android:fontFamily="@font/tajwal"
-                    android:hint="العنوان بالتفصيل"
-                    android:maxLines="1"
+                    android:hint="@string/signup_address_hint"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingRight="@dimen/_8sdp"
+                    android:textAlignment="viewEnd"
                     android:textColor="#005b96"
                     android:textColorHint="#005b96"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -132,21 +132,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Moderator_AddClerk_age_edt"
-                    android:layout_width="250dp"
-                    android:layout_height="50dp"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@drawable/edit_text_back"
+                    android:background="@drawable/add_order_edit_text_back"
                     android:fontFamily="@font/tajwal"
-                    android:hint="السن"
+                    android:hint="@string/clerk_age_hint"
                     android:inputType="number"
-                    android:maxLines="1"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingRight="@dimen/_8sdp"
+                    android:textAlignment="viewEnd"
                     android:textColor="#005b96"
                     android:textColorHint="#005b96"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -159,17 +159,19 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:fontFamily="@font/tajwal"
                     android:gravity="center"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/Moderator_AddClerk_age_edt">
 
                     <RadioButton
                         android:id="@+id/radio_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_4sdp"
                         android:buttonTint="#005b96"
                         android:fontFamily="@font/tajwal"
-                        android:text="  يمتلك طياره "
+                        android:text="@string/has_vehicle_hint"
                         android:textColor="#005b96"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
 
                     <RadioButton
@@ -178,22 +180,23 @@
                         android:layout_height="wrap_content"
                         android:buttonTint="#005b96"
                         android:fontFamily="@font/tajwal"
-                        android:text="لا يمتلك طياره"
+                        android:text="@string/dont_have_vehicle_txt"
                         android:textColor="#005b96"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
                 </RadioGroup>
 
                 <Button
                     android:id="@+id/Moderator_AddClerk_add_btn"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:background="@drawable/btn_back"
                     android:fontFamily="@font/changa_medium"
                     android:padding="@dimen/_8sdp"
-                    android:text="إضافه"
+                    android:text="@string/add_hint"
                     android:textColor="#FFF"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_20ssp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -201,8 +204,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -225,7 +226,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-
             android:indeterminate="true" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

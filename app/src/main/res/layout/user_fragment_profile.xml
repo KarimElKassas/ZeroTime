@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecf2fe"
-
     android:layoutDirection="ltr"
     tools:context=".Fragments.ProfileFragment">
 
@@ -63,7 +62,7 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="تعديل بياناتك"
+                                android:text="@string/update_data_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -77,7 +76,8 @@
                                 android:src="@drawable/ic_identity"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -107,7 +107,7 @@
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="متابعة الطلبات"
+                                android:text="@string/follow_orders_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -121,7 +121,8 @@
                                 android:src="@drawable/followingorder"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -152,7 +153,7 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="الطلبات السابقة"
+                                android:text="@string/history_txt"
                                 android:textColor="#000"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -166,7 +167,8 @@
                                 android:src="@drawable/history_png"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>

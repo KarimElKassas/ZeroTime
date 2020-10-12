@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecf2fe"
+    android:layoutDirection="ltr"
     tools:context=".Moderator.ModeratorComplaints">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/moderator_complaint_no_result"
@@ -22,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/noresult"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
         <TextView
             android:id="@+id/moderator_complaint_no_result_text"
             android:layout_width="wrap_content"
@@ -30,7 +32,7 @@
             android:textColor="@color/DarkBlue"
             android:textStyle="bold"
             android:textSize="@dimen/_24ssp"
-            android:text="لا توجد شكاوى"
+            android:text="@string/no_complaints_fonud_txt"
             android:fontFamily="@font/tajwal"
             app:layout_constraintTop_toBottomOf="@id/moderator_complaint_no_result_img"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +46,7 @@
         app:layout_constraintBottom_toTopOf="@id/deleteAllComplaints"
         tools:listitem="@layout/item_complaint"
         android:visibility="invisible"
-        android:background="#FFF"
+        android:background="#ecf2fe"
         />
 
     <Button
@@ -52,9 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_back_gradient"
-        android:text="مسح جميع الشكاوي"
+        android:text="@string/delete_all_complaints_hint"
         android:textColor="#FFFFFF"
-        android:textSize="@dimen/_18sdp"
+        android:textSize="@dimen/_16ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,6 @@
     android:layoutDirection="ltr"
     tools:context=".Fragments.HomeFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,7 +43,6 @@
                         android:layout_height="@dimen/_100sdp"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:padding="@dimen/_8sdp"
-
                         android:theme="@style/Theme.MaterialComponents.Light"
                         app:cardCornerRadius="@dimen/_12sdp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +61,7 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="اضافة طلب"
+                                android:text="@string/add_order_txt"
                                 android:textColor="#000"
                                 android:textSize="@dimen/_22ssp"
                                 android:textStyle="bold"
@@ -77,7 +75,8 @@
                                 android:src="@drawable/delivery_man_add_order"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -107,7 +106,7 @@
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="عروض الشهر"
+                                android:text="@string/monthly_offers_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_22ssp"
                                 android:textStyle="bold"
@@ -121,7 +120,8 @@
                                 android:src="@drawable/offers"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -152,7 +152,7 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="من نحن ؟"
+                                android:text="@string/about_us_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_22ssp"
                                 android:textStyle="bold"
@@ -166,7 +166,8 @@
                                 android:src="@drawable/group"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -195,7 +196,7 @@
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="منتجاتنا"
+                                android:text="@string/our_products_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_22ssp"
                                 android:textStyle="bold"
@@ -209,7 +210,8 @@
                                 android:src="@drawable/products"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>

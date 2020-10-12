@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecf2fe"
-    tools:context=".No_Internet_Connection">
+    tools:context=".No_Internet_Connection"
+    android:layoutDirection="ltr">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

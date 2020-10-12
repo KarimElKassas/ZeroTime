@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#ecf2fe"
     android:layoutDirection="ltr"
-
     android:orientation="vertical"
     tools:context=".Fragments.SettingsFragment">
 
@@ -64,7 +63,7 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="شكاوى"
+                                android:text="@string/complaints_txt"
                                 android:textColor="#000"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -78,7 +77,8 @@
                                 android:src="@drawable/complaint"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -108,7 +108,7 @@
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="تقييم التطبيق"
+                                android:text="@string/rate_app_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -122,7 +122,8 @@
                                 android:src="@drawable/rate"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -153,7 +154,7 @@
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="مشاركة التطبيق"
+                                android:text="@string/share_app"
                                 android:textColor="#000"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -167,7 +168,8 @@
                                 android:src="@drawable/share"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -197,7 +199,7 @@
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/tajwal"
-                                android:text="تسجيل الخروج"
+                                android:text="@string/logout_txt"
                                 android:textColor="#FFF"
                                 android:textSize="@dimen/_20ssp"
                                 android:textStyle="bold"
@@ -211,7 +213,8 @@
                                 android:src="@drawable/logout"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:ignore="ContentDescription" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
