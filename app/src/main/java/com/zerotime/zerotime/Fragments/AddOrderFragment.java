@@ -333,15 +333,6 @@ public class AddOrderFragment extends Fragment {
 
             if( keyCode == KeyEvent.KEYCODE_BACK )
             {
-                Toast.makeText(context, "aaa", Toast.LENGTH_LONG).show();
-                binding.addOrderOrderDescriptionEditText.clearFocus();
-                binding.addOrderReceiverNameEditText.clearFocus();
-                binding.addOrderReceiverPrimaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverSecondaryPhoneEditText.clearFocus();
-                binding.addOrderReceiverAddressEditText.clearFocus();
-                binding.addOrderOrderPriceEditText.clearFocus();
-                binding.addOrderArrivalDateNotesEditText.clearFocus();
-
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
                 return true;

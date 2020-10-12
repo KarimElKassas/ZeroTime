@@ -300,7 +300,6 @@ public class UpdateUserDataFragment extends Fragment {
             if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                 assert getFragmentManager() != null;
                 getFragmentManager().popBackStackImmediate();
-                Toast.makeText(context.getApplicationContext(), "Update Data Back", Toast.LENGTH_SHORT).show();
                 return true;
             }
 
