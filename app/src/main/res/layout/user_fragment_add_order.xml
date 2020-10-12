@@ -31,7 +31,7 @@
                 android:textAlignment="viewEnd"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
                 android:inputType="numberDecimal"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textAlignment="viewEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                 android:inputType="text"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textAlignment="viewEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                 android:textAlignment="viewEnd"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/addOrder_arrival_date_notes_edit_text" />
@@ -98,7 +98,7 @@
                 android:inputType="number"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textAlignment="viewEnd"
                 android:letterSpacing="0.15"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
                 android:inputType="number"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textAlignment="viewEnd"
                 android:letterSpacing="0.15"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
                 android:inputType="text"
                 android:textColor="#005b96"
                 android:textColorHint="#005b96"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textAlignment="viewEnd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addOrder_order_size_radio_group_layout"
-                android:layout_width="@dimen/_250sdp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,8 +150,7 @@
                 app:layout_constraintTop_toBottomOf="@id/addOrder_receiver_address_edit_text">
 
                 <RadioGroup
-                    android:layout_width="match_parent"
-
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/changa_medium"
                     android:orientation="horizontal"
@@ -171,7 +170,7 @@
                         android:gravity="start"
                         android:text="@string/small"
                         android:textColor="#005b96"
-                        android:textSize="@dimen/_16ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold" />
 
                     <RadioButton
@@ -186,14 +185,13 @@
                         android:fontFamily="@font/changa_medium"
                         android:text="@string/medium"
                         android:textColor="#005b96"
-                        android:textSize="@dimen/_16ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <RadioButton
                         android:id="@+id/addOrder_big_order_radio_btn"
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -203,7 +201,7 @@
                         android:fontFamily="@font/changa_medium"
                         android:text="@string/big"
                         android:textColor="#005b96"
-                        android:textSize="@dimen/_16ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
